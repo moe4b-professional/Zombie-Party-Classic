@@ -1,0 +1,51 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditorInternal;
+#endif
+
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+
+using WebSocketSharp;
+using WebSocketSharp.Net.WebSockets;
+
+namespace Game
+{
+    [Serializable]
+    public class Client
+    {
+        public string Name { get; protected set; }
+
+        public WebSocket Socket { get; protected set; }
+        public virtual void Send(string data)
+        {
+            Socket.Send(data);
+        }
+        public virtual void Send(NetworkMessage message)
+        {
+            Send(NetworkMessage.Serialize(message));
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public Client(string name, WebSocketContext context)
+        {
+            this.Name = name;
+            this.Socket = context.WebSocket;
+        }
+    }
+}
