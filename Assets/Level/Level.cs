@@ -17,19 +17,17 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
-
 namespace Game
 {
     [DefaultExecutionOrder(ExecutionOrder)]
-	public class Level : NetworkBehaviour
+	public class Level : MonoBehaviour
 	{
         public const int ExecutionOrder = -200;
 
         public static Level Instance { get; protected set; }
 
 
-        public LevelMenu Menu { get { return LevelMenu.Instance; } }
+        public LevelMenu Menu { get; protected set; }
 
         public Popup Popup { get { return Menu.Popup; } }
 
@@ -47,27 +45,22 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
 
-        public NetworkCore Network { get { return Core.Server; } }
+        public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
 
-
-        void Init()
+        void Awake()
         {
             Instance = this;
+
+            Menu = FindObjectOfType<LevelMenu>();
 
             Observers = FindObjectOfType<ObserversManager>();
             Observers.Init();
 
-            if (Network.Server.Active)
-            {
-                Players = FindObjectOfType<PlayersManager>();
-                Players.Init();
-            }
+            Players = FindObjectOfType<PlayersManager>();
+            Players.Init();
 
-            if(Network.Server.Active)
-            {
-                Spawner = FindObjectOfType<Spawner>();
-                Spawner.Begin();
-            }
+            Spawner = FindObjectOfType<Spawner>();
 
             Pause = FindObjectOfType<LevelPause>();
             Pause.Init();
@@ -75,23 +68,50 @@ namespace Game
 
 		void Start()
         {
-            Init();
 
-            if (isServer)
+            Clients.ReadyStateChangedEvent += OnClientReadyStateChanged;
+            Clients.DisconnectionEvent += OnClientDisconnection;
+
+            Menu.Players.Visible = true;
+            Menu.HUD.Visible = false;
+        }
+
+        void OnClientReadyStateChanged(Client client)
+        {
+            CheckReadiness();
+        }
+
+        void OnClientDisconnection(Client client)
+        {
+            CheckReadiness();
+        }
+
+        void CheckReadiness()
+        {
+            if (Clients.Count > 0 && Clients.AllReady)
             {
-                Menu.Server.Players.Visible = false;
-                Menu.Server.HUD.Visible = true;
-            }
+                Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
+                Clients.DisconnectionEvent -= OnClientDisconnection;
 
-            if(isClient)
+                //TODO
+                Menu.Players.Visible = false;
+                Menu.HUD.Visible = true;
+                SpawnAllClients();
+            }
+        }
+
+        void SpawnAllClients()
+        {
+            for (int i = 0; i < Clients.List.Count; i++)
             {
-                Popup.Visible = false;
-
-                Menu.Client.Ready.Visible = false;
-                Menu.Client.HUD.Visible = true;
-
-                Observers.Spawn();
+                Observers.Spawn(Clients.List[i]);
             }
+        }
+
+        void OnDestroy()
+        {
+            Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
+            Clients.DisconnectionEvent -= OnClientDisconnection;
         }
     }
 }

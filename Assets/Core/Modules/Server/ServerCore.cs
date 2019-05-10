@@ -19,14 +19,13 @@ using Random = UnityEngine.Random;
 
 using System.Runtime.Serialization;
 
-using UnityEngine.Networking;
-
 using System.Net;
-using System.Net.Http.Headers;
-
-using System.Text.RegularExpressions;
+using System.Net.Sockets;
+using System.Net.NetworkInformation;
 
 using System.Threading;
+
+using System.Text.RegularExpressions;
 
 using WebSocketSharp;
 using WebSocketSharp.Net;
@@ -39,7 +38,7 @@ using Newtonsoft.Json.Linq;
 namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
-    public abstract class ServerCore : Core.Module
+    public class ServerCore : Core.Module
 	{
         new public const string MenuPath = Core.Module.MenuPath + "Server/";
 
@@ -47,6 +46,8 @@ namespace Game
         {
             get
             {
+                if (Server == null) return false;
+
                 return Server.IsListening;
             }
         }
@@ -55,20 +56,25 @@ namespace Game
         protected int port = 8080;
         public int Port { get { return port; } }
 
+        [SerializeField]
+        protected int size = 4;
+        public int Size { get { return size; } }
+
         public string Address { get; protected set; }
 
         public WebSocketServer Server { get; protected set; }
 
-        public ServerBehaviour Behaviour { get; protected set; }
-        void InitBehaviour(ServerBehaviour behaviour)
+        public InternalBehavior Behavior { get; protected set; }
+        void InitBehaviour(InternalBehavior behaviour)
         {
-            this.Behaviour = behaviour;
+            this.Behavior = behaviour;
         }
-        public class ServerBehaviour : WebSocketBehavior
+        public class InternalBehavior : WebSocketBehavior
         {
             public ServerCore Server { get { return Core.Asset.Server; } }
 
             public delegate void ContextOperationDelegate(WebSocketContext context);
+
 
             protected override void OnOpen()
             {
@@ -77,11 +83,10 @@ namespace Game
                 UnityThreadDispatcher.Add(OnOpen_UNITYSAFE(Context));
             }
 
-            public event ContextOperationDelegate ConnectionEvent;
+            ContextOperationDelegate ConnectionAction;
             IEnumerator OnOpen_UNITYSAFE(WebSocketContext context)
             {
-                if (ConnectionEvent != null)
-                    ConnectionEvent(Context);
+                if (ConnectionAction != null) ConnectionAction(Context);
 
                 yield break;
             }
@@ -95,10 +100,10 @@ namespace Game
             }
 
             public delegate void MessageDelegate(WebSocketContext context, MessageEventArgs args);
-            public event MessageDelegate MessageEvent;
+            MessageDelegate MessageAction;
             IEnumerator OnMessage_UNITY_SAFE(MessageEventArgs e)
             {
-                if (MessageEvent != null) MessageEvent(Context, e);
+                if (MessageAction != null) MessageAction(Context, e);
 
                 yield break;
             }
@@ -112,19 +117,28 @@ namespace Game
             }
 
             public delegate void DisconnectOperationDelegate(WebSocketContext context, CloseEventArgs args);
-            public event DisconnectOperationDelegate DisconnectionEvent;
+            DisconnectOperationDelegate DisconnectAction;
             IEnumerator OnClose_UNITY_SAFE(WebSocketContext context, CloseEventArgs e)
             {
-                if (DisconnectionEvent != null) DisconnectionEvent(Context, e);
+                DisconnectAction(Context, e);
 
                 yield break;
             }
 
-            public ServerBehaviour()
+
+            public InternalBehavior()
             {
                 Server.InitBehaviour(this);
+
+                ConnectionAction = Server.OnConnection;
+                MessageAction = Server.OnMessage;
+                DisconnectAction = Server.OnDisconnection;
             }
         }
+
+        [SerializeField]
+        protected ClientsManagerCore clients;
+        public ClientsManagerCore Clients { get { return clients; } }
 
         public override void Configure()
         {
@@ -132,12 +146,18 @@ namespace Game
 
             Application.runInBackground = true;
 
+            NetworkMessage.Configure();
+
+            clients.Configure();
+
             Core.SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
         }
 
         public override void Init()
         {
             base.Init();
+
+            clients.Init();
         }
 
         public virtual void Start()
@@ -148,7 +168,7 @@ namespace Game
             {
                 Server = new WebSocketServer(IPAddress.Any, port);
 
-                Server.AddWebSocketService<ServerBehaviour>("/");
+                Server.AddWebSocketService<InternalBehavior>("/");
 
                 Server.Log.Level = LogLevel.Error;
                 Server.Log.Output = (data, s) => { Debug.LogError(data.Message); };
@@ -161,16 +181,34 @@ namespace Game
             }
         }
 
-        
+        public event InternalBehavior.ContextOperationDelegate ConnectionEvent;
+        void OnConnection(WebSocketContext context)
+        {
+            if (ConnectionEvent != null) ConnectionEvent(context);
+        }
+
+        public event InternalBehavior.MessageDelegate MessageEvent;
+        void OnMessage(WebSocketContext context, MessageEventArgs args)
+        {
+            if (MessageEvent != null) MessageEvent(context, args);
+        }
+
+        public event InternalBehavior.DisconnectOperationDelegate DisconnectionEvent;
+        void OnDisconnection(WebSocketContext context, CloseEventArgs args)
+        {
+            if (DisconnectionEvent != null) DisconnectionEvent(context, args);
+        }
+
         public virtual void Stop()
         {
-            
+            if (!Active) return;
+
+            Server.Stop(CloseStatusCode.Normal, "Session Ended");
         }
         void OnApplicationQuit()
         {
             Stop();
         }
-
 
         public const string LocalHost = "127.0.0.1";
         public static string GetLANIP()
@@ -203,6 +241,8 @@ namespace Game
             new public const string MenuPath = ServerCore.MenuPath + "Modules/";
 
             public ServerCore Server { get { return Core.Server; } }
+
+            public InternalBehavior Behaviour { get { return Server.Behavior; } }
         }
     }
 }

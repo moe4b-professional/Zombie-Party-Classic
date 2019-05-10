@@ -36,7 +36,7 @@ namespace Game
 
         public List<Player> List { get; protected set; }
 
-        public virtual void Set(Player player)
+        public virtual void Add(Player player)
         {
             if (List.Contains(player))
                 throw new NotImplementedException();
@@ -56,53 +56,33 @@ namespace Game
             List.Remove(player);
         }
 
-        public static short PlayerControllerID { get { return Player.ControllerID; } }
-
         public Level Level { get { return Level.Instance; } }
         public LevelMenu Menu { get { return Level.Menu; } }
 
         public Core Core { get { return Core.Asset; } }
-        public NetworkCore Network { get { return Core.Server; } }
-
+        public ServerCore Server { get { return Core.Server; } }
 
         public virtual void Init()
         {
             ConstraintArea = Dependancy.Get<ConstraintArea>(gameObject);
 
             List = new List<Player>();
-
-            if (Network.Server.Active)
-                Network.Server.AddPlayerEvent.Event += OnAddPlayer;
         }
 
-
-        protected virtual void OnAddPlayer(NetworkMessage msg)
+        public virtual Player Spawn(Observer observer)
         {
-            msg.reader.SeekZero();
+            var instance = GameObject.Instantiate(prefab);
 
-            var addPlayerMsg = msg.ReadMessage<AddPlayerMessage>();
+            var player = instance.GetComponent<Player>();
 
-            if (addPlayerMsg.playerControllerId == PlayerControllerID)
-            {
-                var instance = GameObject.Instantiate(prefab);
+            instance.name = observer.Client.Name + " (" + player.GetType().Name + ")";
 
-                var player = instance.GetComponent<Player>();
+            player.Init(observer);
 
-                var observer = Level.Observers.Find(msg.conn.connectionId);
+            instance.transform.position = spawnPoints[observer.ID].position;
+            instance.transform.rotation = spawnPoints[observer.ID].rotation;
 
-                instance.name = Network.Players.Find(msg.conn.connectionId).Name + " (" + player.GetType().Name + ")";
-
-                player.Init(observer);
-
-                instance.transform.position = spawnPoints[observer.ID].position;
-                instance.transform.rotation = spawnPoints[observer.ID].rotation;
-            }
-        }
-
-
-        protected virtual void OnDestroy()
-        {
-            Network.Server.AddPlayerEvent.Event -= OnAddPlayer;
+            return player;
         }
     }
 }

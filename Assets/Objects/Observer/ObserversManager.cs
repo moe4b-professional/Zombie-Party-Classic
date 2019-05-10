@@ -17,9 +17,6 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
-
 namespace Game
 {
     public class ObserversManager : MonoBehaviour
@@ -30,19 +27,13 @@ namespace Game
 
         public List<Observer> List { get; protected set; }
 
-        public Observer Local { get; protected set; }
-
-        public virtual void Set(Observer observer)
+        public virtual void Add(Observer observer)
         {
-            if (observer.isLocalPlayer)
-                Local = observer;
-
             if (List.Contains(observer))
                 throw new NotImplementedException();
 
             List.Add(observer);
         }
-
         public virtual void Remove(Observer observer)
         {
             if (!List.Contains(observer))
@@ -51,61 +42,42 @@ namespace Game
             List.Remove(observer);
         }
 
-        public virtual Observer Find(int connectionID)
-        {
-            for (int i = 0; i < List.Count; i++)
-                if (List[i].NetworkIdentity.connectionToClient.connectionId == connectionID)
-                    return List[i];
-
-            return null;
-        }
-
-        public short PlayerControllerID { get { return 0; } }
-
         public Level Level { get { return Level.Instance; } }
         public LevelMenu Menu { get { return Level.Menu; } }
 
         public Core Core { get { return Core.Asset; } }
-        public NetworkCore Network { get { return Core.Server; } }
+        public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
 
 
         public virtual void Init()
         {
             List = new List<Observer>();
 
-            if (Network.Server.Active)
-                Network.Server.AddPlayerEvent.Event += OnAddPlayer;
+            Clients.DisconnectionEvent += OnDisconnnection;
         }
 
-
-        public virtual void Spawn()
+        void OnDisconnnection(Client client)
         {
-            ClientScene.AddPlayer(PlayerControllerID);
+            var observer = List.Find(x => x.Client == client);
+
+            if (observer != null)
+                Destroy(observer.gameObject);
         }
 
-
-        protected virtual void OnAddPlayer(NetworkMessage msg)
+        public virtual void Spawn(Client client)
         {
-            msg.reader.SeekZero();
+            var instance = GameObject.Instantiate(prefab);
 
-            var addPlayerMsg = msg.ReadMessage<AddPlayerMessage>();
+            var observer = instance.GetComponent<Observer>();
+            observer.Init(client);
 
-            if (addPlayerMsg.playerControllerId == PlayerControllerID)
-            {
-                var instance = GameObject.Instantiate(prefab);
-
-                var observer = instance.GetComponent<Observer>();
-
-                instance.name = Network.Players.Find(msg.conn.connectionId).Name + " (" + observer.GetType().Name + ")";
-
-                NetworkServer.AddPlayerForConnection(msg.conn, instance, PlayerControllerID);
-            }
+            instance.name = client.Name + " (" + observer.GetType().Name + ")";
         }
 
-
-        protected virtual void OnDestroy()
+        void OnDestroy()
         {
-            Network.Server.AddPlayerEvent.Event -= OnAddPlayer;
+            Clients.DisconnectionEvent -= OnDisconnnection;
         }
     }
 }

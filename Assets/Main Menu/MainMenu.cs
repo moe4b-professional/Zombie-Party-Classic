@@ -29,12 +29,8 @@ namespace Game
         public Menu Title { get { return title; } }
 
         [SerializeField]
-        protected ServerMainMenu server;
-        public ServerMainMenu Server { get { return server; } }
-
-        [SerializeField]
-        protected ClientMainMenu client;
-        public ClientMainMenu Client { get { return client; } }
+        protected StartMenu start;
+        public StartMenu Start { get { return start; } }
 
         [SerializeField]
         protected Popup popup;
@@ -44,5 +40,5 @@ namespace Game
         {
             Instance = this;
         }
-	}
+    }
 }

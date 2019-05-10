@@ -17,54 +17,74 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
+using Newtonsoft.Json;
 
 namespace Game
 {
-	public class ObserverInput : NetworkBehaviour, Observer.IReference
+	public class ObserverInput : MonoBehaviour, Observer.IReference
 	{
         public Vector2 Move { get; protected set; }
-        [Command]
-        protected virtual void CmdSetMove(Vector2 newValue)
-        {
-            this.Move = newValue;
-        }
 
         public Vector2 Look { get; protected set; }
-        [Command]
-        protected virtual void CmdSetLook(Vector2 newValue)
-        {
-            this.Look = newValue;
-        }
 
         public Core Core { get { return Core.Asset; } }
-        public NetworkCore Network { get { return Core.Server; } }
+        public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
 
-        public LevelMenu Menu { get { return LevelMenu.Instance; } }
-        public ClientHUDLevelMenu HUD { get { return Menu.Client.HUD; } }
+        public LevelMenu Menu { get { return Level.Instance.Menu; } }
 
         Observer observer;
 
         public virtual void Init(Observer observer)
         {
             this.observer = observer;
+
+            Clients.ClientNetworkMessageEvent.Add<InputMessage>(OnInput);
         }
 
-        protected virtual void Update()
+        void OnInput(Client client, NetworkMessage msg)
         {
-            if(isLocalPlayer)
-            {
-                if (Network.Client.Active)
-                {
-                    if(Network.Client.Active)
-                    {
-                        CmdSetMove(HUD.Move.Value);
+            var input = msg.To<InputMessage>();
 
-                        CmdSetLook(HUD.Look.Value);
-                    }
-                }
+            Move = input.Right;
+            Look = input.Left;
+        }
+    }
+
+    [NetworkMessage(10)]
+    public class InputMessage : NetworkMessage
+    {
+        [JsonProperty]
+        Vector2 left;
+        [JsonIgnore]
+        public Vector2 Left
+        {
+            get
+            {
+                return left;
             }
+        }
+
+        [JsonProperty]
+        Vector2 right;
+        [JsonIgnore]
+        public Vector2 Right
+        {
+            get
+            {
+                return right;
+            }
+        }
+
+        public override string ToString()
+        {
+            return right.ToString() + " : " + left.ToString();
+        }
+
+        public InputMessage(Vector2 right, Vector2 left)
+        {
+            this.right = right;
+            this.left = left;
         }
     }
 }

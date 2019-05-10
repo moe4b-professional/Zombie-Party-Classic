@@ -55,6 +55,8 @@ namespace Game
             var target = Vector3.forward * Input.Move.y +
                 Vector3.right * Input.Move.x;
 
+            target = Vector3.ClampMagnitude(target, 1f);
+
             target *= speed * Sprint.Multiplier;
             target.y = rigidbody.velocity.y;
 

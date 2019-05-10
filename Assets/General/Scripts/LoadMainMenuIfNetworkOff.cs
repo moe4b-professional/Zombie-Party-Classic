@@ -26,7 +26,7 @@ namespace Game
 
         public ScenesCore Scenes { get { return Core.Scenes; } }
 
-        public NetworkCore Network { get { return Core.Server; } }
+        public ServerCore Server { get { return Core.Server; } }
 
 		protected virtual void Awake()
         {

@@ -27,6 +27,10 @@ namespace Game
     {
         public string Name { get; protected set; }
 
+        public bool isReady;
+
+        public int ID { get; protected set; }
+
         public WebSocket Socket { get; protected set; }
         public virtual void Send(string data)
         {
@@ -42,9 +46,10 @@ namespace Game
             return Name;
         }
 
-        public Client(string name, WebSocketContext context)
+        public Client(string name, int ID, WebSocketContext context)
         {
             this.Name = name;
+            this.ID = ID;
             this.Socket = context.WebSocket;
         }
     }

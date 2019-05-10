@@ -19,16 +19,17 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    [DefaultExecutionOrder(ExecutionOrder)]
 	public class LevelMenu : MonoBehaviour
 	{
         public const int ExecutionOrder = Level.ExecutionOrder + 10;
 
-        public static LevelMenu Instance { get; protected set; }
+        [SerializeField]
+        protected Menu players;
+        public Menu Players { get { return players; } }
 
-        public ClientLevelMenu Client { get; protected set; }
-
-        public ServerLevelMenu Server { get; protected set; }
+        [SerializeField]
+        protected Menu _HUD;
+        public Menu HUD { get { return _HUD; } }
 
         [SerializeField]
         protected PopupLabel waveLabel;
@@ -40,18 +41,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
 
-        public NetworkCore Network { get { return Core.Server; } }
-
-        void Awake()
-        {
-            Instance = this;
-        }
-
-        public virtual void Configure()
-        {
-            Client = FindObjectOfType<ClientLevelMenu>();
-
-            Server = FindObjectOfType<ServerLevelMenu>();
-        }
+        public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
     }
 }

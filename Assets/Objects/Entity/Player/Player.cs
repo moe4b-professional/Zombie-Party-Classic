@@ -46,10 +46,10 @@ namespace Game
 
         public virtual void Init(Observer observer)
         {
-            Manager.Set(this);
+            Manager.Add(this);
 
             this.Observer = observer;
-            observer.Data.SetHealth(Health.Value);
+            observer.Data.UpdateHealth(Health);
 
             rigidbody = GetComponent<Rigidbody>();
 
@@ -76,12 +76,12 @@ namespace Game
 
         void OnHealthChanged(float value)
         {
-            Observer.Data.SetHealth(Health.Value);
+            Observer.Data.UpdateHealth(Health);
         }
 
         void OnDamaged(Entity damager, float value)
         {
-            Observer.Data.InvokeDamage(value);
+            
         }
 
         void OnDeath(Entity damager)

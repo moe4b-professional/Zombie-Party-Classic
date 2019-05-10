@@ -18,8 +18,8 @@ MonoBehaviour:
     asset: {fileID: 102900000, guid: 3789c2fca7958f74d81463a1ef0ab0e6, type: 3}
     name: Level
   client:
-    asset: {fileID: 102900000, guid: 6059f84ecb05f84418a616ff8caedc01, type: 3}
-    name: Client
+    asset: {fileID: 0}
+    name: 
   server:
-    asset: {fileID: 102900000, guid: 229902f3808a72449a46c72475e732dd, type: 3}
-    name: Server
+    asset: {fileID: 0}
+    name: 

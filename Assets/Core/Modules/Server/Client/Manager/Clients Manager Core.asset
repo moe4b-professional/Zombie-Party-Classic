@@ -8,8 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a276a22b220cca844b06e0a1ad54ebcf, type: 3}
-  m_Name: Core
+  m_Script: {fileID: 11500000, guid: afc01266fc3883445b8241c2ef7b2544, type: 3}
+  m_Name: Clients Manager Core
   m_EditorClassIdentifier: 
-  scenes: {fileID: 11400000, guid: b22ffcf420c5f4641976da52c6b49e90, type: 2}
-  server: {fileID: 11400000, guid: 93bb1b1ce57c76a4e80c6a29088c4389, type: 2}

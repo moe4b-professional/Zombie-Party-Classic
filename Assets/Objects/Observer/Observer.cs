@@ -17,20 +17,19 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
-
 namespace Game
 {
     [RequireComponent(typeof(ObserverInput))]
-	public class Observer : NetworkBehaviour
+	public class Observer : MonoBehaviour
     {
         public Level Level { get { return Level.Instance; } }
         public virtual ObserversManager Manager { get { return Level.Observers; } }
 
         public Core Core { get { return Core.Asset; } }
-        public NetworkCore Network { get { return Core.Server; } }
+        public ServerCore Server { get { return Core.Server; } }
 
-        public NetworkIdentity NetworkIdentity { get; protected set; }
+        public Client Client { get; protected set; }
+        public int ID { get { return Client.ID; } }
 
         public ObserverInput Input { get; protected set; }
 
@@ -41,41 +40,19 @@ namespace Game
 
         }
 
-        public int ID { get; set; }
-        protected virtual void SetID()
+        public virtual void Init(Client client)
         {
-            if (isLocalPlayer)
-            {
-                ID = Network.Client.ID;
-            }
-
-            if (isServer)
-            {
-                ID = Network.Players.GetIndexOf(connectionToClient.connectionId);
-            }
-        }
-
-        protected virtual void Awake()
-        {
-            NetworkIdentity = GetComponent<NetworkIdentity>();
-        }
-
-        protected virtual void Start()
-        {
-            SetID();
+            this.Client = client;
 
             Input = GetComponent<ObserverInput>();
 
             Data = GetComponent<ObserverData>();
 
-            Manager.Set(this);
+            Manager.Add(this);
 
             References.Init(this);
 
-            if (isLocalPlayer)
-            {
-                ClientScene.AddPlayer(Player.ControllerID);
-            }
+            Level.Players.Spawn(this);
         }
 
         public event Action DestroyEvent;

@@ -30,14 +30,6 @@ namespace Game
         protected GameScene level;
         public GameScene Level { get { return level; } }
 
-        [SerializeField]
-        protected GameScene client;
-        public GameScene Client { get { return client; } }
-
-        [SerializeField]
-        protected GameScene server;
-        public GameScene Server { get { return server; } }
-
         public virtual void Load(string name)
         {
             SceneManager.LoadScene(name);

@@ -25,6 +25,12 @@ namespace Game
     {
         public static bool IsValid(string text)
         {
+            if (string.IsNullOrEmpty(text)) return false;
+
+            int count = text.Count(character => character == ':');
+
+            if (count > 1) return false;
+
             for (int i = 0; i < text.Length; i++)
             {
                 if (text[i] == ':')

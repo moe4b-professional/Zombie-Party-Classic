@@ -29,32 +29,8 @@ namespace Game
         {
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
-            if (Application.isMobilePlatform || !Application.isEditor)
-                ProgressToClient();
-            else
-                ProgressToServer();
-        }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.C))
-                ProgressToClient();
-            else if (Input.GetKeyDown(KeyCode.S))
-                ProgressToServer();
-        }
-
-        void ProgressToClient()
-        {
-            MainMenu.Client.Visible = true;
-
             Visible = false;
-        }
-
-        void ProgressToServer()
-        {
-            MainMenu.Server.Visible = true;
-
-            Visible = false;
+            MainMenu.Start.Visible = true;
         }
     }
 }

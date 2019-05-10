@@ -17,11 +17,11 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 namespace Game
 {
-	public class ObserverData : NetworkBehaviour, Observer.IReference
+	public class ObserverData : MonoBehaviour, Observer.IReference
     {
         public Level Level { get { return Level.Instance; } }
 
@@ -34,44 +34,35 @@ namespace Game
             this.observer = observer;
         }
 
-        #region Health
-        [SyncVar(hook = "OnHealthChanged")]
-        protected float health;
-        public float Health { get { return health; } }
-
-        public const float MaxHealth = 100f;
-
-        [Server]
-        public virtual void SetHealth(float value)
+        //TODO implement health sync
+        public virtual void UpdateHealth(EntityHealth health)
         {
-            health = value;
+
+        }
+    }
+
+    [NetworkMessage(11)]
+    public class HealthMessage : NetworkMessage
+    {
+        [JsonProperty]
+        float value;
+        [JsonIgnore]
+        public float Value { get { return value; } }
+
+        [JsonProperty]
+        float max;
+        [JsonIgnore]
+        public float Max { get { return max; } }
+
+        public override string ToString()
+        {
+            return value + "/" + max;
         }
 
-        public event Action<float> HealthChangeEvent;
-        protected virtual void OnHealthChanged(float value)
+        public HealthMessage(float value, float max)
         {
-            health = value;
-
-            if(isLocalPlayer)
-                Menu.Client.HUD.HealthBar.Value = value / MaxHealth;
-
-            if (HealthChangeEvent != null) HealthChangeEvent(health);
+            this.value = value;
+            this.max = max;
         }
-
-        [Server]
-        public virtual void InvokeDamage(float value)
-        {
-            RpcDamage(value);
-        }
-
-        [ClientRpc]
-        protected virtual void RpcDamage(float value)
-        {
-#if UNITY_ANDROID
-            if(isLocalPlayer)
-                Handheld.Vibrate();
-#endif
-        }
-#endregion
     }
 }
