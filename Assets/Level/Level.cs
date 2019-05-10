@@ -96,7 +96,10 @@ namespace Game
                 //TODO
                 Menu.Players.Visible = false;
                 Menu.HUD.Visible = true;
+
                 SpawnAllClients();
+
+                Spawner.Begin();
             }
         }
 

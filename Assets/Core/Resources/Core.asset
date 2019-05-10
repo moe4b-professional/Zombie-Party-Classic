@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenes: {fileID: 11400000, guid: b22ffcf420c5f4641976da52c6b49e90, type: 2}
   server: {fileID: 11400000, guid: 93bb1b1ce57c76a4e80c6a29088c4389, type: 2}
+  webServer: {fileID: 11400000, guid: ab042e6ff2687ab488296ec7a9eb7735, type: 2}

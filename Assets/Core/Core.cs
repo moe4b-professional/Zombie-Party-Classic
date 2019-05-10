@@ -37,10 +37,15 @@ namespace Game
         protected ServerCore server;
         public ServerCore Server { get { return server; } }
 
+        [SerializeField]
+        protected WebServerCore webServer;
+        public WebServerCore WebServer { get { return webServer; } }
+
         public virtual void ForEachModule(Action<Core.Module> action)
         {
             action(scenes);
             action(server);
+            action(webServer);
         }
 
         public abstract class ModuleBase : ScriptableObject
