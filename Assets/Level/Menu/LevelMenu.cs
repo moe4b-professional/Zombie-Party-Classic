@@ -24,8 +24,8 @@ namespace Game
         public const int ExecutionOrder = Level.ExecutionOrder + 10;
 
         [SerializeField]
-        protected Menu players;
-        public Menu Players { get { return players; } }
+        protected Menu initial;
+        public Menu Initial { get { return initial; } }
 
         [SerializeField]
         protected Menu _HUD;

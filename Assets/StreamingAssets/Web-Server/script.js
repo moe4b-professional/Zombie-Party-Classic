@@ -22,7 +22,7 @@ function getURI()
 
 window.addEventListener("load", onLoad, false);
 function onLoad() {
-    console.log(address);
+
 }
 
 addEventListener("inputChanged", onInputChanged);

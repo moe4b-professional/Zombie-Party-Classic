@@ -207,9 +207,9 @@ namespace Game
                 Debug.LogWarning("WebSocket: " + context.UserEndPoint + " disconnected without getting registered as a client, most likely the client didn't send it's name");
             else
             {
-                if (DisconnectionEvent != null) DisconnectionEvent(client);
-
                 List.Remove(client);
+
+                if (DisconnectionEvent != null) DisconnectionEvent(client);
             }
         }
     }

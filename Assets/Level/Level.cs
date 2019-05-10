@@ -72,7 +72,7 @@ namespace Game
             Clients.ReadyStateChangedEvent += OnClientReadyStateChanged;
             Clients.DisconnectionEvent += OnClientDisconnection;
 
-            Menu.Players.Visible = true;
+            Menu.Initial.Visible = true;
             Menu.HUD.Visible = false;
         }
 
@@ -94,7 +94,7 @@ namespace Game
                 Clients.DisconnectionEvent -= OnClientDisconnection;
 
                 //TODO
-                Menu.Players.Visible = false;
+                Menu.Initial.Visible = false;
                 Menu.HUD.Visible = true;
 
                 SpawnAllClients();

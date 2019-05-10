@@ -53,15 +53,13 @@ namespace Game
             Mimes.Configure();
 
             Core.SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
-
-            Start();
         }
 
         public void Start()
         {
             server = new HttpServer();
 
-            server.EndPoint = new IPEndPoint(IPAddress.Any, 7000);
+            server.EndPoint = new IPEndPoint(IPAddress.Any, port);
             server.RequestReceived += OnRequest;
 
             server.Start();
@@ -118,7 +116,7 @@ namespace Game
             }
         }
 
-        void Stop()
+        public void Stop()
         {
             if (!Active) return;
 

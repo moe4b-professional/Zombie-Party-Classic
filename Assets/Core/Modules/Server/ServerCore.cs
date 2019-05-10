@@ -140,6 +140,8 @@ namespace Game
         protected ClientsManagerCore clients;
         public ClientsManagerCore Clients { get { return clients; } }
 
+        public WebServerCore WebServer { get { return Core.WebServer; } }
+
         public override void Configure()
         {
             base.Configure();
@@ -166,7 +168,7 @@ namespace Game
 
             try
             {
-                Server = new WebSocketServer(IPAddress.Any, port);
+                Server = new WebSocketServer(IPAddress.Parse(Address), port);
 
                 Server.AddWebSocketService<InternalBehavior>("/");
 
@@ -179,6 +181,8 @@ namespace Game
             {
                 Debug.LogError("Error when starting server, message: " + e.Message);
             }
+
+            WebServer.Start();
         }
 
         public event InternalBehavior.ContextOperationDelegate ConnectionEvent;
@@ -201,9 +205,13 @@ namespace Game
 
         public virtual void Stop()
         {
-            if (!Active) return;
+            if (Active)
+            {
+                Server.Stop(CloseStatusCode.Normal, "Session Ended");
+            }
 
-            Server.Stop(CloseStatusCode.Normal, "Session Ended");
+            if (WebServer.Active)
+                WebServer.Stop();
         }
         void OnApplicationQuit()
         {
@@ -213,7 +221,7 @@ namespace Game
         public const string LocalHost = "127.0.0.1";
         public static string GetLANIP()
         {
-            var interfaceTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Wireless80211 };
+            var interfaceTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Wireless80211, NetworkInterfaceType.Ethernet };
 
             foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
