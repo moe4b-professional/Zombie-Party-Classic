@@ -39,10 +39,10 @@ namespace Game
         {
             this.observer = observer;
 
-            Clients.ClientNetworkMessageEvent.Add<InputMessage>(OnInput);
+            Clients.ClientNetworkMessageEvent.Add<InputMessage>(observer.Client, OnInput);
         }
 
-        void OnInput(Client client, NetworkMessage msg)
+        void OnInput(NetworkMessage msg)
         {
             var input = msg.To<InputMessage>();
 

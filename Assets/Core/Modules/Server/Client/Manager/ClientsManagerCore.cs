@@ -91,46 +91,57 @@ namespace Game
         public NetworkMessageDispatcher ClientNetworkMessageEvent { get; protected set; }
         public class NetworkMessageDispatcher
         {
-            public delegate void Delegate(Client client, NetworkMessage msg);
+            public delegate void Delegate(NetworkMessage msg);
 
             public List<Listener> Listeners { get; protected set; }
             public class Listener
             {
                 public int ID { get; private set; }
 
+                public Client Client { get; private set; }
+
                 public Delegate Callback { get; private set; }
 
-                public void Invoke(Client client, NetworkMessage msg)
+                public void Invoke(NetworkMessage msg)
                 {
-                    Callback.Invoke(client, msg);
+                    Callback.Invoke(msg);
                 }
 
-                public Listener(int ID, Delegate callback)
+                public virtual bool Compare(int ID, Client client, Delegate callback)
+                {
+                    return this.ID == ID && this.Client == client && this.Callback == callback;
+                }
+
+                public Listener(int ID, Client client, Delegate callback)
                 {
                     this.ID = ID;
+                    this.Client = client;
                     this.Callback = callback;
                 }
             }
 
-            public void Add(int ID, Delegate callback)
+            public delegate void GlobalDelegate(int ID, Client client, NetworkMessage msg);
+            public event GlobalDelegate GlobalEvent;
+
+            public void Add(int ID, Client target, Delegate callback)
             {
                 for (int i = 0; i < Listeners.Count; i++)
-                    if (Listeners[i].ID == ID && Listeners[i].Callback == callback)
+                    if (Listeners[i].Compare(ID, target, callback))
                         throw new ArgumentException("Listener with ID: " + ID + " And Callback: " + callback.Method.Name + " Already Registered");
 
-                Listeners.Add(new Listener(ID, callback));
+                Listeners.Add(new Listener(ID, target, callback));
             }
-            public void Add<TNetworkMessage>(Delegate callback)
+            public void Add<TNetworkMessage>(Client target, Delegate callback)
                 where TNetworkMessage : NetworkMessage
             {
-                Add(NetworkMessage.GetID<TNetworkMessage>(), callback);
+                Add(NetworkMessage.GetID<TNetworkMessage>(), target, callback);
             }
 
-            public void Remove(int ID, Delegate callback)
+            public void Remove(int ID, Client target, Delegate callback)
             {
                 for (int i = 0; i < Listeners.Count; i++)
                 {
-                    if (Listeners[i].ID == ID && Listeners[i].Callback == callback)
+                    if (Listeners[i].Compare(ID, target, callback))
                     {
                         Listeners.RemoveAt(i);
                         return;
@@ -139,24 +150,29 @@ namespace Game
 
                 throw new ArgumentException("No Listener with ID: " + ID + " And Callback: " + callback.Method.Name + " Was Found");
             }
-            public void Remove<TNetworkMessage>(Delegate callback)
+            public void Remove<TNetworkMessage>(Client target, Delegate callback)
                 where TNetworkMessage : NetworkMessage
             {
-                Remove(NetworkMessage.GetID<TNetworkMessage>(), callback);
+                Remove(NetworkMessage.GetID<TNetworkMessage>(), target, callback);
+            }
+            public void RemoveAll(Client client)
+            {
+                Listeners.RemoveAll(x => x.Client == client);
             }
 
             public void Invoke(Client client, NetworkMessage msg)
             {
                 for (int i = 0; i < Listeners.Count; i++)
-                    if (Listeners[i].ID == msg.ID)
-                        Listeners[i].Invoke(client, msg);
+                    if (Listeners[i].ID == msg.ID && Listeners[i].Client == client)
+                        Listeners[i].Invoke(msg);
+
+                if (GlobalEvent != null) GlobalEvent(msg.ID, client, msg);
             }
 
             public virtual void Clear()
             {
                 Listeners.Clear();
             }
-
 
             public NetworkMessageDispatcher()
             {
@@ -208,6 +224,8 @@ namespace Game
             else
             {
                 List.Remove(client);
+
+                ClientNetworkMessageEvent.RemoveAll(client);
 
                 if (DisconnectionEvent != null) DisconnectionEvent(client);
             }
