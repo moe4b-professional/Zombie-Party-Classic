@@ -40,7 +40,6 @@ namespace Game
                 InvokeChange();
             }
         }
-
         public event Action<float> OnValueChanged;
 
         [SerializeField]
@@ -62,13 +61,12 @@ namespace Game
                 InvokeChange();
             }
         }
-
         public event Action<float> OnMaxValueChanged;
 
-        public event Action OnChanged;
+        public event Action OnChange;
         protected virtual void InvokeChange()
         {
-            if (OnChanged != null) OnChanged();
+            if (OnChange != null) OnChange();
         }
 
         protected virtual void Reset()
@@ -76,31 +74,14 @@ namespace Game
             Value = MaxValue;
         }
 
-        public delegate void DamageDelegate(Entity damager, float value);
-        public event DamageDelegate OnDamage;
-        public virtual void Damage(Entity damager, float value)
-        {
-            if (this.Value <= 0f) return;
-
-            this.Value -= value;
-
-            if (OnDamage != null) OnDamage(damager, value);
-
-            if (this.Value == 0f)
-                Death(damager);
-        }
-
-        public delegate void DeathDelegate(Entity damager);
-        public event DeathDelegate OnDeath;
-        protected virtual void Death(Entity Damager)
-        {
-            if (OnDeath != null)
-                OnDeath(Damager);
-        }
-
         public virtual void Add(float value)
         {
             this.Value += value;
+        }
+
+        public virtual void Remove(float value)
+        {
+            this.Value -= value;
         }
     }
 }

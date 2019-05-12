@@ -17,22 +17,22 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.EventSystems;
-
 namespace Game
 {
-	public class HoldUIInput : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+	public class LevelEndStage : LevelStage
 	{
-        public bool Value { get; protected set; }
+        public override LevelStage Next { get { return null; } }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public override void Begin()
         {
-            Value = true;
-        }
+            base.Begin();
 
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            Value = false;
+            Level.Spawner.Stop();
+
+            Menu.HUD.Visible = false;
+            Menu.End.Visible = true;
+
+            End();
         }
     }
 }

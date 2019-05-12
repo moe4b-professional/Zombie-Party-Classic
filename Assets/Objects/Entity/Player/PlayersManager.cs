@@ -34,7 +34,12 @@ namespace Game
 
         public ConstraintArea ConstraintArea { get; protected set; }
 
+
         public List<Player> List { get; protected set; }
+        public Player Find(Client client)
+        {
+            return List.Find(x => x.Client == client);
+        }
 
         public virtual void Add(Player player)
         {
@@ -46,6 +51,7 @@ namespace Game
             ConstraintArea.AddTarget(player.transform);
         }
 
+        public event Action<Player> OnRemove;
         public virtual void Remove(Player player)
         {
             if (!List.Contains(player))
@@ -54,13 +60,17 @@ namespace Game
             ConstraintArea.RemoveTarget(player.transform);
 
             List.Remove(player);
+
+            if (OnRemove != null) OnRemove(player);
         }
+
 
         public Level Level { get { return Level.Instance; } }
         public LevelMenu Menu { get { return Level.Menu; } }
 
         public Core Core { get { return Core.Asset; } }
         public ServerCore Server { get { return Core.Server; } }
+
 
         public virtual void Init()
         {

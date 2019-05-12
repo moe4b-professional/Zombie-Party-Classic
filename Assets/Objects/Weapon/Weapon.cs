@@ -28,7 +28,7 @@ namespace Game
         public Entity Owner { get; protected set; }
         public void Damage(Entity target, float damage)
         {
-            target.Health.Damage(Owner, damage);
+            target.TakeDamage(Owner, damage);
         }
 
 

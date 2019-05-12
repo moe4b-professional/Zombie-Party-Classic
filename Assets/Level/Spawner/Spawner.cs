@@ -64,7 +64,7 @@ namespace Game
 
         public Level Level { get { return Level.Instance; } }
         public LevelMenu Menu { get { return Level.Menu; } }
-        public PopupLabel PopupLabel { get { return Menu.WaveLabel; } }
+        public PopupLabel PopupLabel { get { return Menu.PopupLabel; } }
 
         public void Begin()
         {
@@ -94,7 +94,7 @@ namespace Game
 
             var deathCount = 0;
 
-            EntityHealth.DeathDelegate deathAction = (Entity damager) =>
+            Entity.DeathDelegate deathAction = (Entity damager) =>
             {
                 deathCount++;
             };
@@ -112,7 +112,7 @@ namespace Game
         }
 
         public float spawnDelay = 1.5f;
-        protected virtual IEnumerator SpawnProcedure(EntityHealth.DeathDelegate deathAction)
+        protected virtual IEnumerator SpawnProcedure(Entity.DeathDelegate deathAction)
         {
             var prefab = GetPrefab();
 
@@ -122,7 +122,7 @@ namespace Game
             var instance = Instantiate(prefab, position, rotation);
 
             var entity = instance.GetComponent<Entity>();
-            entity.Health.OnDeath += deathAction;
+            entity.OnDeath += deathAction;
 
             yield return new WaitForSeconds(spawnDelay / waveNumber);
         }

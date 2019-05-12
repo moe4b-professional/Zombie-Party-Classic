@@ -64,8 +64,6 @@ namespace Game
                 else
                     yield return Chase();
             }
-
-            OnDeath();
         }
 
 
@@ -152,7 +150,7 @@ namespace Game
 
                 var entity = colliders[i].attachedRigidbody.GetComponent<Entity>();
 
-                entity.Health.Damage(this, damage);
+                entity.TakeDamage(this, damage);
             }
         }
         #endregion
@@ -166,8 +164,10 @@ namespace Game
 
 
 
-        protected virtual void OnDeath()
+        protected override void Death(Entity Damager)
         {
+            base.Death(Damager);
+
             Agent.isStopped = true;
 
             Animator.enabled = false;

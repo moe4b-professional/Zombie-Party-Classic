@@ -28,23 +28,57 @@ namespace Game
 
 
         public LevelMenu Menu { get; protected set; }
-
+        protected virtual void InitMenu()
+        {
+            Menu = FindObjectOfType<LevelMenu>();
+            Menu.Init();
+        }
         public Popup Popup { get { return Menu.Popup; } }
 
 
         public LevelPause Pause { get; protected set; }
+        protected virtual void InitPause()
+        {
+            Pause = FindObjectOfType<LevelPause>();
+            Pause.Init();
+        }
 
+        public LevelStartStage StartStage { get; protected set; }
+        public LevelPlayStage PlayStage { get; protected set; }
+        public LevelEndStage EndStage { get; protected set; }
+        protected virtual void InitStages()
+        {
+            StartStage = FindObjectOfType<LevelStartStage>();
+            StartStage.Init();
+
+            PlayStage = FindObjectOfType<LevelPlayStage>();
+            PlayStage.Init();
+
+            EndStage = FindObjectOfType<LevelEndStage>();
+            EndStage.Init();
+        }
 
         public ObserversManager Observers { get; protected set; }
+        protected virtual void InitObservers()
+        {
+            Observers = FindObjectOfType<ObserversManager>();
+            Observers.Init();
+        }
 
         public PlayersManager Players { get; protected set; }
-
+        protected virtual void InitPlayers()
+        {
+            Players = FindObjectOfType<PlayersManager>();
+            Players.Init();
+        }
 
         public Spawner Spawner { get; protected set; }
-
+        protected virtual void InitSpawner()
+        {
+            Spawner = FindObjectOfType<Spawner>();
+        }
 
         public Core Core { get { return Core.Asset; } }
-
         public ServerCore Server { get { return Core.Server; } }
         public ClientsManagerCore Clients { get { return Server.Clients; } }
 
@@ -52,69 +86,28 @@ namespace Game
         {
             Instance = this;
 
-            Menu = FindObjectOfType<LevelMenu>();
+            InitMenu();
 
-            Observers = FindObjectOfType<ObserversManager>();
-            Observers.Init();
+            InitObservers();
 
-            Players = FindObjectOfType<PlayersManager>();
-            Players.Init();
+            InitPlayers();
 
-            Spawner = FindObjectOfType<Spawner>();
+            InitSpawner();
 
-            Pause = FindObjectOfType<LevelPause>();
-            Pause.Init();
+            InitStages();
+
+            InitPause();
         }
 
 		void Start()
         {
-
-            Clients.ReadyStateChangedEvent += OnClientReadyStateChanged;
-            Clients.DisconnectionEvent += OnClientDisconnection;
-
-            Menu.Initial.Visible = true;
-            Menu.HUD.Visible = false;
+            EndStage.OnEnd += OnEnd;
+            StartStage.Begin();
         }
 
-        void OnClientReadyStateChanged(Client client)
+        protected virtual void OnEnd()
         {
-            CheckReadiness();
-        }
-
-        void OnClientDisconnection(Client client)
-        {
-            CheckReadiness();
-        }
-
-        void CheckReadiness()
-        {
-            if (Clients.Count > 0 && Clients.AllReady)
-            {
-                Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
-                Clients.DisconnectionEvent -= OnClientDisconnection;
-
-                //TODO
-                Menu.Initial.Visible = false;
-                Menu.HUD.Visible = true;
-
-                SpawnAllClients();
-
-                Spawner.Begin();
-            }
-        }
-
-        void SpawnAllClients()
-        {
-            for (int i = 0; i < Clients.List.Count; i++)
-            {
-                Observers.Spawn(Clients.List[i]);
-            }
-        }
-
-        void OnDestroy()
-        {
-            Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
-            Clients.DisconnectionEvent -= OnClientDisconnection;
+            Debug.Log("Level Ended");
         }
     }
 }

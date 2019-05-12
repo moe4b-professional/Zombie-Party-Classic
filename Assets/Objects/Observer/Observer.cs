@@ -27,6 +27,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
 
         public Client Client { get; protected set; }
         public int ID { get { return Client.ID; } }
@@ -53,14 +54,6 @@ namespace Game
             References.Init(this);
 
             Level.Players.Spawn(this);
-        }
-
-        public event Action DestroyEvent;
-        void OnDestroy()
-        {
-            Manager.Remove(this);
-
-            if (DestroyEvent != null) DestroyEvent();
         }
     }
 }

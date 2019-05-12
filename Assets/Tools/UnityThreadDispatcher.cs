@@ -37,10 +37,16 @@ public class UnityThreadDispatcher : MonoBehaviour
         Queue = new Queue<IEnumerator>();
     }
 
-
     public static void Add(IEnumerator procedure)
     {
-        Instance.Queue.Enqueue(procedure);
+        Instance.AddInternal(procedure);
+    }
+    void AddInternal(IEnumerator procedure)
+    {
+        lock (Queue)
+        {
+            Queue.Enqueue(procedure);
+        }
     }
 
     void Update()
@@ -53,7 +59,6 @@ public class UnityThreadDispatcher : MonoBehaviour
             }
         }
     }
-
 
     void OnDestroy()
     {

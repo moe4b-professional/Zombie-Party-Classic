@@ -30,6 +30,24 @@ namespace Game
 	{
         public List<Client> List { get; protected set; }
 
+        protected virtual int GetVacantID()
+        {
+            for (int i = 0; i < Server.Size; i++)
+            {
+                if (Contains(i)) continue;
+                else return i;
+            }
+
+            throw new NotImplementedException("No More Vacant Slots Left To Populate");
+        }
+        protected virtual bool Contains(int ID)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].ID == ID) return true;
+
+            return false;
+        }
+
         public int Count { get { return List.Count; } }
 
         public bool AllReady
@@ -81,7 +99,7 @@ namespace Game
         public event ClientOperationDelegate JoinEvent;
         void OnJoined(WebSocketContext context, string name)
         {
-            var client = new Client(name, List.Count, context);
+            var client = new Client(name, GetVacantID(), context);
 
             List.Add(client);
 

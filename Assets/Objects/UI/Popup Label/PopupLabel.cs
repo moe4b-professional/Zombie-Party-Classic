@@ -19,9 +19,10 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof(Animator))]
     public class PopupLabel : MonoBehaviour, Initializer.Interface
     {
+        [SerializeField]
         Text label;
         public Text Label { get { return label; } }
 
@@ -37,19 +38,12 @@ namespace Game
             }
         }
 
+        Animator animator;
+
         public void Init()
         {
-            label = GetComponent<Text>();
+            animator = GetComponent<Animator>();
         }
-
-        [SerializeField]
-        protected float duration = 3f;
-        public float Duration { get { return duration; } }
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        protected float size = 0.7f;
-        public float Size { get { return size; } }
 
         public void Show(string text)
         {
@@ -63,23 +57,10 @@ namespace Game
             StopAllCoroutines();
 
             gameObject.SetActive(true);
-
-            StartCoroutine(Procedure());
         }
 
-        IEnumerator Procedure()
+        public void Hide()
         {
-            var time = 0f;
-
-            while(time != duration)
-            {
-                time = Mathf.MoveTowards(time, duration, Time.deltaTime);
-
-                transform.localScale = Vector3.one * Mathf.Lerp(size, 1f, time / duration);
-
-                yield return null;
-            }
-
             gameObject.SetActive(false);
         }
 	}

@@ -48,15 +48,12 @@ namespace Game
         {
             _state = value;
 
+            Time.timeScale = State == LevelPauseState.Full ? 0f : 1f;
+
             if (OnStateChange != null) OnStateChange(_state);
         }
 
         public virtual void Init()
-        {
-
-        }
-
-        public virtual void Update()
         {
 
         }

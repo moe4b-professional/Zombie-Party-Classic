@@ -49,7 +49,6 @@ namespace Game
         public ServerCore Server { get { return Core.Server; } }
         public ClientsManagerCore Clients { get { return Server.Clients; } }
 
-
         public virtual void Init()
         {
             List = new List<Observer>();
@@ -59,10 +58,21 @@ namespace Game
 
         void OnDisconnnection(Client client)
         {
-            var observer = List.Find(x => x.Client == client);
+            var player = Level.Players.Find(client);
 
-            if (observer != null)
-                Destroy(observer.gameObject);
+            if (player != null) player.Suicide();
+
+            for (int i = 0; i < List.Count; i++)
+            {
+                if(List[i].Client == client)
+                {
+                    Destroy(List[i].gameObject);
+
+                    Remove(List[i]);
+
+                    break;
+                }
+            }
         }
 
         public virtual void Spawn(Client client)

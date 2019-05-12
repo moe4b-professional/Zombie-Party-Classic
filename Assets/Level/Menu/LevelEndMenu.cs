@@ -19,21 +19,19 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class QuitLevelOperation : Operation.Behaviour
+	public class LevelEndMenu : Menu
 	{
         public Level Level { get { return Level.Instance; } }
 
-        public Core Core { get { return Core.Asset; } }
-        public ScenesCore Scenes { get { return Core.Scenes; } }
+        [SerializeField]
+        protected Text wave;
+        public Text Wave { get { return wave; } }
 
-        public override void Execute()
+        public override void Show()
         {
-            if (Level.Pause.State != LevelPauseState.None)
-                Level.Pause.State = LevelPauseState.None;
+            base.Show();
 
-            Core.Server.Stop();
-
-            Scenes.Load(Scenes.MainMenu.Name);
+            wave.text = Level.Spawner.WaveNumber + " Waves Survived";
         }
     }
 }

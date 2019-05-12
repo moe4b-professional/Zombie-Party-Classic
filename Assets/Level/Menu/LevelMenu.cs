@@ -21,8 +21,6 @@ namespace Game
 {
 	public class LevelMenu : MonoBehaviour
 	{
-        public const int ExecutionOrder = Level.ExecutionOrder + 10;
-
         [SerializeField]
         protected Menu initial;
         public Menu Initial { get { return initial; } }
@@ -32,8 +30,13 @@ namespace Game
         public Menu HUD { get { return _HUD; } }
 
         [SerializeField]
-        protected PopupLabel waveLabel;
-        public PopupLabel WaveLabel { get { return waveLabel; } }
+        protected LevelEndMenu end;
+        public LevelEndMenu End { get { return end; } }
+
+        [SerializeField]
+        protected PopupLabel popupLabel;
+
+        public PopupLabel PopupLabel { get { return popupLabel; } }
 
         [SerializeField]
         protected Popup popup;
@@ -43,5 +46,10 @@ namespace Game
 
         public ServerCore Server { get { return Core.Server; } }
         public ClientsManagerCore Clients { get { return Server.Clients; } }
+
+        public virtual void Init()
+        {
+
+        }
     }
 }

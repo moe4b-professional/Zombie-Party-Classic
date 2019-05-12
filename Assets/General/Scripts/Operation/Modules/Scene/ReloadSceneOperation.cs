@@ -19,21 +19,11 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class QuitLevelOperation : Operation.Behaviour
+	public class ReloadSceneOperation : Operation.Behaviour
 	{
-        public Level Level { get { return Level.Instance; } }
-
-        public Core Core { get { return Core.Asset; } }
-        public ScenesCore Scenes { get { return Core.Scenes; } }
-
         public override void Execute()
         {
-            if (Level.Pause.State != LevelPauseState.None)
-                Level.Pause.State = LevelPauseState.None;
-
-            Core.Server.Stop();
-
-            Scenes.Load(Scenes.MainMenu.Name);
+            SceneManager.LoadScene(gameObject.scene.name);
         }
     }
 }

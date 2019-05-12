@@ -72,6 +72,7 @@ namespace Game
         public class InternalBehavior : WebSocketBehavior
         {
             public ServerCore Server { get { return Core.Asset.Server; } }
+            public ClientsManagerCore Clients { get { return Server.Clients; } }
 
             public delegate void ContextOperationDelegate(WebSocketContext context);
 
@@ -207,7 +208,9 @@ namespace Game
         {
             if (Active)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 Server.Stop(CloseStatusCode.Normal, "Session Ended");
+#pragma warning restore CS0618 // Type or member is obsolete
             }
 
             if (WebServer.Active)

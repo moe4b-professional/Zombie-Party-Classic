@@ -34,5 +34,32 @@ namespace Game
         {
 
         }
+
+        public delegate void DamageDelegate(Entity damager, float value);
+        public event DamageDelegate OnTookDamage;
+        public virtual void TakeDamage(Entity damager, float value)
+        {
+            if (Health.Value <= 0f) return;
+
+            Health.Value -= value;
+
+            if (OnTookDamage != null) OnTookDamage(damager, value);
+
+            if (Health.Value == 0f)
+                Death(damager);
+        }
+
+        public delegate void DeathDelegate(Entity damager);
+        public event DeathDelegate OnDeath;
+        protected virtual void Death(Entity Damager)
+        {
+            if (OnDeath != null)
+                OnDeath(Damager);
+        }
+
+        public virtual void Suicide()
+        {
+            this.TakeDamage(this, Health.Value);
+        }
     }
 }

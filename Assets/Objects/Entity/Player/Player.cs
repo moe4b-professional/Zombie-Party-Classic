@@ -39,6 +39,7 @@ namespace Game
         public RagdollController Ragdoll { get; protected set; }
 
         public Observer Observer { get; protected set; }
+        public Client Client { get { return Observer.Client; } }
         public ObserverInput Input { get { return Observer.Input; } }
 
         public Level Level { get { return Level.Instance; } }
@@ -63,10 +64,6 @@ namespace Game
             References.Init(this);
 
             Health.OnValueChanged += OnHealthChanged;
-            Health.OnDamage += OnDamaged;
-            Health.OnDeath += OnDeath;
-
-            observer.DestroyEvent += OnObserverDestroyed;
         }
 
         void Update()
@@ -79,29 +76,16 @@ namespace Game
             Observer.Data.UpdateHealth(Health);
         }
 
-        void OnDamaged(Entity damager, float value)
+        protected override void Death(Entity Damager)
         {
-            
-        }
+            base.Death(Damager);
 
-        void OnDeath(Entity damager)
-        {
             Body.Animator.enabled = false;
 
             Ragdoll.Enable();
             Ragdoll.transform.parent = null;
 
-            Destroy(gameObject);
-        }
-
-        void OnDestroy()
-        {
             Manager.Remove(this);
-        }
-
-        void OnObserverDestroyed()
-        {
-            if (this == null) return;
 
             Destroy(gameObject);
         }
