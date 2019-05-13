@@ -28,7 +28,20 @@ namespace Game
 
         [SerializeField]
         protected float maxSize = 100;
-        public float MaxSize { get { return maxSize; } }
+        public float MaxSize
+        {
+            get
+            {
+                return maxSize;
+            }
+            set
+            {
+                if (value < minSize)
+                    maxSize = value;
+
+                maxSize = value;
+            }
+        }
 
         [SerializeField]
         protected AxisTarget axis;
