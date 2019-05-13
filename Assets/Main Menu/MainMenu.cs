@@ -39,6 +39,8 @@ namespace Game
         void Awake()
         {
             Instance = this;
+
+            Time.timeScale = 1f;
         }
     }
 }

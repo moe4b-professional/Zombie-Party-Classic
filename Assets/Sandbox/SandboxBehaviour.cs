@@ -21,6 +21,15 @@ namespace Game
 {
 	public class SandboxBehaviour : MonoBehaviour
 	{
-        
+        public UIElement element;
+
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+                element.Visible = true;
+
+            if (Input.GetMouseButtonDown(1))
+                element.Visible = false;
+        }
     }
 }

@@ -19,18 +19,22 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class QuitLevelOperation : Operation.Behaviour
+	public class RetryLevelOperation : Operation.Behaviour
 	{
         public Level Level { get { return Level.Instance; } }
 
         public Core Core { get { return Core.Asset; } }
+
         public ScenesCore Scenes { get { return Core.Scenes; } }
+
+        public ServerCore Server { get { return Core.Server; } }
+        public ClientsManagerCore Clients { get { return Server.Clients; } }
 
         public override void Execute()
         {
-            Core.Server.Stop();
+            Clients.SetAllClientsReadiness(false);
 
-            Scenes.Load(Scenes.MainMenu.Name);
+            Scenes.Load(Scenes.Level.Name);
         }
     }
 }

@@ -19,12 +19,15 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    [RequireComponent(typeof(Animator))]
-    public class PopupLabel : MonoBehaviour, Initializer.Interface
+    public class PopupLabel : UIElement, Initializer.Interface
     {
         [SerializeField]
-        Text label;
+        protected Text label;
         public Text Label { get { return label; } }
+
+        [SerializeField]
+        protected float displayDuration = 2.5f;
+        public float DisplayDuration { get { return displayDuration; } }
 
         public string Text
         {
@@ -38,13 +41,6 @@ namespace Game
             }
         }
 
-        Animator animator;
-
-        public void Init()
-        {
-            animator = GetComponent<Animator>();
-        }
-
         public void Show(string text)
         {
             this.Text = text;
@@ -52,16 +48,21 @@ namespace Game
             Show();
         }
 
-        public void Show()
+        public override void Show()
         {
-            StopAllCoroutines();
+            base.Show();
 
-            gameObject.SetActive(true);
+            Invoke("Hide", displayDuration);
         }
 
-        public void Hide()
+        public override void Hide()
         {
-            gameObject.SetActive(false);
+            base.Hide();
+        }
+
+        public static string Colorize(string value, string color)
+        {
+            return "<color=" + color + ">" + value + "</color>";
         }
 	}
 }

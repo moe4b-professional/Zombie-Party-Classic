@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2109333899564303951}
   - component: {fileID: 2109333899564303952}
-  - component: {fileID: 2109333899564303953}
+  - component: {fileID: 824739704}
+  - component: {fileID: 824739703}
   - component: {fileID: 2109333899564303954}
+  - component: {fileID: 824739701}
   m_Layer: 5
   m_Name: Popup Label
   m_TagString: Untagged
@@ -52,25 +54,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 2109333900495107720}
---- !u!95 &2109333899564303953
-Animator:
-  serializedVersion: 3
+  displayDuration: 2.5
+--- !u!114 &824739704
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109333899564303950}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 70b2d1c463676a040b2e445e76c9f5d2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901c07a449d514348b16bac9dd695131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _value: 0
+  speed: 5
+--- !u!114 &824739703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109333899564303950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3ae1434a791b640bd30fd3735606ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 2109333899564303954}
 --- !u!225 &2109333899564303954
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -83,6 +94,21 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &824739701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109333899564303950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0656b5b2c78c0a147ae09a7644f3b2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSize: 0
+  maxSize: 120
+  axis: 1
 --- !u!1 &2109333899765447162
 GameObject:
   m_ObjectHideFlags: 0

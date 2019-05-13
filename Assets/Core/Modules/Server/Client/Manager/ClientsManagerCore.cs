@@ -30,6 +30,8 @@ namespace Game
 	{
         public List<Client> List { get; protected set; }
 
+        public delegate void ClientOperationDelegate(Client client);
+
         protected virtual int GetVacantID()
         {
             for (int i = 0; i < Server.Size; i++)
@@ -60,8 +62,18 @@ namespace Game
                 return true;
             }
         }
+        public event ClientOperationDelegate ReadyStateChangedEvent;
+        public virtual void SetClientReadiness(Client client, bool value)
+        {
+            client.isReady = value;
 
-        public delegate void ClientOperationDelegate(Client client);
+            if (ReadyStateChangedEvent != null) ReadyStateChangedEvent(client);
+        }
+        public virtual void SetAllClientsReadiness(bool value)
+        {
+            for (int i = 0; i < List.Count; i++)
+                SetClientReadiness(List[i], value);
+        }
 
         public override void Configure()
         {
@@ -198,8 +210,6 @@ namespace Game
             }
         }
 
-        public event ClientOperationDelegate ReadyStateChangedEvent;
-
         void OnMessage(Client client, MessageEventArgs args)
         {
             if (args.IsText)
@@ -212,8 +222,7 @@ namespace Game
 
                     if (header.Key == "ready")
                     {
-                        client.isReady = bool.Parse(header.Value);
-                        if (ReadyStateChangedEvent != null) ReadyStateChangedEvent(client);
+                        SetClientReadiness(client, bool.Parse(header.Value));
                     }
                 }
                 else if(args.Data.Contains("\"ID\":")) //is a networkmessage .... hopefully

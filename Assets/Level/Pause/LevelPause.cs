@@ -57,6 +57,11 @@ namespace Game
         {
 
         }
+
+        protected virtual void OnDestroy()
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     public enum LevelPauseState

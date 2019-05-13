@@ -27,7 +27,14 @@ namespace Game
         {
             base.Begin();
 
+            StartCoroutine(Procedure());
+        }
+
+        IEnumerator Procedure()
+        {
             Level.Spawner.Stop();
+
+            yield return new WaitForSeconds(2f);
 
             Menu.HUD.Visible = false;
             Menu.End.Visible = true;

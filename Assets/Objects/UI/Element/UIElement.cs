@@ -19,9 +19,16 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class UIElement : MonoBehaviour
+	public class UIElement : MonoBehaviour, Initializer.Interface
 	{
-		public bool Visible
+        public UITransition Transition { get; protected set; }
+
+        public void Init()
+        {
+            Transition = GetComponent<UITransition>();
+        }
+
+        public bool Visible
         {
             get
             {
@@ -39,7 +46,10 @@ namespace Game
         public event Action OnShow;
         public virtual void Show()
         {
-            gameObject.SetActive(true);
+            if (Transition == null)
+                gameObject.SetActive(true);
+            else
+                Transition.To(1f);
 
             if (OnShow != null) OnShow();
         }
@@ -47,7 +57,10 @@ namespace Game
         public event Action OnHide;
         public virtual void Hide()
         {
-            gameObject.SetActive(false);
+            if (Transition == null)
+                gameObject.SetActive(false);
+            else
+                Transition.To(0f);
 
             if (OnHide != null) OnHide();
         }

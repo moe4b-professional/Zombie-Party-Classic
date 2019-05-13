@@ -88,7 +88,7 @@ namespace Game
 
         protected virtual IEnumerator WaveProcedure()
         {
-            PopupLabel.Show("WAVE " + waveNumber);
+            PopupLabel.Show("WAVE " + PopupLabel.Colorize(waveNumber.ToString(), "red"));
 
             var spawnCount = 10 * waveNumber / 2;
 
