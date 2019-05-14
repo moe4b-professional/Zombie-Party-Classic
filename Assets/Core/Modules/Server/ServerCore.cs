@@ -169,7 +169,7 @@ namespace Game
 
             try
             {
-                Server = new WebSocketServer(IPAddress.Parse(Address), port);
+                Server = new WebSocketServer(IPAddress.Any, port);
 
                 Server.AddWebSocketService<InternalBehavior>("/");
 
@@ -189,6 +189,8 @@ namespace Game
         public event InternalBehavior.ContextOperationDelegate ConnectionEvent;
         void OnConnection(WebSocketContext context)
         {
+            Debug.Log(context.UserEndPoint);
+
             if (ConnectionEvent != null) ConnectionEvent(context);
         }
 
