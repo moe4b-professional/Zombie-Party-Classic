@@ -85,7 +85,10 @@ namespace Game
             while (IsAlive)
             {
                 if (Target == null)
+                {
+                    Agent.isStopped = true;
                     break;
+                }
 
                 Agent.SetDestination(Target.transform.position);
 
@@ -99,8 +102,6 @@ namespace Game
 
                 yield return null;
             }
-
-            Agent.isStopped = true;
         }
 
         protected virtual void RotateTowardsTarget()
@@ -167,8 +168,6 @@ namespace Game
         protected override void Death(Entity Damager)
         {
             base.Death(Damager);
-
-            Agent.isStopped = true;
 
             Animator.enabled = false;
 

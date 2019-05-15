@@ -221,6 +221,17 @@ namespace Game
             Stop();
         }
 
+
+        public abstract partial class Module : Core.Module
+        {
+            new public const string MenuPath = ServerCore.MenuPath + "Modules/";
+
+            public ServerCore Server { get { return Core.Server; } }
+
+            public InternalBehavior Behaviour { get { return Server.Behavior; } }
+        }
+
+
         public const string LocalHost = "127.0.0.1";
         public static string GetLANIP()
         {
@@ -244,16 +255,6 @@ namespace Game
             }
 
             return LocalHost;
-        }
-
-
-        public abstract partial class Module : Core.Module
-        {
-            new public const string MenuPath = ServerCore.MenuPath + "Modules/";
-
-            public ServerCore Server { get { return Core.Server; } }
-
-            public InternalBehavior Behaviour { get { return Server.Behavior; } }
         }
     }
 }

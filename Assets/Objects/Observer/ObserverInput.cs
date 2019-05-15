@@ -46,8 +46,8 @@ namespace Game
         {
             var input = msg.To<InputMessage>();
 
-            Move = input.Right;
-            Look = input.Left;
+            Move = input.Left;
+            Look = input.Right;
         }
     }
 

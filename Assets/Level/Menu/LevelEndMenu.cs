@@ -31,7 +31,7 @@ namespace Game
         {
             base.Show();
 
-            wave.text = Level.Spawner.WaveNumber + " Waves Survived";
+            wave.text = PopupLabel.Colorize((Level.Spawner.WaveNumber - 1).ToString(), "red") + " Waves Survived";
         }
     }
 }

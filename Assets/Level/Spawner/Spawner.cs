@@ -68,6 +68,8 @@ namespace Game
 
         public void Begin()
         {
+            waveNumber = 0;
+
             StartCoroutine(Procedure());
         }
 
@@ -138,8 +140,6 @@ namespace Game
         public void Stop()
         {
             StopAllCoroutines();
-
-            waveNumber = 0;
         }
 
 #if UNITY_EDITOR
