@@ -189,8 +189,6 @@ namespace Game
         public event InternalBehavior.ContextOperationDelegate ConnectionEvent;
         void OnConnection(WebSocketContext context)
         {
-            Debug.Log(context.UserEndPoint);
-
             if (ConnectionEvent != null) ConnectionEvent(context);
         }
 

@@ -29,6 +29,8 @@ namespace Game
         {
             base.Begin();
 
+            Clients.Broadcast("#Start");
+
             Players.OnRemove += OnPlayerRemoved;
         }
 

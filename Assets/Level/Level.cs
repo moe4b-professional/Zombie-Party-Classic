@@ -107,7 +107,7 @@ namespace Game
 
         protected virtual void OnEnd()
         {
-            Debug.Log("Level Ended");
+            
         }
     }
 }

@@ -257,5 +257,11 @@ namespace Game
                 if (DisconnectionEvent != null) DisconnectionEvent(client);
             }
         }
+
+        public virtual void Broadcast(string message)
+        {
+            for (int i = 0; i < List.Count; i++)
+                List[i].Send(message);
+        }
     }
 }

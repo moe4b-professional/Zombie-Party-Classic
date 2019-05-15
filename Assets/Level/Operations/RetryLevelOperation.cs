@@ -34,6 +34,8 @@ namespace Game
         {
             Clients.SetAllClientsReadiness(false);
 
+            Clients.Broadcast("#Retry");
+
             Scenes.Load(Scenes.Level.Name);
         }
     }
