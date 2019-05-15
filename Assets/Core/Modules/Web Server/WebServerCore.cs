@@ -91,14 +91,12 @@ namespace Game
                 }
 
                 if(mime != null)
-                    args.Response.Headers.Add("Content-Type", Mimes.FindByExtension(extension).Value);
+                    args.Response.ContentType = mime;
 
                 using (FileStream file = File.OpenRead(resourcePath))
                 {
                     var length = (int)file.Length;
-
-                    args.Response.Headers.Add("Content-Length", length.ToString());
-
+                    
                     byte[] buffer;
 
                     using (BinaryReader reader = new BinaryReader(file))
