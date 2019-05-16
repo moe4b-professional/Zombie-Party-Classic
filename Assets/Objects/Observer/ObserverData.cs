@@ -28,16 +28,18 @@ namespace Game
         public LevelMenu Menu { get { return Level.Menu; } }
 
         Observer observer;
+        public Client Client { get { return observer.Client; } }
 
         public virtual void Init(Observer observer)
         {
             this.observer = observer;
         }
 
-        //TODO implement health sync
         public virtual void UpdateHealth(EntityHealth health)
         {
+            if (Client.State != WebSocketSharp.WebSocketState.Open) return;
 
+            Client.Send(new HealthMessage(health));
         }
     }
 
@@ -63,6 +65,11 @@ namespace Game
         {
             this.value = value;
             this.max = max;
+        }
+        public HealthMessage(EntityHealth health) : 
+            this(health.Value, health.MaxValue)
+        {
+
         }
     }
 }

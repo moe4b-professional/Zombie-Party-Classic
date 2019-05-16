@@ -32,8 +32,15 @@ namespace Game
         public int ID { get; protected set; }
 
         public WebSocket Socket { get; protected set; }
+        public WebSocketState State { get { return Socket.ReadyState; } }
         public virtual void Send(string data)
         {
+            if(State != WebSocketState.Open)
+            {
+                Debug.LogError("Trying to send message to unopen client socket, message: " + data);
+                return;
+            }
+
             Socket.Send(data);
         }
         public virtual void Send(NetworkMessage message)
