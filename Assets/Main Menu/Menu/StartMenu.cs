@@ -37,19 +37,29 @@ namespace Game
 
         IEnumerator Procedure()
         {
-            Popup.Visible = true;
-
-            Popup.Label.text = "Starting Server";
-
-            Popup.Interactable = false;
+            Popup.Show("Starting Server");
 
             yield return new WaitForSeconds(1f);
 
-            Server.Start();
-
-            yield return null;
+            try
+            {
+                Server.Start();
+            }
+            catch (Exception)
+            {
+                Popup.Show(PopupLabel.Colorize("Server Error", "red"), OnError, "Close");
+                throw;
+            }
 
             Scenes.Load(Scenes.Level.Name);
+        }
+
+        void OnError()
+        {
+            Popup.Hide();
+
+            Visible = false;
+            MainMenu.Title.Visible = true;
         }
     }
 }

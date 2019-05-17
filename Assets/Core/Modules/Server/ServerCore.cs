@@ -181,6 +181,7 @@ namespace Game
             catch (Exception e)
             {
                 Debug.LogError("Error when starting server, message: " + e.Message);
+                throw;
             }
 
             WebServer.Start();

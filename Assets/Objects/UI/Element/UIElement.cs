@@ -23,7 +23,7 @@ namespace Game
 	{
         public UITransition Transition { get; protected set; }
 
-        public void Init()
+        public virtual void Init()
         {
             Transition = GetComponent<UITransition>();
         }

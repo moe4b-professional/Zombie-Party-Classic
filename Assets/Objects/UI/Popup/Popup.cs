@@ -25,11 +25,21 @@ namespace Game
         [SerializeField]
         protected Text label;
         public Text Label { get { return label; } }
+        public string Text
+        {
+            get
+            {
+                return label.text;
+            }
+            set
+            {
+                label.text = value;
+            }
+        }
 
         [SerializeField]
         protected LabeledButton button;
         public LabeledButton Button { get { return button; } }
-
         public bool Interactable
         {
             get
@@ -42,22 +52,43 @@ namespace Game
             }
         }
 
-        void OnEnable()
+        public override void Init()
         {
-            StartCoroutine(Procedure());
+            base.Init();
+
+            button.onClick.AddListener(onClick);
         }
 
-        IEnumerator Procedure()
+        public void Show(string text)
         {
-            yield return new WaitForEndOfFrame();
+            Transition.Value = 0f;
 
-            UpdateLayout();
+            this.Text = text;
+
+            Interactable = false;
+
+            Show();
+        }
+        public void Show(string text, Action action, string buttonText)
+        {
+            Transition.Value = 0f;
+
+            this.Text = text;
+
+            if (action == null) throw new NullReferenceException();
+
+            this.Interactable = true;
+            this.action = action;
+
+            this.button.Text = buttonText;
+
+            Show();
         }
 
-        void UpdateLayout()
+        Action action;
+        public virtual void onClick()
         {
-            Canvas.ForceUpdateCanvases();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetChild(0) as RectTransform);
+            if (action != null) action();
         }
-	}
+    }
 }
