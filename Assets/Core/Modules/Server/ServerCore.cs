@@ -74,66 +74,42 @@ namespace Game
             public ServerCore Server { get { return Core.Asset.Server; } }
             public ClientsManagerCore Clients { get { return Server.Clients; } }
 
-            public delegate void ContextOperationDelegate(WebSocketContext context);
-
-
             protected override void OnOpen()
             {
                 base.OnOpen();
 
-                UnityThreadDispatcher.Add(OnOpen_UNITYSAFE(Context));
+                UnityThreadDispatcher.Add(()=>OnOpen_UNITYSAFE(Context));
             }
-
-            ContextOperationDelegate ConnectionAction;
-            IEnumerator OnOpen_UNITYSAFE(WebSocketContext context)
+            void OnOpen_UNITYSAFE(WebSocketContext context)
             {
-                if (ConnectionAction != null) ConnectionAction(Context);
-
-                yield break;
+                Server.OnConnection(Context);
             }
 
-
-            protected override void OnMessage(MessageEventArgs e)
+            protected override void OnMessage(MessageEventArgs args)
             {
-                base.OnMessage(e);
+                base.OnMessage(args);
 
-                UnityThreadDispatcher.Add(OnMessage_UNITY_SAFE(e));
+                UnityThreadDispatcher.Add(()=>OnMessage_UNITY_SAFE(Context, args));
             }
-
-            public delegate void MessageDelegate(WebSocketContext context, MessageEventArgs args);
-            MessageDelegate MessageAction;
-            IEnumerator OnMessage_UNITY_SAFE(MessageEventArgs e)
+            void OnMessage_UNITY_SAFE(WebSocketContext context, MessageEventArgs args)
             {
-                if (MessageAction != null) MessageAction(Context, e);
-
-                yield break;
+                Server.OnMessage(Context, args);
             }
 
-
-            protected override void OnClose(CloseEventArgs e)
+            protected override void OnClose(CloseEventArgs args)
             {
-                base.OnClose(e);
+                base.OnClose(args);
 
-                UnityThreadDispatcher.Add(OnClose_UNITY_SAFE(Context, e));
+                UnityThreadDispatcher.Add(()=>OnClose_UNITY_SAFE(Context, args));
             }
-
-            public delegate void DisconnectOperationDelegate(WebSocketContext context, CloseEventArgs args);
-            DisconnectOperationDelegate DisconnectAction;
-            IEnumerator OnClose_UNITY_SAFE(WebSocketContext context, CloseEventArgs e)
+            void OnClose_UNITY_SAFE(WebSocketContext context, CloseEventArgs args)
             {
-                DisconnectAction(Context, e);
-
-                yield break;
+                Server.OnDisconnection(Context, args);
             }
-
 
             public InternalBehavior()
             {
                 Server.InitBehaviour(this);
-
-                ConnectionAction = Server.OnConnection;
-                MessageAction = Server.OnMessage;
-                DisconnectAction = Server.OnDisconnection;
             }
         }
 
@@ -187,19 +163,22 @@ namespace Game
             WebServer.Start();
         }
 
-        public event InternalBehavior.ContextOperationDelegate ConnectionEvent;
+        public delegate void ContextOperationDelegate(WebSocketContext context);
+        public event ContextOperationDelegate ConnectionEvent;
         void OnConnection(WebSocketContext context)
         {
             if (ConnectionEvent != null) ConnectionEvent(context);
         }
 
-        public event InternalBehavior.MessageDelegate MessageEvent;
+        public delegate void MessageDelegate(WebSocketContext context, MessageEventArgs args);
+        public event MessageDelegate MessageEvent;
         void OnMessage(WebSocketContext context, MessageEventArgs args)
         {
             if (MessageEvent != null) MessageEvent(context, args);
         }
 
-        public event InternalBehavior.DisconnectOperationDelegate DisconnectionEvent;
+        public delegate void DisconnectOperationDelegate(WebSocketContext context, CloseEventArgs args);
+        public event DisconnectOperationDelegate DisconnectionEvent;
         void OnDisconnection(WebSocketContext context, CloseEventArgs args)
         {
             if (DisconnectionEvent != null) DisconnectionEvent(context, args);

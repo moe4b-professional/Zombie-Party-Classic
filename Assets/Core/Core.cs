@@ -117,6 +117,9 @@ namespace Game
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             ForEachModule(ConfigureModule);
+
+            if (Application.isEditor)
+                QualitySettings.vSyncCount = 0;
         }
 
         protected virtual void ConfigureModule(Core.Module module)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
 
 [DefaultExecutionOrder(ExecutionOrder)]
 public class UnityThreadDispatcher : MonoBehaviour
@@ -11,7 +12,7 @@ public class UnityThreadDispatcher : MonoBehaviour
 
     public static UnityThreadDispatcher Instance { get; protected set; }
 
-    public Queue<IEnumerator> Queue { get; protected set; }
+    public ConcurrentQueue<Action> Queue { get; protected set; }
 
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -34,29 +35,21 @@ public class UnityThreadDispatcher : MonoBehaviour
 
     protected virtual void Awake()
     {
-        Queue = new Queue<IEnumerator>();
+        Queue = new ConcurrentQueue<Action>();
     }
 
-    public static void Add(IEnumerator procedure)
+    public static void Add(Action action)
     {
-        Instance.AddInternal(procedure);
-    }
-    void AddInternal(IEnumerator procedure)
-    {
-        lock (Queue)
-        {
-            Queue.Enqueue(procedure);
-        }
+        Instance.Queue.Enqueue(action);
     }
 
+    Action action;
     void Update()
     {
-        lock (Queue)
+        while (!Queue.IsEmpty)
         {
-            while (Queue.Count > 0)
-            {
-                StartCoroutine(Queue.Dequeue());
-            }
+            if(Queue.TryDequeue(out action))
+                action();
         }
     }
 

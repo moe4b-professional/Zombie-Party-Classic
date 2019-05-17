@@ -214,8 +214,6 @@ namespace Game
         {
             if (args.IsText)
             {
-                //Debug.Log(args.Data);
-
                 if (Header.IsValid(args.Data)) //is a header
                 {
                     var header = Header.Parse(args.Data);
