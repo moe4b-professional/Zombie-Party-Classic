@@ -51,6 +51,7 @@ namespace Game
                 throw;
             }
 
+            Popup.Visible = false;
             MainMenu.Fade.Transition(1f);
             yield return MainMenu.Fade.Coroutine;
 
