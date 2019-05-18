@@ -19,9 +19,15 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
+    [DefaultExecutionOrder(-200)]
 	public class SandboxBehaviour : MonoBehaviour
 	{
         public UIElement element;
+
+        void Awake()
+        {
+            Core.Asset.Scenes.Load(Core.Asset.Scenes.MainMenu.Name);
+        }
 
         void Update()
         {
