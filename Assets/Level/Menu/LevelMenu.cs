@@ -35,12 +35,15 @@ namespace Game
 
         [SerializeField]
         protected PopupLabel popupLabel;
-
         public PopupLabel PopupLabel { get { return popupLabel; } }
 
         [SerializeField]
         protected Popup popup;
         public Popup Popup { get { return popup; } }
+
+        [SerializeField]
+        protected ScreenFade fade;
+        public ScreenFade Fade { get { return fade; } }
 
         public Core Core { get { return Core.Asset; } }
 
@@ -49,7 +52,7 @@ namespace Game
 
         public virtual void Init()
         {
-
+            fade.Init(1f, 0f);
         }
     }
 }

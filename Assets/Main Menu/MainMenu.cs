@@ -36,11 +36,17 @@ namespace Game
         protected Popup popup;
         public Popup Popup { get { return popup; } }
 
+        [SerializeField]
+        protected ScreenFade fade;
+        public ScreenFade Fade { get { return fade; } }
+
         void Awake()
         {
             Instance = this;
 
             Time.timeScale = 1f;
+
+            fade.Init(1f, 0f);
         }
     }
 }

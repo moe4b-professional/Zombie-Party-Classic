@@ -68,7 +68,7 @@ namespace Game
 
         public void Begin()
         {
-            waveNumber = 0;
+            waveNumber = 1;
 
             StartCoroutine(Procedure());
         }
@@ -80,11 +80,11 @@ namespace Game
 
             while (true)
             {
-                waveNumber++;
-
                 yield return WaveProcedure();
 
                 yield return new WaitForSeconds(waveDelay);
+
+                waveNumber++;
             }
         }
 

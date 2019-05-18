@@ -79,11 +79,19 @@ namespace Game
         }
 
         public Core Core { get { return Core.Asset; } }
+        public ScenesCore Scenes { get { return Core.Scenes; } }
         public ServerCore Server { get { return Core.Server; } }
         public ClientsManagerCore Clients { get { return Server.Clients; } }
 
         void Awake()
         {
+            if (!Core.Server.Active)
+            {
+                Scenes.Load(Scenes.MainMenu.Name);
+                enabled = false;
+                return;
+            }
+
             Instance = this;
 
             InitMenu();

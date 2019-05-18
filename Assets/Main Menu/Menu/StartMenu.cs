@@ -51,6 +51,9 @@ namespace Game
                 throw;
             }
 
+            MainMenu.Fade.Transition(1f);
+            yield return MainMenu.Fade.Coroutine;
+
             Scenes.Load(Scenes.Level.Name);
         }
 
