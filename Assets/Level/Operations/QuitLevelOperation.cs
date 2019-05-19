@@ -41,6 +41,8 @@ namespace Game
             Fade.OnTransitionEnd -= OnFadeTransitionEnd;
 
             Core.Server.Stop();
+            Core.WebServer.Stop();
+
             Scenes.Load(Scenes.MainMenu.Name);
         }
     }

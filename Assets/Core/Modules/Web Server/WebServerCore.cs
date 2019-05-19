@@ -119,7 +119,9 @@ namespace Game
         {
             if (!Active) return;
 
-            server.Dispose();
+            server.Stop();
+
+            server = null;
         }
         void OnApplicationQuit()
         {

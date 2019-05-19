@@ -60,8 +60,6 @@ namespace Game
             Menu.Initial.Visible = false;
             Menu.HUD.Visible = true;
 
-            Level.Spawner.Begin();
-
             SpawnAllClients();
 
             End();

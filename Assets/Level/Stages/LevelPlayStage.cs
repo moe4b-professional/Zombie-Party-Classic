@@ -31,6 +31,8 @@ namespace Game
 
             Clients.Broadcast("#Start");
 
+            Level.Spawner.Begin();
+
             Players.OnRemove += OnPlayerRemoved;
         }
 

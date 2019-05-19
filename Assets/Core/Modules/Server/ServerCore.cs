@@ -128,8 +128,6 @@ namespace Game
             NetworkMessage.Configure();
 
             clients.Configure();
-
-            Core.SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
         }
 
         public override void Init()
@@ -146,6 +144,8 @@ namespace Game
             try
             {
                 Server = new WebSocketServer(IPAddress.Any, port);
+
+                Server.KeepClean = true;
 
                 Server.AddWebSocketService<InternalBehavior>("/");
 
@@ -186,19 +186,12 @@ namespace Game
 
         public virtual void Stop()
         {
-            if (Active)
-            {
-#pragma warning disable CS0618 // Type or member is obsolete
-                Server.Stop(CloseStatusCode.Normal, "Session Ended");
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
+            if (!Active) return;
 
-            if (WebServer.Active)
-                WebServer.Stop();
-        }
-        void OnApplicationQuit()
-        {
-            Stop();
+            Server.Stop();
+
+            Server = null;
+            Behavior = null;
         }
 
 

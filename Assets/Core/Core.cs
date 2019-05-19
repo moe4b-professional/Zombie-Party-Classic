@@ -73,6 +73,8 @@ namespace Game
             SceneAccessor = new GameObject("Scene Accessor").AddComponent<SceneAccessor>();
 
             SceneAccessor.Configure();
+
+            SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
         }
         #endregion
 
@@ -144,6 +146,15 @@ namespace Game
             module.Init();
         }
         #endregion
+
+        protected virtual void OnApplicationQuit()
+        {
+            if (server.Active) server.Stop();
+
+            if (webServer.Active) webServer.Stop();
+
+            GC.Collect();
+        }
     }
 
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
