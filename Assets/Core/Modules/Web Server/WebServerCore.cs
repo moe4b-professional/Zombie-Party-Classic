@@ -20,6 +20,7 @@ using Random = UnityEngine.Random;
 using System.Net;
 
 using NHttp;
+using System.Text.RegularExpressions;
 
 namespace Game
 {
@@ -67,7 +68,7 @@ namespace Game
 
         private void OnRequest(object sender, HttpRequestEventArgs args)
         {
-            string resourcePath = Root + "/Web-Server" + args.Request.Path;
+            string resourcePath = Root + "/Web-Server" + Regex.Replace(args.Request.Path, "%20", " ");
 
             if (args.Request.Path == "/")
                 resourcePath += "index.html";

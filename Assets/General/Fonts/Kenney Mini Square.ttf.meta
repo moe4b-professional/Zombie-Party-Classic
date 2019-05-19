@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a8b128084d7d954489955a6c31d82406
+guid: 07f9b30798edeff42857e05cf9e67846
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,16 +8,14 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Roboto
+  fontName: Kenney Mini Square
   fontNames:
-  - Roboto
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 3c52d49480f3adf47aa821eaa0a28c08, type: 3}
-  - {fileID: 12800000, guid: 0f26acc493916a84780bb693cf8e764d, type: 3}
+  - Kenney Mini Square
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
+  useLegacyBoundsCalculation: 1
   shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
