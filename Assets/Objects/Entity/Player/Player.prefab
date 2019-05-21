@@ -6332,7 +6332,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1331
   range: 400
-  damage: 15
+  damage: 20
   triggerInteraction: 1
   point: {fileID: 4082513803218437450}
 --- !u!114 &3290171570706867521
