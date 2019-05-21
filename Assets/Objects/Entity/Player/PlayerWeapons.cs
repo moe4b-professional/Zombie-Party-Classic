@@ -29,20 +29,24 @@ namespace Game
 
         public const float ShootMagnitude = 0.75f;
 
-        [SerializeField]
-        protected Weapon weapon;
-        public Weapon Weapon { get { return weapon; } }
+        public Weapon Weapon { get; protected set; }
 
         public virtual void Init(Player reference)
         {
             this.player = reference;
+        }
 
-            weapon.Init(player);
+        public virtual void Set(Weapon weapon)
+        {
+            this.Weapon = weapon;
+
+            this.Weapon.Init(player);
         }
 
         protected virtual void Update()
         {
-            weapon.Process(Input.Look.magnitude > ShootMagnitude && Mathf.Abs(Aim.DeltaTargetAngle) < 15f);
+            if(Weapon != null)
+                Weapon.Process(Input.Look.magnitude > ShootMagnitude && Mathf.Abs(Aim.DeltaTargetAngle) < 15f);
         }
     }
 }

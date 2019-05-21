@@ -28,9 +28,11 @@ namespace Game
 
         new public Rigidbody rigidbody { get; protected set; }
 
+        public PlayerVariants Variants { get; protected set; }
         public PlayerMovement Movement { get; protected set; }
         public PlayerBody Body { get; protected set; }
         public PlayerAim Aim { get; protected set; }
+        public PlayerWeapons Weapons { get; protected set; }
         public interface IReference : References.Interface<Player>
         {
 
@@ -54,14 +56,19 @@ namespace Game
 
             rigidbody = GetComponent<Rigidbody>();
 
+            Variants = Dependancy.Get<PlayerVariants>(gameObject);
+
             Movement = Dependancy.Get<PlayerMovement>(gameObject);
             Body = Dependancy.Get<PlayerBody>(gameObject);
             Aim = Dependancy.Get<PlayerAim>(gameObject);
+            Weapons = Dependancy.Get<PlayerWeapons>(gameObject);
+
+            References.Init(this);
+
+            Variants.Init(this);
 
             Ragdoll = Dependancy.Get<RagdollController>(gameObject);
             Ragdoll.Disable();
-
-            References.Init(this);
 
             Health.OnValueChanged += OnHealthChanged;
         }

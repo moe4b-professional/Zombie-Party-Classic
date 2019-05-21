@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sub-Machine Gun
+  m_Controller: {fileID: 9100000, guid: 76ba1f99d5ed12a40b8fdfd3937efc09, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f33fe0cd2b4cecd478195b784e143810, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ec599873b51057b41b54da408172ab5a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4fe8ba11aa2855941b48e8c92a17d780, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1c1623cd9d1fda94c998e7684649fadd, type: 2}

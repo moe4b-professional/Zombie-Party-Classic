@@ -104,15 +104,6 @@ namespace Game
             }
         }
 
-        [SerializeField]
-        protected GameObject[] models;
-        public GameObject[] Models { get { return models; } }
-        void SetModel(int ID)
-        {
-            for (int i = 0; i < models.Length; i++)
-                models[i].SetActive(i == ID);
-        }
-
         Player player;
 		public virtual void Init(Player reference)
         {
@@ -122,8 +113,6 @@ namespace Game
 
             RightHandIK = new IKController(Animator, AvatarIKGoal.RightHand);
             LeftHandIK = new IKController(Animator, AvatarIKGoal.LeftHand);
-
-            SetModel(player.Client.ID);
         }
 
         protected virtual void OnAnimatorMove()
