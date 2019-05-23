@@ -48,7 +48,6 @@ namespace Game
 
 
         IList<IModule> modules;
-
         public virtual T FindModule<T>()
             where T : IModule
         {
@@ -58,7 +57,6 @@ namespace Game
 
             return default(T);
         }
-
         public interface IModule
         {
             void Init(Weapon weapon);
@@ -77,7 +75,6 @@ namespace Game
 
             }
         }
-
         public void InitModules()
         {
             modules = GetComponentsInChildren<IModule>();
@@ -88,17 +85,14 @@ namespace Game
 
 
         IList<IConstraint> constraints;
-
         public interface IConstraint
         {
             bool Active { get; }
         }
-
         public void InitConstraints()
         {
             constraints = GetComponentsInChildren<IConstraint>();
         }
-
         public bool HasActiveConstraints()
         {
             for (int i = 0; i < constraints.Count; i++)

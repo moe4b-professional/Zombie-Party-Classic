@@ -22,20 +22,21 @@ namespace Game
     [DefaultExecutionOrder(-200)]
 	public class SandboxBehaviour : MonoBehaviour
 	{
-        public UIElement element;
+        public Weapon weapon;
 
-        void Awake()
+        public ParticleSystem particle;
+
+        void Start()
         {
-            Core.Asset.Scenes.Load(Core.Asset.Scenes.MainMenu.Name);
+            weapon.Init(null);
         }
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-                element.Visible = true;
+            weapon.Process(Input.GetMouseButton(0));
 
-            if (Input.GetMouseButtonDown(1))
-                element.Visible = false;
+            if (Input.GetKeyDown(KeyCode.D))
+                SceneManager.LoadScene(Core.Asset.Scenes.Level.Name);
         }
     }
 }
