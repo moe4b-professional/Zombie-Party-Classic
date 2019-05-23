@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class PlayerWeapons : MonoBehaviour, Player.IReference
+	public class PlayerWeapons : MonoBehaviour, IPlayerReference
 	{
         Player player;
 

@@ -21,18 +21,21 @@ namespace Game
     public class Entity : MonoBehaviour
     {
         public EntityHealth Health { get; protected set; }
-
         public virtual bool IsAlive { get { return Health.Value > 0f; } }
         public virtual bool IsDead { get { return Health.Value == 0f; } }
+
+        public EntityBurn Burn { get; protected set; }
 
         protected virtual void Awake()
         {
             Health = GetComponent<EntityHealth>();
+
+            Burn = Dependancy.Get<EntityBurn>(gameObject);
         }
 
         protected virtual void Start()
         {
-
+            References.Init(this);
         }
 
         public delegate void DamageDelegate(Entity damager, float value);
@@ -61,5 +64,10 @@ namespace Game
         {
             this.TakeDamage(this, Health.Value);
         }
+    }
+
+    public interface IEntityReference : References.Interface<Entity>
+    {
+
     }
 }

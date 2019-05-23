@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class PlayerHandsIKTargets : MonoBehaviour, Player.IReference
+	public class PlayerHandsIKTargets : MonoBehaviour, IPlayerReference
 	{
         [SerializeField]
         protected TargetData right;

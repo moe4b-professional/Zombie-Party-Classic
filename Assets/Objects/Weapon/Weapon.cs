@@ -31,7 +31,6 @@ namespace Game
             target.TakeDamage(Owner, damage);
         }
 
-
         public void Init(Entity owner)
         {
             this.Owner = owner;
@@ -39,6 +38,7 @@ namespace Game
             State = WeaponState.Idle;
 
             Model = GetComponentInChildren<WeaponModel>();
+            AutoTwoSidedShadows.Apply(gameObject);
             Model.Init();
 
             InitModules();
@@ -46,16 +46,24 @@ namespace Game
             InitConstraints();
         }
 
-
         IList<IModule> modules;
         public virtual T FindModule<T>()
-            where T : IModule
         {
             for (int i = 0; i < modules.Count; i++)
                 if (modules[i] is T)
                     return (T)modules[i];
 
             return default(T);
+        }
+        public virtual List<T> FindModules<T>()
+        {
+            var list = new List<T>();
+
+            for (int i = 0; i < modules.Count; i++)
+                if (modules[i] is T)
+                    list.Add((T)modules[i]);
+
+            return list;
         }
         public interface IModule
         {
@@ -83,7 +91,6 @@ namespace Game
                 modules[i].Init(this);
         }
 
-
         IList<IConstraint> constraints;
         public interface IConstraint
         {
@@ -102,6 +109,31 @@ namespace Game
             return false;
         }
 
+        public delegate void HitDelegate(HitData data);
+        public event HitDelegate OnHit;
+        public struct HitData
+        {
+            public GameObject GameObject { get; private set; }
+            public Entity Entity { get; private set; }
+            public Vector3 Position { get; private set; }
+
+            public HitData(GameObject gameObject, Entity entity, Vector3 position)
+            {
+                this.GameObject = gameObject;
+                this.Entity = entity;
+                this.Position = position;
+            }
+        }
+        public virtual void InvokeHit(HitData data)
+        {
+            if (OnHit != null) OnHit(data);
+        }
+        public virtual void InvokeHit(GameObject gameObject, Entity entity, Vector3 position)
+        {
+            var data = new HitData(gameObject, entity, position);
+
+            InvokeHit(data);
+        }
 
         public delegate void ProcessDelegate(bool input);
         public event ProcessDelegate ProcessEvent;

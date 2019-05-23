@@ -69,38 +69,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &6948723971888453347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6948723971888453346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f276f4deb459ae47bb26c3fa8be38ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle: {fileID: 6948723971903453944}
---- !u!114 &6948723971888453348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6948723971888453346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63a494687660ad340bf1b9bd85cf80d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle: {fileID: 6948723971903453944}
-  mask:
-    serializedVersion: 2
-    m_Bits: 1331
-  damage: 100
-  radius: 1
-  minLifeTime: 0.42
 --- !u!1001 &6948723971888373740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -396,27 +364,19 @@ PrefabInstance:
       propertyPath: LightsModule.intensityCurve.scalar
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 19801364, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
+      propertyPath: LightsModule.maxLights
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 19998858, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: add720790ce17664983ac47d93a920d8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd5599e01f32bd418f20a3b9eac1c57, type: 3}
---- !u!1 &6948723971888453346 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 182542, guid: 5cd5599e01f32bd418f20a3b9eac1c57,
-    type: 3}
-  m_PrefabInstance: {fileID: 6948723971888373740}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6948723971888156574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 479346, guid: 5cd5599e01f32bd418f20a3b9eac1c57,
-    type: 3}
-  m_PrefabInstance: {fileID: 6948723971888373740}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &6948723971903453944 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19801364, guid: 5cd5599e01f32bd418f20a3b9eac1c57,
     type: 3}
   m_PrefabInstance: {fileID: 6948723971888373740}
   m_PrefabAsset: {fileID: 0}

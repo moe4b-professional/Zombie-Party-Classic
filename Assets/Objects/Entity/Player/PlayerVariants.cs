@@ -41,6 +41,7 @@ namespace Game
         {
             this.player = player;
 
+            //Apply(3);
             Apply(player.Client.ID);
         }
 

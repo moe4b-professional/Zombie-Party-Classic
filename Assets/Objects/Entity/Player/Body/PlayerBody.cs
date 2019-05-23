@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 namespace Game
 {
     [RequireComponent(typeof(Animator))]
-	public class PlayerBody : MonoBehaviour, Player.IReference
+	public class PlayerBody : MonoBehaviour, IPlayerReference
 	{
         public Animator Animator { get; protected set; }
 

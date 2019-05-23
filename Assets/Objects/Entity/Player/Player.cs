@@ -33,10 +33,6 @@ namespace Game
         public PlayerBody Body { get; protected set; }
         public PlayerAim Aim { get; protected set; }
         public PlayerWeapons Weapons { get; protected set; }
-        public interface IReference : References.Interface<Player>
-        {
-
-        }
 
         public RagdollController Ragdoll { get; protected set; }
 
@@ -96,5 +92,10 @@ namespace Game
 
             Destroy(gameObject);
         }
+    }
+
+    public interface IPlayerReference : References.Interface<Player>
+    {
+
     }
 }

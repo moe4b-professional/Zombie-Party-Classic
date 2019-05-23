@@ -58,9 +58,12 @@ namespace Game
         {
             CalculateRange();
 
-            CalculateOverlap();
+            if(range > 0f)
+            {
+                CalculateOverlap();
 
-            ApplyDamage();
+                ApplyDamage();
+            }
         }
 
         float range = 0f;
@@ -88,6 +91,7 @@ namespace Game
         }
 
         Queue<Entity> targets = new Queue<Entity>();
+
         void CalculateOverlap()
         {
             var p1 = particle.transform.position;
@@ -101,9 +105,9 @@ namespace Game
 
                 var entity = array[i].GetComponent<Entity>();
 
-                if (entity == null) continue;
+                weapon.InvokeHit(array[i].gameObject, entity, array[i].transform.position);
 
-                if (targets.Contains(entity)) continue;
+                if (entity == null || targets.Contains(entity)) continue;
 
                 targets.Enqueue(entity);
             }
@@ -113,22 +117,27 @@ namespace Game
         {
             while (targets.Count != 0)
             {
-                weapon.Damage(targets.Dequeue(), damage * Time.deltaTime);
+                var target = targets.Dequeue();
+
+                weapon.Damage(target, damage * Time.deltaTime);
             }
         }
 
         void OnDrawGizmos()
         {
-            Gizmos.color = Color.magenta;
+            if(particle)
+            {
+                Gizmos.color = Color.red;
 
-            var p1 = particle.transform.position;
-            var p2 = p1 + particle.transform.forward * range;
+                var p1 = particle.transform.position;
+                var p2 = p1 + particle.transform.forward * range;
 
-            var p3 = particle.transform.position + (particle.transform.forward * range / 2f) + (particle.transform.right * radius / 2f);
-            var p4 = particle.transform.position + (particle.transform.forward * range / 2f) - (particle.transform.right * radius / 2f);
+                var p3 = particle.transform.position + (particle.transform.forward * range / 2f) + (particle.transform.right * radius / 2f);
+                var p4 = particle.transform.position + (particle.transform.forward * range / 2f) - (particle.transform.right * radius / 2f);
 
-            Gizmos.DrawLine(p1, p2);
-            Gizmos.DrawLine(p3, p4);
+                Gizmos.DrawLine(p1, p2);
+                Gizmos.DrawLine(p3, p4);
+            }
         }
     }
 }

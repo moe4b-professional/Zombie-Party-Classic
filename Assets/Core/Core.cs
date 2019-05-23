@@ -122,6 +122,8 @@ namespace Game
 
             if (Application.isEditor)
                 QualitySettings.vSyncCount = 0;
+
+            QualitySettings.vSyncCount = 0;
         }
 
         protected virtual void ConfigureModule(Core.Module module)

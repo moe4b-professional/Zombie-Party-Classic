@@ -35,9 +35,7 @@ namespace Game
 
             weapon.ProcessEvent += Process;
 
-            raycast = weapon.FindModule<WeaponRaycastAction>();
-
-            raycast.OnHit += OnHit;
+            weapon.OnHit += OnHit;
         }
 
         void Process(bool input)
@@ -45,9 +43,9 @@ namespace Game
             line.SetPosition(0, start.position);
         }
 
-        void OnHit(RaycastHit obj)
+        void OnHit(Weapon.HitData data)
         {
-            line.SetPosition(1, obj.point);
+            line.SetPosition(1, data.Position);
         }
     }
 }

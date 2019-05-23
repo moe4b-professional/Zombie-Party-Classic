@@ -24,8 +24,6 @@ namespace Game
 	{
         public Weapon weapon;
 
-        public ParticleSystem particle;
-
         void Start()
         {
             weapon.Init(null);

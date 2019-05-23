@@ -36,8 +36,6 @@ namespace Game
         [SerializeField]
         Transform point;
 
-        WeaponHitEffects hitEffect;
-
         void Reset()
         {
             point = transform;
@@ -48,29 +46,22 @@ namespace Game
             base.Init(weapon);
 
             weapon.ActionEvent += Action;
-
-            hitEffect = weapon.GetComponentInChildren<WeaponHitEffects>();
         }
 
-        public event Action<RaycastHit> OnHit;
         void Action()
         {
             if (!enabled) return;
 
-            RaycastHit hit;
+            RaycastHit raycastHit;
 
-            if(Physics.Raycast(point.position, point.forward, out hit, range, mask, triggerInteraction))
+            if(Physics.Raycast(point.position, point.forward, out raycastHit, range, mask, triggerInteraction))
             {
-                if(hitEffect != null)
-                    hitEffect.Instantiate(hit);
-
-                var entity = hit.transform.GetComponent<Entity>();
+                var entity = raycastHit.transform.GetComponent<Entity>();
 
                 if (entity != null)
                     weapon.Damage(entity, damage);
 
-                if (OnHit != null) OnHit(hit);
-
+                weapon.InvokeHit(raycastHit.transform.gameObject, entity, raycastHit.point);
             }
             else
             {

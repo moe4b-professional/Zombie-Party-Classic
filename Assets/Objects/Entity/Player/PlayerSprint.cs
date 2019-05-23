@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    public class PlayerSprint : MonoBehaviour, Player.IReference
+    public class PlayerSprint : MonoBehaviour, IPlayerReference
     {
         public float DotProduct { get; protected set; }
 

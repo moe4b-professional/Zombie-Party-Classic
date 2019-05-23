@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class PlayerMovement : MonoBehaviour, Player.IReference
+	public class PlayerMovement : MonoBehaviour, IPlayerReference
 	{
         [SerializeField]
         protected float speed;
