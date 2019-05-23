@@ -1643,7 +1643,7 @@ GameObject:
   - component: {fileID: 1081903882}
   - component: {fileID: 1081903881}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1719,7 +1719,7 @@ Transform:
   m_LocalScale: {x: 4, y: 2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1118604676
 PrefabInstance:
@@ -2395,7 +2395,7 @@ Transform:
   m_Children:
   - {fileID: 1118604677}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1846565117
 MonoBehaviour:
@@ -2477,7 +2477,7 @@ PrefabInstance:
     - target: {fileID: 6948723971888156574, guid: 90518ce2f978e394a8a8cc2e2c41c217,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 6948723971888156574, guid: 90518ce2f978e394a8a8cc2e2c41c217,
         type: 3}
