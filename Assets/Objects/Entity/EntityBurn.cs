@@ -54,7 +54,9 @@ namespace Game
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
+#pragma warning disable CS0109
         new SkinnedMeshRenderer renderer;
+#pragma warning restore CS0109
         Color color;
 
         Entity entity;

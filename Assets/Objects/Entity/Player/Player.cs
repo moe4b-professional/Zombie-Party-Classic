@@ -26,7 +26,9 @@ namespace Game
 	{
         public const short ControllerID = 1;
 
+#pragma warning disable CS0109
         new public Rigidbody rigidbody { get; protected set; }
+#pragma warning restore CS0109
 
         public PlayerVariants Variants { get; protected set; }
         public PlayerMovement Movement { get; protected set; }

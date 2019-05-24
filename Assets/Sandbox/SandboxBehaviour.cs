@@ -22,16 +22,22 @@ namespace Game
     [DefaultExecutionOrder(-200)]
 	public class SandboxBehaviour : MonoBehaviour
 	{
-        public Weapon weapon;
+        public Weapon[] weapons;
 
         void Start()
         {
-            weapon.Init(null);
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i].Init(null);
+            }
         }
 
         void Update()
         {
-            weapon.Process(Input.GetMouseButton(0));
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i].Process(Input.GetMouseButton(0));
+            }
 
             if (Input.GetKeyDown(KeyCode.D))
                 SceneManager.LoadScene(Core.Asset.Scenes.Level.Name);

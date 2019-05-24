@@ -45,7 +45,9 @@ namespace Game
 
         Player player;
 
+#pragma warning disable CS0109
         new public Rigidbody rigidbody { get { return player.rigidbody; } }
+#pragma warning restore CS0109
 
         public ObserverInput Input { get { return player.Input; } }
 

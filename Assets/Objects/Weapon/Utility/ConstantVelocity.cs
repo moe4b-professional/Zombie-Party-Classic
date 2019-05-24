@@ -28,7 +28,9 @@ namespace Game
         [SerializeField]
         protected bool relative = false;
 
+#pragma warning disable CS0109
         new Rigidbody rigidbody;
+#pragma warning restore CS0109
 
         void Awake()
         {
