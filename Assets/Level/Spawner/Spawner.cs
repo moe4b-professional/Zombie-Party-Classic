@@ -88,6 +88,7 @@ namespace Game
             }
         }
 
+        public float spawnDelay = 1.5f;
         protected virtual IEnumerator WaveProcedure()
         {
             PopupLabel.Show("WAVE " + PopupLabel.Colorize(waveNumber.ToString(), "red"));
@@ -102,7 +103,10 @@ namespace Game
             };
 
             for (int i = 0; i < spawnCount; i++)
-                yield return SpawnProcedure(deathAction);
+            {
+                Spawn(deathAction);
+                yield return new WaitForSeconds(spawnDelay / waveNumber);
+            }
 
             while(true)
             {
@@ -112,9 +116,8 @@ namespace Game
                 yield return new WaitForEndOfFrame();
             }
         }
-
-        public float spawnDelay = 1.5f;
-        protected virtual IEnumerator SpawnProcedure(Entity.DeathDelegate deathAction)
+        
+        protected virtual Entity Spawn(Entity.DeathDelegate deathAction)
         {
             var prefab = GetPrefab();
 
@@ -126,7 +129,7 @@ namespace Game
             var entity = instance.GetComponent<Entity>();
             entity.OnDeath += deathAction;
 
-            yield return new WaitForSeconds(spawnDelay / waveNumber);
+            return entity;
         }
 
 #if UNITY_EDITOR

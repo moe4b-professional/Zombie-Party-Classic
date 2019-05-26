@@ -41,8 +41,10 @@ namespace Game
         {
             this.player = player;
 
-            //Apply(3);
-            Apply(player.Client.ID);
+            if (Application.isEditor && Input.GetKey(KeyCode.D))
+                Apply(3);
+            else
+                Apply(player.Client.ID);
         }
 
         protected virtual void Apply(int ID)

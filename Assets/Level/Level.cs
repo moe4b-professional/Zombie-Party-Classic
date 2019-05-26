@@ -26,6 +26,9 @@ namespace Game
 
         public static Level Instance { get; protected set; }
 
+#pragma warning disable CS0109
+        new public Camera camera { get; protected set; }
+#pragma warning restore CS0109
 
         public LevelMenu Menu { get; protected set; }
         protected virtual void InitMenu()
@@ -93,6 +96,8 @@ namespace Game
             }
 
             Instance = this;
+
+            camera = Camera.main;
 
             InitMenu();
 
