@@ -41,11 +41,16 @@ namespace Game
         protected WebServerCore webServer;
         public WebServerCore WebServer { get { return webServer; } }
 
+        [SerializeField]
+        protected CheatsCore cheats;
+        public CheatsCore Cheats { get { return cheats; } }
+
         public virtual void ForEachModule(Action<Core.Module> action)
         {
             action(scenes);
             action(server);
             action(webServer);
+            action(cheats);
         }
 
         public abstract class ModuleBase : ScriptableObject
@@ -53,6 +58,8 @@ namespace Game
             public const string MenuPath = Core.MenuPath + "Modules/";
 
             public Core Core { get { return Core.Asset; } }
+
+            public SceneAccessor SceneAccessor { get { return Core.SceneAccessor; } }
 
             public virtual void Configure()
             {
@@ -70,9 +77,7 @@ namespace Game
         public SceneAccessor SceneAccessor { get; protected set; }
         protected virtual void ConfigureSceneAccessor()
         {
-            SceneAccessor = new GameObject("Scene Accessor").AddComponent<SceneAccessor>();
-
-            SceneAccessor.Configure();
+            SceneAccessor = SceneAccessor.Create();
 
             SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
         }
@@ -119,11 +124,6 @@ namespace Game
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             ForEachModule(ConfigureModule);
-
-            if (Application.isEditor)
-                QualitySettings.vSyncCount = 0;
-
-            QualitySettings.vSyncCount = 0;
         }
 
         protected virtual void ConfigureModule(Core.Module module)
@@ -138,9 +138,12 @@ namespace Game
         }
 
         #region Init
+        public event Action OnInit;
         protected virtual void Init()
         {
             ForEachModule(InitModule);
+
+            if (OnInit != null) OnInit();
         }
 
         protected virtual void InitModule(Core.Module module)

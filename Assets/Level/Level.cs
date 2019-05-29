@@ -122,5 +122,10 @@ namespace Game
         {
             
         }
+
+        protected virtual void OnDestroy()
+        {
+            Instance = null;
+        }
     }
 }

@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: dbbc53a6bc8f5c64bb234194ce1380aa
-timeCreated: 1472976980
-licenseType: Store
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Body_jnt
     100002: Foot_Left_jnt
@@ -267,48 +265,72 @@ ModelImporter:
     13700094: SA_Zombie_Streetman
     13700096: SA_Zombie_Tourist
     13700098: SA_Zombie_Trucker
+  externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
     importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 0
     normalImportMode: 1
     tangentImportMode: 1
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human:
     - boneName: Hips_jnt
       humanName: Hips
@@ -480,380 +502,384 @@ ModelImporter:
         modified: 0
     skeleton:
     - name: SA_Character(Clone)
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Hips_jnt
-      position: {x: 3.62720075e-16, y: 1.04498756, z: -6.26920848e-18}
-      rotation: {x: 0, y: 0, z: -.707106829, w: .707106829}
+      parentName: 
+      position: {x: 3.6272008e-16, y: 1.0449876, z: -6.2692085e-18}
+      rotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Spine_jnt
-      position: {x: -.019048661, y: -5.15874299e-16, z: 6.26920848e-18}
-      rotation: {x: 6.93880415e-18, y: 3.52680668e-20, z: 1.05688028e-15, w: 1}
+      parentName: 
+      position: {x: -0.019048661, y: -5.158743e-16, z: 6.2692085e-18}
+      rotation: {x: 6.938804e-18, y: 3.5268067e-20, z: 1.0568803e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Spine_jnt 1
-      position: {x: -.336072505, y: 3.72617417e-16, z: 2.36434647e-18}
-      rotation: {x: 6.9388939e-18, y: 3.83681356e-33, z: -1.61025707e-15, w: 1}
+      parentName: 
+      position: {x: -0.3360725, y: 3.7261742e-16, z: 2.3643465e-18}
+      rotation: {x: 6.938894e-18, y: 3.8368136e-33, z: -1.6102571e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Chest_jnt
-      position: {x: -.334252715, y: -1.2999511e-15, z: -2.36434647e-18}
-      rotation: {x: 6.9388939e-18, y: 1.61657745e-32, z: -1.66533454e-16, w: 1}
+      parentName: 
+      position: {x: -0.33425272, y: -1.2999511e-15, z: -2.3643465e-18}
+      rotation: {x: 6.938894e-18, y: 1.6165774e-32, z: -1.6653345e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Neck_jnt
-      position: {x: -.228951901, y: 4.22168632e-16, z: 5.66728424e-19}
-      rotation: {x: 6.9388939e-18, y: 2.8864875e-32, z: -1.66533454e-15, w: 1}
+      parentName: 
+      position: {x: -0.2289519, y: 4.2216863e-16, z: 5.667284e-19}
+      rotation: {x: 6.938894e-18, y: 2.8864875e-32, z: -1.6653345e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Head_jnt
-      position: {x: -.0816741735, y: -5.98022466e-16, z: -5.66728424e-19}
-      rotation: {x: 6.9388939e-18, y: 4.04385103e-32, z: -0, w: 1}
+      parentName: 
+      position: {x: -0.08167417, y: -5.9802247e-16, z: -5.667284e-19}
+      rotation: {x: 6.938894e-18, y: 4.043851e-32, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Shoulder_Left_jnt
-      position: {x: -.219108447, y: -.272741646, z: .0076430398}
-      rotation: {x: -.707106829, y: .707106829, z: 4.82588254e-17, w: -3.83367873e-17}
+      parentName: 
+      position: {x: -0.21910845, y: -0.27274165, z: 0.00764304}
+      rotation: {x: -0.7071068, y: 0.7071068, z: 4.8258825e-17, w: -3.8336787e-17}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Arm_Left_jnt
-      position: {x: .292490363, y: 2.55795374e-15, z: .0076430398}
-      rotation: {x: 1, y: -2.66453526e-15, z: 6.89300565e-18, w: -6.12323426e-17}
+      parentName: 
+      position: {x: 0.29249036, y: 2.5579537e-15, z: 0.00764304}
+      rotation: {x: 1, y: -2.6645353e-15, z: 6.8930056e-18, w: -6.123234e-17}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Forearm_Left_jnt
-      position: {x: .471187979, y: -2.84217088e-16, z: 5.1165055e-17}
-      rotation: {x: -1.65629975e-32, y: 6.9388939e-18, z: -2.3869795e-15, w: 1}
+      parentName: 
+      position: {x: 0.47118798, y: -2.842171e-16, z: 5.1165055e-17}
+      rotation: {x: -1.6562998e-32, y: 6.938894e-18, z: -2.3869795e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Hand_Left_jnt
-      position: {x: .440299988, y: 0, z: 4.78105133e-17}
-      rotation: {x: -1.76586691e-13, y: 1, z: -7.27366144e-16, w: -2.31104956e-15}
+      parentName: 
+      position: {x: 0.4403, y: 0, z: 4.7810513e-17}
+      rotation: {x: -1.7658669e-13, y: 1, z: -7.2736614e-16, w: -2.3110496e-15}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Shoulder_Right_jnt
-      position: {x: -.219108447, y: .272741646, z: -.0076430398}
-      rotation: {x: -.707106829, y: .707106829, z: 4.82588254e-17, w: -3.83367873e-17}
+      parentName: 
+      position: {x: -0.21910845, y: 0.27274165, z: -0.00764304}
+      rotation: {x: -0.7071068, y: 0.7071068, z: 4.8258825e-17, w: -3.8336787e-17}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Arm_Right_jnt
-      position: {x: -.292490363, y: 1.98951967e-15, z: -.0076430398}
-      rotation: {x: -5.40452792e-21, y: 5.17011923e-19, z: 3.38043395e-15, w: 1}
+      parentName: 
+      position: {x: -0.29249036, y: 1.9895197e-15, z: -0.00764304}
+      rotation: {x: -5.404528e-21, y: 5.170119e-19, z: 3.380434e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Forearm_Right_jnt
-      position: {x: -.471189976, y: -2.84217077e-15, z: -6.46651463e-18}
-      rotation: {x: 6.11552494e-17, y: 5.43704427e-17, z: 4.71844785e-15, w: 1}
+      parentName: 
+      position: {x: -0.47118998, y: -2.8421708e-15, z: -6.4665146e-18}
+      rotation: {x: 6.115525e-17, y: 5.4370443e-17, z: 4.718448e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Hand_Right_jnt
-      position: {x: -.440299988, y: -4.83169023e-15, z: -6.04258663e-18}
-      rotation: {x: 1.44834313e-13, y: 1, z: -1.17145535e-15, w: 1.74662937e-15}
+      parentName: 
+      position: {x: -0.4403, y: -4.8316902e-15, z: -6.0425866e-18}
+      rotation: {x: 1.4483431e-13, y: 1, z: -1.1714554e-15, w: 1.7466294e-15}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: UpperLeg_Left_jnt
-      position: {x: .128917083, y: -.221588001, z: -.0178638734}
-      rotation: {x: -.0116954949, y: -.000402353529, z: .999931395, w: .000461597927}
+      parentName: 
+      position: {x: 0.12891708, y: -0.221588, z: -0.017863873}
+      rotation: {x: -0.011695495, y: -0.00040235353, z: 0.9999314, w: 0.00046159793}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: LowerLeg_Left_jnt
-      position: {x: -.374521613, y: 7.1054272e-17, z: 1.110223e-18}
-      rotation: {x: -.707590222, y: 6.44689135e-06, z: -6.14591227e-06, w: .706623018}
+      parentName: 
+      position: {x: -0.3745216, y: 7.105427e-17, z: 1.110223e-18}
+      rotation: {x: -0.7075902, y: 0.0000064468913, z: -0.0000061459123, w: 0.706623}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Foot_Left_jnt
-      position: {x: -.388743728, y: -1.72084554e-17, z: 7.34246431e-12}
-      rotation: {x: .506745458, y: .494267821, z: -.505197346, w: .493643612}
+      parentName: 
+      position: {x: -0.38874373, y: -1.7208455e-17, z: 7.342464e-12}
+      rotation: {x: 0.50674546, y: 0.49426782, z: -0.50519735, w: 0.4936436}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Toe_Left_jnt
-      position: {x: -6.72411432e-12, y: -.149733499, z: .219697013}
-      rotation: {x: 6.17708264e-15, y: 1.46690595e-16, z: -2.00402556e-16, w: 1}
+      parentName: 
+      position: {x: -6.7241143e-12, y: -0.1497335, z: 0.21969701}
+      rotation: {x: 6.1770826e-15, y: 1.466906e-16, z: -2.0040256e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: UpperLeg_Right_jnt
-      position: {x: .128916636, y: .22158809, z: .0178638808}
-      rotation: {x: .999907792, y: .000580901396, z: -.0117083928, w: .00685811508}
+      parentName: 
+      position: {x: 0.12891664, y: 0.22158809, z: 0.01786388}
+      rotation: {x: 0.9999078, y: 0.0005809014, z: -0.011708393, w: 0.006858115}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: LowerLeg_Right_jnt
-      position: {x: .374522001, y: 3.19744217e-16, z: -1.09874544e-12}
-      rotation: {x: -.704109967, y: -3.09605057e-05, z: 5.18196284e-05, w: .710090935}
+      parentName: 
+      position: {x: 0.374522, y: 3.1974422e-16, z: -1.0987454e-12}
+      rotation: {x: -0.70410997, y: -0.000030960506, z: 0.00005181963, w: 0.71009094}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Foot_Right_jnt
-      position: {x: .388743997, y: 8.19713655e-12, z: -3.69074007e-11}
-      rotation: {x: .495834202, y: .506727397, z: -.492732584, w: .50456953}
+      parentName: 
+      position: {x: 0.388744, y: 8.1971365e-12, z: -3.69074e-11}
+      rotation: {x: 0.4958342, y: 0.5067274, z: -0.49273258, w: 0.50456953}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Toe_Right_jnt
-      position: {x: -3.4907971e-06, y: .149733305, z: -.219697013}
-      rotation: {x: 8.77322845e-15, y: 1.42353118e-17, z: -2.97588138e-16, w: 1}
+      parentName: 
+      position: {x: -0.000003490797, y: 0.1497333, z: -0.21969701}
+      rotation: {x: 8.7732285e-15, y: 1.4235312e-17, z: -2.9758814e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Biohazard
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Businessman
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Doctor
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Farmer
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_FemaleHero
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_FemalePyro
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_FemaleSoldier
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_FemaleTrenchcoat
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Hazard
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_HoodedMan
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_InjuredMan
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Male_01
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Male_02
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Male_03
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Male_04
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_MaleHunter
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_MaleTrenchcoat
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_OldMan
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Prisoner
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_RoadWorker
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Scout
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Char_Survivor_Sheriff
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_AirportSecurity
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_AirportWorker
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Bellhop
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Businessman
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Cheerleader
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Clown
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Farmer
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_FarmersDaughter
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Firefighter
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_FootballPlayer
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Grandma
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Hobo
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Industrial
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Mechanic
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Mountie
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Pilot
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Pimp
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Prisoner
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Prostitute
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Roadworker
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Robber
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Runner
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Santa
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Shopkeeper
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Soldier
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Streetman
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Tourist
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: SA_Zombie_Trucker
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -50,9 +50,7 @@ namespace Game
         public void OnPointerClick(PointerEventData eventData)
         {
             if(Debug.isDebugBuild || Application.isEditor || eventData.button == PointerEventData.InputButton.Left)
-            {
                 Application.OpenURL(URL);
-            }
         }
     }
 }

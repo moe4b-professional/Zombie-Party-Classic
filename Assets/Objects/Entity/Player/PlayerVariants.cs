@@ -41,7 +41,7 @@ namespace Game
         {
             this.player = player;
 
-            if (Application.isEditor && Input.GetKey(KeyCode.D))
+            if (Core.Asset.Cheats.AllPlayersArePyro)
                 Apply(3);
             else
                 Apply(player.Client.ID);

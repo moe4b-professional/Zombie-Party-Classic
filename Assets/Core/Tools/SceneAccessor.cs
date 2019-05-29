@@ -21,19 +21,45 @@ namespace Game
 {
 	public class SceneAccessor : MonoBehaviour
 	{
-		public CoroutineManager Coroutine { get; protected set; }
-
-        public event Action ApplicationQuitEvent;
-        void OnApplicationQuit()
+        public static SceneAccessor Create()
         {
-            if (ApplicationQuitEvent != null) ApplicationQuitEvent();
-        }
+            var gameObject = new GameObject("Scene Accessor");
 
-        public virtual void Configure()
+            var component = gameObject.AddComponent<SceneAccessor>();
+
+            component.Configure();
+
+            return component;
+        }
+        protected virtual void Configure()
         {
             DontDestroyOnLoad(gameObject);
 
             Coroutine = new CoroutineManager(this);
+
+            ConfigureAudioSource();
+        }
+
+        public CoroutineManager Coroutine { get; protected set; }
+
+        public AudioSource AudioSource { get; protected set; }
+        protected virtual void ConfigureAudioSource()
+        {
+            AudioSource = gameObject.AddComponent<AudioSource>();
+
+            AudioSource.loop = false;
+        }
+
+        public event Action UpdateEvent;
+        protected virtual void Update()
+        {
+            if (UpdateEvent != null) UpdateEvent();
+        }
+
+        public event Action ApplicationQuitEvent;
+        protected virtual void OnApplicationQuit()
+        {
+            if (ApplicationQuitEvent != null) ApplicationQuitEvent();
         }
     }
 }

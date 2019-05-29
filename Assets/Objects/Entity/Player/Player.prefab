@@ -17962,7 +17962,7 @@ PrefabInstance:
     - target: {fileID: 5696309382769767399, guid: 7e30c43725418214e89ec9687b948045,
         type: 3}
       propertyPath: m_Name
-      value: SA_Character Variant
+      value: SA_Character
       objectReference: {fileID: 0}
     - target: {fileID: 5696309382769340359, guid: 7e30c43725418214e89ec9687b948045,
         type: 3}
@@ -18033,7 +18033,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 7ec3089fea528434b96e820585caa45d, type: 2}
+      objectReference: {fileID: 9100000, guid: a92f24a083a8e1c4bbb975511ec493b0, type: 2}
     - target: {fileID: 5696309382764560071, guid: 7e30c43725418214e89ec9687b948045,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -18081,6 +18081,16 @@ PrefabInstance:
     - target: {fileID: 1602616731, guid: 7e30c43725418214e89ec9687b948045, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 2.3643465e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696309382769339911, guid: 7e30c43725418214e89ec9687b948045,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00040235362
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696309382769339911, guid: 7e30c43725418214e89ec9687b948045,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.000461598
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e30c43725418214e89ec9687b948045, type: 3}
@@ -18133,10 +18143,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5325283149713274807}
     m_Modifications:
-    - target: {fileID: 168810, guid: 45d2bc2c9ccd4e440ab916f134b20ad1, type: 3}
-      propertyPath: m_Name
-      value: SA_Wep_FlamethrowerHandle
-      objectReference: {fileID: 0}
     - target: {fileID: 442530, guid: 45d2bc2c9ccd4e440ab916f134b20ad1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18181,6 +18187,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 168810, guid: 45d2bc2c9ccd4e440ab916f134b20ad1, type: 3}
+      propertyPath: m_Name
+      value: SA_Wep_FlamethrowerHandle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45d2bc2c9ccd4e440ab916f134b20ad1, type: 3}
 --- !u!4 &681341693856970408 stripped
@@ -18202,10 +18212,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 388026803315800586}
     m_Modifications:
-    - target: {fileID: 179986, guid: 65389442798920a489c4dd8f72671788, type: 3}
-      propertyPath: m_Name
-      value: SA_Wep_AssaultRifle01
-      objectReference: {fileID: 0}
     - target: {fileID: 456384, guid: 65389442798920a489c4dd8f72671788, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18261,6 +18267,10 @@ PrefabInstance:
     - target: {fileID: 456384, guid: 65389442798920a489c4dd8f72671788, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 179986, guid: 65389442798920a489c4dd8f72671788, type: 3}
+      propertyPath: m_Name
+      value: SA_Wep_AssaultRifle01
       objectReference: {fileID: 0}
     - target: {fileID: 490126, guid: 65389442798920a489c4dd8f72671788, type: 3}
       propertyPath: m_LocalRotation.z
@@ -18359,10 +18369,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2200912636039128335}
     m_Modifications:
-    - target: {fileID: 123816, guid: 45d3b23ed254442429bb6f0ae22779ed, type: 3}
-      propertyPath: m_Name
-      value: SA_Wep_SMG
-      objectReference: {fileID: 0}
     - target: {fileID: 436096, guid: 45d3b23ed254442429bb6f0ae22779ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18419,6 +18425,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.63
       objectReference: {fileID: 0}
+    - target: {fileID: 123816, guid: 45d3b23ed254442429bb6f0ae22779ed, type: 3}
+      propertyPath: m_Name
+      value: SA_Wep_SMG
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45d3b23ed254442429bb6f0ae22779ed, type: 3}
 --- !u!4 &4988485678480475579 stripped
@@ -18440,11 +18450,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5746879161842297065}
     m_Modifications:
-    - target: {fileID: 6948723971888453346, guid: 90518ce2f978e394a8a8cc2e2c41c217,
-        type: 3}
-      propertyPath: m_Name
-      value: Flames
-      objectReference: {fileID: 0}
     - target: {fileID: 6948723971888156574, guid: 90518ce2f978e394a8a8cc2e2c41c217,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18499,6 +18504,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6948723971888453346, guid: 90518ce2f978e394a8a8cc2e2c41c217,
+        type: 3}
+      propertyPath: m_Name
+      value: Flames
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90518ce2f978e394a8a8cc2e2c41c217, type: 3}
