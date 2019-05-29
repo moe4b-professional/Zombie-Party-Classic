@@ -26,6 +26,7 @@ namespace Game
         public WeaponModel Model { get; protected set; }
 
         public Entity Owner { get; protected set; }
+
         public void Damage(Entity target, float damage)
         {
             target.TakeDamage(Owner, damage);
@@ -151,8 +152,6 @@ namespace Game
                     State = WeaponState.Idle;
             }
 
-            ProcessInput = input;
-
             if (ProcessEvent != null) ProcessEvent(input);
         }
 
@@ -162,21 +161,6 @@ namespace Game
             State = WeaponState.Action;
 
             if (ActionEvent != null) ActionEvent();
-        }
-
-        bool? ProcessInput;
-        void LateUpdate()
-        {
-            if (ProcessInput.HasValue)
-                LateProcess(ProcessInput.Value);
-        }
-
-        public event ProcessDelegate LateProcessEvent;
-        public void LateProcess(bool input)
-        {
-            ProcessInput = null;
-
-            if (LateProcessEvent != null) LateProcessEvent(input);
         }
 	}
 

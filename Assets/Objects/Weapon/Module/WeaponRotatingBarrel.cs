@@ -55,7 +55,6 @@ namespace Game
             base.Init(weapon);
 
             weapon.ProcessEvent += Process;
-            weapon.LateProcessEvent += LateProcess;
         }
 
         void Process(bool input)
@@ -66,7 +65,7 @@ namespace Game
                 rate = Mathf.MoveTowards(rate, 0f, deAcceleration * Time.deltaTime);
         }
 
-        void LateProcess(bool input)
+        protected virtual void LateUpdate()
         {
             target.Rotate(axis * rate * rotationMultiplier);
         }
