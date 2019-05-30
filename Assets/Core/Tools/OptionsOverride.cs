@@ -22,6 +22,7 @@ namespace Game
 	public static class OptionsOverride
 	{
         public const string FileName = "Options Override.txt";
+
         public static string FilePath
         {
             get
@@ -58,11 +59,11 @@ namespace Game
 
             return Entries[key];
         }
-        public static T Get<T>(string key, Func<string, T> parse)
+        public static T Get<T>(string key, Func<string, T> parser)
         {
             var value = Get(key);
 
-            return parse(value);
+            return parser(value);
         }
 
         public static string Get(string key, string defaultValue)
@@ -72,10 +73,10 @@ namespace Game
             else
                 return defaultValue;
         }
-        public static T Get<T>(string key, Func<string, T> parse, T defaultValue)
+        public static T Get<T>(string key, Func<string, T> parser, T defaultValue)
         {
             if (Entries.ContainsKey(key))
-                return Get(key, parse);
+                return Get(key, parser);
             else
                 return defaultValue;
         }

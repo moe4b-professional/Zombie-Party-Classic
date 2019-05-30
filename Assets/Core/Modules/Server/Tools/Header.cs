@@ -44,8 +44,8 @@ namespace Game
 
             var index = text.IndexOf(Colon);
 
-            var key = text.Substring(0, index);
-            var value = text.Substring(index + 1);
+            var key = text.Substring(0, index).Trim();
+            var value = text.Substring(index + 1).Trim();
 
             return new KeyValuePair<string, string>(key, value);
         }
