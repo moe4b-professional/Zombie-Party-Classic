@@ -68,14 +68,21 @@ namespace Game
             server.Start();
         }
 
-        private void OnRequest(object sender, HttpRequestEventArgs args)
+        void OnRequest(object sender, HttpRequestEventArgs args)
         {
-            if (args.Request.HttpMethod == "RSC") OnRSCRequest(sender, args);
+            switch (args.Request.HttpMethod)
+            {
+                case "RSC":
+                    OnResourceRequest(sender, args);
+                    break;
 
-            if (args.Request.HttpMethod == "GET") OnGetRequest(sender, args);
+                case "GET":
+                    OnGetRequest(sender, args);
+                    break;
+            }
         }
 
-        void OnRSCRequest(object sender, HttpRequestEventArgs args)
+        void OnResourceRequest(object sender, HttpRequestEventArgs args)
         {
             var request = args.Request.Path.Substring(1);
             request = Regex.Replace(request, "%20", " ");
