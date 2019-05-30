@@ -121,9 +121,11 @@ namespace Game
 
             Initializer.Configure();
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            OptionsOverride.Configure();
 
             ForEachModule(ConfigureModule);
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         protected virtual void ConfigureModule(Core.Module module)

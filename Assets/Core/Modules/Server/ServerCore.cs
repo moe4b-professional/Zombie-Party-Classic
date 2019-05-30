@@ -123,6 +123,8 @@ namespace Game
         {
             base.Configure();
 
+            port = OptionsOverride.Get("server port", int.Parse, port);
+
             Application.runInBackground = true;
 
             NetworkMessage.Configure();

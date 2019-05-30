@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 135c9b99ffc18254ea7cbaa35035f1e8, type: 3}
   m_Name: Server Core
   m_EditorClassIdentifier: 
-  port: 8080
+  port: 5460
   size: 4
   clients: {fileID: 11400000, guid: 32788e7e1d7c97a43a381488b137ff53, type: 2}

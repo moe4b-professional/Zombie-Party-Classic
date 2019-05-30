@@ -23,25 +23,18 @@ namespace Game
 {
     public static class Header
     {
+        public const char Colon = ':';
+
         public static bool IsValid(string text)
         {
             if (string.IsNullOrEmpty(text)) return false;
 
-            int count = text.Count(character => character == ':');
+            if (text.Count(character => character == Colon) < 1) return false; //Make sure there is only one colon in the text
 
-            if (count > 1) return false;
+            var index = text.IndexOf(Colon); //get the index of that semi colon
+            if (index == 0 || index == text.Length - 1) return false; //return false if the semi colon is the first or last character
 
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (text[i] == ':')
-                {
-                    if (i == 0) return false;
-                    else if (i == text.Length - 1) return false;
-                    else return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         public static KeyValuePair<string, string> Parse(string text)
@@ -49,24 +42,40 @@ namespace Game
             if (!IsValid(text))
                 throw new InvalidDataException();
 
-            text = Regex.Replace(text, ": ", ":");
+            var index = text.IndexOf(Colon);
 
-            var pair = text.Split(':');
+            var key = text.Substring(0, index);
+            var value = text.Substring(index + 1);
 
-            pair[0] = pair[0].ToLower();
-
-            return new KeyValuePair<string, string>(pair[0], pair[1]);
+            return new KeyValuePair<string, string>(key, value);
         }
 
         public static Dictionary<string, string> ParseAll(IList<string> headers)
         {
-            var dictionary = new Dictionary<string, string>();
+            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             for (int i = 0; i < headers.Count; i++)
             {
                 var pair = Parse(headers[i]);
 
                 dictionary.Add(pair.Key, pair.Value);
+            }
+
+            return dictionary;
+        }
+        public static Dictionary<string, string> ParseAll(string text)
+        {
+            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            var lines = Regex.Split(text, Environment.NewLine);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (!IsValid(lines[i])) continue;
+
+                var element = Parse(lines[i]);
+
+                dictionary.Add(element.Key, element.Value);
             }
 
             return dictionary;
@@ -79,6 +88,11 @@ namespace Game
                     return pair;
 
             throw new KeyNotFoundException("No header with the key: " + key + " was found");
+        }
+
+        public static bool Compare(KeyValuePair<string, string> header, string key)
+        {
+            return header.Key == key.ToLower();
         }
     }
 }

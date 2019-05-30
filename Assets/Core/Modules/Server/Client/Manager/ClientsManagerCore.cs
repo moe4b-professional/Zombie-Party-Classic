@@ -214,16 +214,7 @@ namespace Game
         {
             if (args.IsText)
             {
-                if (Header.IsValid(args.Data)) //is a header
-                {
-                    var header = Header.Parse(args.Data);
-
-                    if (header.Key == "ready")
-                    {
-                        SetClientReadiness(client, bool.Parse(header.Value));
-                    }
-                }
-                else if(args.Data.Contains("\"ID\":")) //is a networkmessage .... hopefully
+                if(args.Data.Contains("\"ID\":")) //is a networkmessage .... hopefully
                 {
                     try
                     {
@@ -234,6 +225,15 @@ namespace Game
                     catch (Exception)
                     {
                         throw;
+                    }
+                }
+                else if (Header.IsValid(args.Data)) //is a header
+                {
+                    var header = Header.Parse(args.Data);
+
+                    if (header.Key == "ready")
+                    {
+                        SetClientReadiness(client, bool.Parse(header.Value));
                     }
                 }
             }

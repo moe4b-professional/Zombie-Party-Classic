@@ -22,6 +22,8 @@ using System.Net;
 using NHttp;
 using System.Text.RegularExpressions;
 
+using System.Text;
+
 namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Web Server")]
@@ -49,11 +51,11 @@ namespace Game
         {
             base.Configure();
 
+            port = OptionsOverride.Get("web server port", int.Parse, port);
+
             Root = Application.streamingAssetsPath;
 
             Mimes.Configure();
-
-            Core.SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
         }
 
         public void Start()
@@ -67,6 +69,29 @@ namespace Game
         }
 
         private void OnRequest(object sender, HttpRequestEventArgs args)
+        {
+            if (args.Request.HttpMethod == "RSC") OnRSCRequest(sender, args);
+
+            if (args.Request.HttpMethod == "GET") OnGetRequest(sender, args);
+        }
+
+        void OnRSCRequest(object sender, HttpRequestEventArgs args)
+        {
+            var request = args.Request.Path.Substring(1);
+            request = Regex.Replace(request, "%20", " ");
+            request = request.ToLower();
+
+            if(request == "server port")
+            {
+                var data = Encoding.UTF8.GetBytes(Core.Server.Port.ToString());
+
+                args.Response.StatusCode = 200;
+                args.Response.StatusDescription = "OK.";
+                args.Response.OutputStream.Write(data, 0, data.Length);
+            }
+        }
+
+        void OnGetRequest(object sender, HttpRequestEventArgs args)
         {
             string resourcePath = Root + "/Web-Server" + Regex.Replace(args.Request.Path, "%20", " ");
 
@@ -91,13 +116,13 @@ namespace Game
                     mime = null;
                 }
 
-                if(mime != null)
+                if (mime != null)
                     args.Response.ContentType = mime;
 
                 using (FileStream file = File.OpenRead(resourcePath))
                 {
                     var length = (int)file.Length;
-                    
+
                     byte[] buffer;
 
                     using (BinaryReader reader = new BinaryReader(file))
@@ -122,10 +147,6 @@ namespace Game
             server.Stop();
 
             server = null;
-        }
-        void OnApplicationQuit()
-        {
-            Stop();
         }
     }
 }
