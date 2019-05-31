@@ -18,11 +18,10 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 using System.Net;
-
-using NHttp;
+using System.Text;
 using System.Text.RegularExpressions;
 
-using System.Text;
+using NHttp;
 
 namespace Game
 {
@@ -32,6 +31,21 @@ namespace Game
         [SerializeField]
         protected int port = 7878;
         public int Port { get { return port; } }
+
+        public IPAddress Address { get; protected set; }
+        protected virtual void InitAddress()
+        {
+            try
+            {
+                Address = OptionsOverride.Get("Internal IP Address", IPAddress.Parse, IPAddress.Any);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Error when getting Internal IP Address, Using any IP instead");
+
+                Address = IPAddress.Any;
+            }
+        }
 
         HttpServer server;
 
@@ -60,12 +74,23 @@ namespace Game
 
         public void Start()
         {
-            server = new HttpServer();
+            InitAddress();
 
-            server.EndPoint = new IPEndPoint(IPAddress.Any, port);
-            server.RequestReceived += OnRequest;
+            try
+            {
+                server = new HttpServer();
 
-            server.Start();
+                server.EndPoint = new IPEndPoint(Address, port);
+
+                server.RequestReceived += OnRequest;
+
+                server.Start();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error when initiating web server, message: " + e.ToString());
+                throw;
+            }
         }
 
         void OnRequest(object sender, HttpRequestEventArgs args)

@@ -60,7 +60,20 @@ namespace Game
         protected int size = 4;
         public int Size { get { return size; } }
 
-        public string Address { get; protected set; }
+        public IPAddress Address { get; protected set; }
+        protected virtual void InitAddress()
+        {
+            try
+            {
+                Address = OptionsOverride.Get("Internal IP Address", IPAddress.Parse, IPAddress.Any);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Error when getting Internal IP Address, Using any IP instead");
+
+                Address = IPAddress.Any;
+            }
+        }
 
         public WebSocketServer Server { get; protected set; }
 
@@ -141,11 +154,11 @@ namespace Game
 
         public virtual void Start()
         {
-            Address = GetLANIP();
+            InitAddress();
 
             try
             {
-                Server = new WebSocketServer(IPAddress.Any, port);
+                Server = new WebSocketServer(Address, port);
 
                 Server.KeepClean = true;
 
@@ -158,7 +171,7 @@ namespace Game
             }
             catch (Exception e)
             {
-                Debug.LogError("Error when starting server, message: " + e.Message);
+                Debug.LogError("Error when initiating server, message: " + e.ToString());
                 throw;
             }
 
@@ -204,32 +217,6 @@ namespace Game
             public ServerCore Server { get { return Core.Server; } }
 
             public InternalBehavior Behaviour { get { return Server.Behavior; } }
-        }
-
-
-        public const string LocalHost = "127.0.0.1";
-        public static string GetLANIP()
-        {
-            var interfaceTypes = new NetworkInterfaceType[] { NetworkInterfaceType.Wireless80211, NetworkInterfaceType.Ethernet };
-
-            foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                for (int i = 0; i < interfaceTypes.Length; i++)
-                {
-                    if ((netInterface.NetworkInterfaceType == interfaceTypes[i] || netInterface.Name.ToLower().Contains("lan")) && netInterface.OperationalStatus == OperationalStatus.Up)
-                    {
-                        foreach (UnicastIPAddressInformation ip in netInterface.GetIPProperties().UnicastAddresses)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            {
-                                return ip.Address.ToString();
-                            }
-                        }
-                    }
-                }
-            }
-
-            return LocalHost;
         }
     }
 }

@@ -19,14 +19,32 @@ using Random = UnityEngine.Random;
 
 using UnityEngine.EventSystems;
 
+using System.Net;
+
 namespace Game
 {
 	public class ServerConnectionGuide : MonoBehaviour, IPointerClickHandler
 	{
         public Core Core { get { return Core.Asset; } }
 
+        public IPAddress Address { get; protected set; }
+        protected virtual void InitAddress()
+        {
+            var local = LocalAddress.Get();
+
+            try
+            {
+                Address = OptionsOverride.Get("Display IP Address", IPAddress.Parse, local);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Error when getting Display IP Address, Using Local Address instead");
+
+                Address = local;
+            }
+        }
+
         public int Port { get { return Core.WebServer.Port; } }
-        public string Address { get { return Core.Server.Address; } }
 
         public string EndPoint { get { return Address + ":" + Port.ToString(); } }
 
@@ -42,6 +60,8 @@ namespace Game
 
         void Start()
         {
+            InitAddress();
+
             label.text = EndPoint;
 
             image.texture = QRUtility.Generate(URL, 256);
