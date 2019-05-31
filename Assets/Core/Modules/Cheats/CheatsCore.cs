@@ -129,7 +129,7 @@ namespace Game
                 foreach (var player in Level.Players.List)
                 {
                     player.Health.MaxValue *= 2;
-                    player.Health.Value *= 2;
+                    player.Health.Value = player.Health.MaxValue;
                 }
 
                 PlayAudio(sounds.On);

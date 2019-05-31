@@ -19,37 +19,54 @@ using Random = UnityEngine.Random;
 
 using ZXing;
 using ZXing.QrCode;
+using ZXing.Common;
 
 namespace Game
 {
 	public static class QRUtility
 	{
-        public static Texture2D Generate(string text, int size)
+        public static Texture2D Generate(string data, int size)
         {
-            var encoded = new Texture2D(size, size);
-
-            var color32 = Encode(text, size);
-
-            encoded.SetPixels32(color32);
-
-            encoded.Apply();
-
-            return encoded;
-        }
-
-        public static Color32[] Encode(string text, int size)
-        {
-            var writer = new BarcodeWriter
+            var writer = new BarcodeWriter()
             {
                 Format = BarcodeFormat.QR_CODE,
-                Options = new QrCodeEncodingOptions
+
+                Options = new EncodingOptions()
                 {
                     Height = size,
                     Width = size,
-                    Margin = 0,
+                    Margin = 0
                 }
             };
-            return writer.Write(text);
+
+            var matrix = writer.Encode(data);
+
+            var colors = BitMatrixToColors(matrix);
+            
+            Texture2D tex = new Texture2D(matrix.Width, matrix.Height);
+
+            tex.filterMode = FilterMode.Point;
+            tex.SetPixels(colors);
+
+            tex.Apply();
+
+            return tex;
+        }
+
+        public static Color[] BitMatrixToColors(BitMatrix matrix)
+        {
+            Color[] colors = new Color[matrix.Width * matrix.Height];
+
+            int pos = 0;
+            for (int y = 0; y < matrix.Height; y++)
+            {
+                for (int x = 0; x < matrix.Width; x++)
+                {
+                    colors[pos++] = matrix[x, y] ? Color.black : Color.white;
+                }
+            }
+
+            return colors;
         }
     }
 }

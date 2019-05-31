@@ -24,12 +24,16 @@ namespace Game
 	{
         public Weapon[] weapons;
 
+        public RawImage image;
+
         void Start()
         {
             for (int i = 0; i < weapons.Length; i++)
             {
                 weapons[i].Init(null);
             }
+
+            image.texture = QRUtility.Generate("Hello World, This is a large piece of text, goodbye", 256);
         }
 
         void Update()
