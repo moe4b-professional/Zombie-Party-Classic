@@ -39,15 +39,11 @@ namespace Game
         }
 
         [SerializeField]
-        protected ParticleSystem burn;
-        public ParticleSystem Burn { get { return burn; } }
+        protected EntityBurn burn;
+        public EntityBurn Burn { get { return burn; } }
         protected virtual void InitBurn()
         {
-            var renderer = Model.GetComponent<SkinnedMeshRenderer>();
-
-            var shape = burn.shape;
-
-            shape.skinnedMeshRenderer = renderer;
+            burn.SetModel(Model);
         }
         
         protected virtual void Awake()

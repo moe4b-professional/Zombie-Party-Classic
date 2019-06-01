@@ -152,6 +152,9 @@ namespace Game
                 var entity = colliders[i].attachedRigidbody.GetComponent<Entity>();
 
                 entity.TakeDamage(this, damage);
+
+                if (Burn.Active && entity.Burn != null)
+                    entity.Burn.Apply(this, EntityBurn.MaxValue * 2);
             }
         }
         #endregion

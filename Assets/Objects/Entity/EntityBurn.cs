@@ -26,7 +26,7 @@ namespace Game
         protected float value;
         public float Value { get { return value; } }
 
-        public const float MaxValue = 10;
+        public const float MaxValue = 100;
 
         [SerializeField]
         [Range(0f, 1f)]
@@ -57,15 +57,26 @@ namespace Game
 #pragma warning disable CS0109
         new SkinnedMeshRenderer renderer;
 #pragma warning restore CS0109
-        Color color;
+
+        public virtual void SetModel(GameObject gameObject)
+        {
+            renderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+
+            var shape = particle.shape;
+            shape.skinnedMeshRenderer = renderer;
+        }
+
+        [SerializeField]
+        protected bool colorize = true;
+        public bool Colorize { get { return colorize; } }
 
         Entity entity;
 		public virtual void Init(Entity reference)
         {
             this.entity = reference;
 
-            renderer = entity.GetComponentInChildren<SkinnedMeshRenderer>();
-            color = Color.Lerp(Color.white, Color.black, 0.8f);
+            if(renderer == null)
+                renderer = entity.GetComponentInChildren<SkinnedMeshRenderer>();
 
             SetParticleEmission(false);
         }
@@ -74,8 +85,6 @@ namespace Game
         {
             value += Mathf.Lerp(increase, 0f, resistance);
 
-            renderer.material.color = Color.Lerp(Color.white, Color.black, value / MaxValue * 0.8f);
-
             if (value >= MaxValue)
             {
                 value = MaxValue;
@@ -83,9 +92,13 @@ namespace Game
                 if (coroutine == null)
                     coroutine = StartCoroutine(Procedure(damager));
             }
+
+            if (colorize)
+                renderer.material.color = Color.Lerp(Color.white, Color.black, value / MaxValue * 0.85f);
         }
 
         Coroutine coroutine;
+        public virtual bool Active { get { return coroutine != null; } }
         protected virtual IEnumerator Procedure(Entity damager)
         {
             SetParticleEmission(true);

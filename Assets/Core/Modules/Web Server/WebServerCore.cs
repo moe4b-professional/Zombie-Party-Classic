@@ -115,10 +115,10 @@ namespace Game
 
             if(request == "server port")
             {
-                var data = Encoding.UTF8.GetBytes(Core.Server.Port.ToString());
-
                 args.Response.StatusCode = 200;
                 args.Response.StatusDescription = "OK.";
+
+                var data = Encoding.UTF8.GetBytes(Core.Server.Port.ToString());
                 args.Response.OutputStream.Write(data, 0, data.Length);
             }
         }

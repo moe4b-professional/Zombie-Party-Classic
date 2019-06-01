@@ -63,8 +63,9 @@ namespace Game
             }
 
             data.Model.SetActive(true);
-            data.Weapon.gameObject.SetActive(true);
+            player.Burn.SetModel(data.Model);
 
+            data.Weapon.gameObject.SetActive(true);
             player.Weapons.Set(data.Weapon);
         }
 	}
