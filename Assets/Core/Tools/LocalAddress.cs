@@ -29,16 +29,16 @@ namespace Game
 
         public static IPAddress Get()
         {
-            var types = new NetworkInterfaceType[] { NetworkInterfaceType.Wireless80211, NetworkInterfaceType.Ethernet };
-
             foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (networkInterface.OperationalStatus != OperationalStatus.Up) continue;
 
-                if (types.Contains(networkInterface.NetworkInterfaceType))
+                if(networkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                {
                     foreach (UnicastIPAddressInformation ip in networkInterface.GetIPProperties().UnicastAddresses)
                         if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                             return ip.Address;
+                }
             }
 
             return Default;

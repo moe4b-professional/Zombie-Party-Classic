@@ -26,32 +26,17 @@ using NHttp;
 namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Web Server")]
-	public class WebServerCore : Core.Module
+	public class WebServerCore : ServersCore.Module
 	{
         [SerializeField]
-        protected int port = 7878;
+        protected int port = 80;
         public int Port { get { return port; } }
-
-        public IPAddress Address { get; protected set; }
-        protected virtual void InitAddress()
-        {
-            try
-            {
-                Address = OptionsOverride.Get("Internal IP Address", IPAddress.Parse, IPAddress.Any);
-            }
-            catch (Exception)
-            {
-                Debug.LogError("Error when getting Internal IP Address, Using any IP instead");
-
-                Address = IPAddress.Any;
-            }
-        }
 
         HttpServer server;
 
         public string Root { get; protected set; }
 
-        public bool Active
+        public override bool Active
         {
             get
             {
@@ -65,17 +50,15 @@ namespace Game
         {
             base.Configure();
 
-            port = OptionsOverride.Get("web server port", int.Parse, port);
+            port = OptionsOverride.Get("Web Server Port", int.Parse, port);
 
             Root = Application.streamingAssetsPath;
 
             Mimes.Configure();
         }
 
-        public void Start()
+        public override void Start()
         {
-            InitAddress();
-
             try
             {
                 server = new HttpServer();
@@ -118,7 +101,7 @@ namespace Game
                 args.Response.StatusCode = 200;
                 args.Response.StatusDescription = "OK.";
 
-                var data = Encoding.UTF8.GetBytes(Core.Server.Port.ToString());
+                var data = Encoding.UTF8.GetBytes(Core.Servers.WebSocket.Port.ToString());
                 args.Response.OutputStream.Write(data, 0, data.Length);
             }
         }
@@ -172,7 +155,7 @@ namespace Game
             }
         }
 
-        public void Stop()
+        public override void Stop()
         {
             if (!Active) return;
 

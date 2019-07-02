@@ -27,7 +27,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
 
-        public ServerCore Server { get { return Core.Server; } }
+        public ServersCore Servers { get { return Core.Servers; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }
 
         void OnEnable()
@@ -43,7 +43,7 @@ namespace Game
 
             try
             {
-                Server.Start();
+                Servers.Start();
             }
             catch (Exception)
             {

@@ -20,6 +20,7 @@ namespace DNS.Server {
         public delegate void RespondedEventHandler(IRequest request, IResponse response);
 
         private volatile bool run = true;
+        public bool Run { get { return run; } }
 
         private IQuestionAnswerer questionAnswerer;
 

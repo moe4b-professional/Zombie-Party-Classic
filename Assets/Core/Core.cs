@@ -34,12 +34,8 @@ namespace Game
         public ScenesCore Scenes { get { return scenes; } }
 
         [SerializeField]
-        protected ServerCore server;
-        public ServerCore Server { get { return server; } }
-
-        [SerializeField]
-        protected WebServerCore webServer;
-        public WebServerCore WebServer { get { return webServer; } }
+        protected ServersCore servers;
+        public ServersCore Servers { get { return servers; } }
 
         [SerializeField]
         protected CheatsCore cheats;
@@ -48,8 +44,7 @@ namespace Game
         public virtual void ForEachModule(Action<Core.Module> action)
         {
             action(scenes);
-            action(server);
-            action(webServer);
+            action(servers);
             action(cheats);
         }
 
@@ -156,9 +151,7 @@ namespace Game
 
         protected virtual void OnApplicationQuit()
         {
-            if (server.Active) server.Stop();
-
-            if (webServer.Active) webServer.Stop();
+            servers.Stop();
 
             GC.Collect();
         }

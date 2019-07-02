@@ -27,8 +27,8 @@ namespace Game
 
         public ScenesCore Scenes { get { return Core.Scenes; } }
 
-        public ServerCore Server { get { return Core.Server; } }
-        public ClientsManagerCore Clients { get { return Server.Clients; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         public override void Execute()
         {

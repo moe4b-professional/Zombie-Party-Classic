@@ -57,8 +57,9 @@ namespace Game
 
         public List<PlayersListElement> Elements { get; protected set; }
 
-        public ServerCore Server { get { return Core.Asset.Server; } }
-        public ClientsManagerCore Clients { get { return Core.Asset.Server.Clients; } }
+        public Core Core { get { return Core.Asset; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         void Start()
         {

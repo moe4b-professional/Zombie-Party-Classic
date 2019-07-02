@@ -30,9 +30,9 @@ namespace Game
         protected string suffix;
         public string Suffix { get { return suffix; } }
 
-        public ServerCore Server { get { return Core.Asset.Server; } }
-
-        public ClientsManagerCore Clients { get { return Core.Asset.Server.Clients; } }
+        public Core Core { get { return Core.Asset; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         Text label;
 
@@ -48,7 +48,7 @@ namespace Game
 
         void UpdateState()
         {
-            label.text = prefix + "(" + Clients.Count + "/" + Server.Size + ")" + suffix;
+            label.text = prefix + "(" + Clients.Count + "/" + WebSocketServer.Size + ")" + suffix;
         }
 
         void OnDisconnection(Client client)

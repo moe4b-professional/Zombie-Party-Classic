@@ -69,7 +69,7 @@ namespace Game
         public LevelMenu Menu { get { return Level.Menu; } }
 
         public Core Core { get { return Core.Asset; } }
-        public ServerCore Server { get { return Core.Server; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
 
 
         public virtual void Init()

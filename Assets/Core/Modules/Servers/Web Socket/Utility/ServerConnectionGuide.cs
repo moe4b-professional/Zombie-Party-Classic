@@ -27,26 +27,20 @@ namespace Game
 	{
         public Core Core { get { return Core.Asset; } }
 
-        public IPAddress Address { get; protected set; }
-        protected virtual void InitAddress()
+        public IPAddress Address { get { return Core.Servers.Address; } }
+
+        public int Port { get { return Core.Servers.WebServer.Port; } }
+
+        public string EndPoint
         {
-            var local = LocalAddress.Get();
-
-            try
+            get
             {
-                Address = OptionsOverride.Get("Display IP Address", IPAddress.Parse, local);
-            }
-            catch (Exception)
-            {
-                Debug.LogError("Error when getting Display IP Address, Using Local Address instead");
-
-                Address = local;
+                if(Port == 80)
+                    return Address.ToString();
+                else
+                    return Address.ToString() + ":" + Port.ToString();
             }
         }
-
-        public int Port { get { return Core.WebServer.Port; } }
-
-        public string EndPoint { get { return Address + ":" + Port.ToString(); } }
 
         public string URL { get { return "http://" + EndPoint; } }
 
@@ -60,8 +54,6 @@ namespace Game
 
         void Start()
         {
-            InitAddress();
-
             label.text = EndPoint;
 
             image.texture = QRUtility.Generate(URL, 256);

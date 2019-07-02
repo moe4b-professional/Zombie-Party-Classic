@@ -38,11 +38,23 @@ using Newtonsoft.Json.Linq;
 namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
-    public class ServerCore : Core.Module
+    public class WebSocketServerCore : ServersCore.Module
 	{
-        new public const string MenuPath = Core.Module.MenuPath + "Server/";
+        new public const string MenuPath = ServersCore.Module.MenuPath + "Server/";
 
-        public bool Active
+        
+
+        [SerializeField]
+        protected int port = 5460;
+        public int Port { get { return port; } }
+
+        [SerializeField]
+        protected int size = 4;
+        public int Size { get { return size; } }
+
+        public WebSocketServer Server { get; protected set; }
+
+        public override bool Active
         {
             get
             {
@@ -52,31 +64,6 @@ namespace Game
             }
         }
 
-        [SerializeField]
-        protected int port = 8080;
-        public int Port { get { return port; } }
-
-        [SerializeField]
-        protected int size = 4;
-        public int Size { get { return size; } }
-
-        public IPAddress Address { get; protected set; }
-        protected virtual void InitAddress()
-        {
-            try
-            {
-                Address = OptionsOverride.Get("Internal IP Address", IPAddress.Parse, IPAddress.Any);
-            }
-            catch (Exception)
-            {
-                Debug.LogError("Error when getting Internal IP Address, Using any IP instead");
-
-                Address = IPAddress.Any;
-            }
-        }
-
-        public WebSocketServer Server { get; protected set; }
-
         public InternalBehavior Behavior { get; protected set; }
         void InitBehaviour(InternalBehavior behaviour)
         {
@@ -84,8 +71,9 @@ namespace Game
         }
         public class InternalBehavior : WebSocketBehavior
         {
-            public ServerCore Server { get { return Core.Asset.Server; } }
-            public ClientsManagerCore Clients { get { return Server.Clients; } }
+            public Core Core { get { return Core.Asset; } }
+            public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+            public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
             protected override void OnOpen()
             {
@@ -95,7 +83,7 @@ namespace Game
             }
             void OnOpen_UNITYSAFE(WebSocketContext context)
             {
-                Server.OnConnection(Context);
+                WebSocketServer.OnConnection(Context);
             }
 
             protected override void OnMessage(MessageEventArgs args)
@@ -106,7 +94,7 @@ namespace Game
             }
             void OnMessage_UNITY_SAFE(WebSocketContext context, MessageEventArgs args)
             {
-                Server.OnMessage(Context, args);
+                WebSocketServer.OnMessage(Context, args);
             }
 
             protected override void OnClose(CloseEventArgs args)
@@ -117,12 +105,12 @@ namespace Game
             }
             void OnClose_UNITY_SAFE(WebSocketContext context, CloseEventArgs args)
             {
-                Server.OnDisconnection(Context, args);
+                WebSocketServer.OnDisconnection(Context, args);
             }
 
             public InternalBehavior()
             {
-                Server.InitBehaviour(this);
+                WebSocketServer.InitBehaviour(this);
             }
         }
 
@@ -130,13 +118,15 @@ namespace Game
         protected ClientsManagerCore clients;
         public ClientsManagerCore Clients { get { return clients; } }
 
-        public WebServerCore WebServer { get { return Core.WebServer; } }
+        public WebServerCore WebServer { get { return Core.Servers.WebServer; } }
+
+        public DNSCore DNSServer { get { return Core.Servers.DNS; } }
 
         public override void Configure()
         {
             base.Configure();
 
-            port = OptionsOverride.Get("server port", int.Parse, port);
+            port = OptionsOverride.Get("Web Socket Port", int.Parse, port);
 
             Application.runInBackground = true;
 
@@ -152,10 +142,8 @@ namespace Game
             clients.Init();
         }
 
-        public virtual void Start()
+        public override void Start()
         {
-            InitAddress();
-
             try
             {
                 Server = new WebSocketServer(Address, port);
@@ -174,8 +162,6 @@ namespace Game
                 Debug.LogError("Error when initiating server, message: " + e.ToString());
                 throw;
             }
-
-            WebServer.Start();
         }
 
         public delegate void ContextOperationDelegate(WebSocketContext context);
@@ -199,7 +185,7 @@ namespace Game
             if (DisconnectionEvent != null) DisconnectionEvent(context, args);
         }
 
-        public virtual void Stop()
+        public override void Stop()
         {
             if (!Active) return;
 
@@ -209,14 +195,13 @@ namespace Game
             Behavior = null;
         }
 
-
         public abstract partial class Module : Core.Module
         {
-            new public const string MenuPath = ServerCore.MenuPath + "Modules/";
+            new public const string MenuPath = WebSocketServerCore.MenuPath + "Modules/";
 
-            public ServerCore Server { get { return Core.Server; } }
+            public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
 
-            public InternalBehavior Behaviour { get { return Server.Behavior; } }
+            public InternalBehavior Behaviour { get { return WebSocketServer.Behavior; } }
         }
     }
 }

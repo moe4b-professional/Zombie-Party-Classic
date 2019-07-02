@@ -28,8 +28,8 @@ namespace Game
         public Vector2 Look { get; protected set; }
 
         public Core Core { get { return Core.Asset; } }
-        public ServerCore Server { get { return Core.Server; } }
-        public ClientsManagerCore Clients { get { return Server.Clients; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         public LevelMenu Menu { get { return Level.Instance.Menu; } }
 

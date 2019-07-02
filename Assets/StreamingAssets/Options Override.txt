@@ -1,4 +1,4 @@
-Server Port: 5460
-Web Server Port: 5440
-Internal IP Address: 0.0.0.0
-*Display IP Address: 127.0.0.1
+Web Socket Port: 5460
+Web Server Port: 80
+DNS Port : 53
+*IP Address: 127.0.0.1

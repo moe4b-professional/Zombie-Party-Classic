@@ -83,12 +83,12 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }
-        public ServerCore Server { get { return Core.Server; } }
-        public ClientsManagerCore Clients { get { return Server.Clients; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         void Awake()
         {
-            if (!Core.Server.Active)
+            if (!WebSocketServer.Active)
             {
                 Scenes.Load(Scenes.MainMenu.Name);
                 enabled = false;

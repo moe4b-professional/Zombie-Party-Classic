@@ -1,0 +1,126 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.AI;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditorInternal;
+#endif
+
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+
+using System.Net;
+
+namespace Game
+{
+    [CreateAssetMenu(menuName = MenuPath + "Module")]
+	public class ServersCore : Core.Module
+	{
+        new public const string MenuPath = Core.Module.MenuPath + "Servers/";
+
+        public IPAddress Address { get; protected set; }
+        protected virtual void InitAddress()
+        {
+            Address = LocalAddress.Get();
+
+            try
+            {
+                Address = OptionsOverride.Get("IP Address", IPAddress.Parse, Address);
+            }
+            catch (Exception)
+            {
+                Debug.LogError("Error when getting IP Address, Using Local Address instead");
+            };
+        }
+
+        #region Modules
+        [SerializeField]
+        protected WebSocketServerCore webSocket;
+        public WebSocketServerCore WebSocket { get { return webSocket; } }
+
+        [SerializeField]
+        protected WebServerCore webServer;
+        public WebServerCore WebServer { get { return webServer; } }
+
+        [SerializeField]
+        protected DNSCore _DNS;
+        public DNSCore DNS { get { return _DNS; } }
+
+        public virtual void ForEachModule(Action<Module> action)
+        {
+            action(webSocket);
+            action(webServer);
+            action(DNS);
+        }
+        #endregion
+
+        public override void Configure()
+        {
+            base.Configure();
+
+            InitAddress();
+
+            ForEachModule(ConfigureModule);
+        }
+        protected virtual void ConfigureModule(Module module)
+        {
+            module.Configure();
+        }
+
+        public override void Init()
+        {
+            base.Init();
+
+            ForEachModule(InitModule);
+        }
+        protected virtual void InitModule(Module module)
+        {
+            module.Init();
+        }
+
+        public virtual void Start()
+        {
+            ForEachModule(StartModule);
+        }
+        protected virtual void StartModule(Module module)
+        {
+            module.Start();
+        }
+
+        public virtual void Stop()
+        {
+            ForEachModule(StopModule);
+        }
+        protected virtual void StopModule(Module module)
+        {
+            module.Stop();
+        }
+
+        public abstract class Module : Core.Module
+        {
+            public ServersCore Servers { get { return Core.Servers; } }
+
+            public IPAddress Address { get { return Servers.Address; } }
+
+            public abstract bool Active { get; }
+
+            public virtual void Start()
+            {
+
+            }
+
+            public virtual void Stop()
+            {
+
+            }
+        }
+	}
+}

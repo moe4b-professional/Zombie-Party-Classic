@@ -26,7 +26,7 @@ using WebSocketSharp.Net.WebSockets;
 namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Clients")]
-	public class ClientsManagerCore : ServerCore.Module
+	public class ClientsManagerCore : WebSocketServerCore.Module
 	{
         public List<Client> List { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace Game
 
         protected virtual int GetVacantID()
         {
-            for (int i = 0; i < Server.Size; i++)
+            for (int i = 0; i < WebSocketServer.Size; i++)
             {
                 if (Contains(i)) continue;
                 else return i;
@@ -83,8 +83,8 @@ namespace Game
 
             ClientNetworkMessageEvent = new NetworkMessageDispatcher();
 
-            Server.MessageEvent += OnInternalMessage;
-            Server.DisconnectionEvent += OnDisconnection;
+            WebSocketServer.MessageEvent += OnInternalMessage;
+            WebSocketServer.DisconnectionEvent += OnDisconnection;
         }
 
         void OnInternalMessage(WebSocketContext context, MessageEventArgs args)
