@@ -21,7 +21,7 @@ using System.Net;
 
 namespace Game
 {
-    [CreateAssetMenu(menuName = MenuPath + "Module")]
+    [CreateAssetMenu(menuName = MenuPath + "Asset")]
 	public class ServersCore : Core.Module
 	{
         new public const string MenuPath = Core.Module.MenuPath + "Servers/";
@@ -106,6 +106,8 @@ namespace Game
 
         public abstract class Module : Core.Module
         {
+            new public const string MenuPath = ServersCore.MenuPath + "Modules/";
+
             public ServersCore Servers { get { return Core.Servers; } }
 
             public IPAddress Address { get { return Servers.Address; } }

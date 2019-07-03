@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1166e0eefa2ef4092526a06fc58fb2, type: 3}
   m_Name: DNS Core
   m_EditorClassIdentifier: 
+  port: 53
+  _URL: game.com

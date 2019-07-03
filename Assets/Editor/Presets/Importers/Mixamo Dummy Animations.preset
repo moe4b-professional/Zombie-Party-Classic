@@ -4,7 +4,8 @@
 Preset:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Mixamo Dummy Animations
   m_TargetType:
     m_NativeTypeID: 1041
@@ -12,323 +13,11 @@ Preset:
     m_ManagedTypeFallback: 
   m_Properties:
   - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.size
-    value: 38
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[0].first
-    value: 100000
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[0].second
-    value: //RootNode
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[1].first
-    value: 100002
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[1].second
-    value: Head
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[2].first
-    value: 100004
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[2].second
-    value: Hips
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[3].first
-    value: 100006
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[3].second
-    value: Left_Arm
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[4].first
-    value: 100008
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[4].second
-    value: Left_Elbow
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[5].first
-    value: 100010
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[5].second
-    value: Left_Foot
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[6].first
-    value: 100012
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[6].second
-    value: Left_Hand
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[7].first
-    value: 100014
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[7].second
-    value: Left_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[8].first
-    value: 100016
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[8].second
-    value: Left_Lower_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[9].first
-    value: 100018
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[9].second
-    value: Right_Ankle
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[10].first
-    value: 100020
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[10].second
-    value: Right_Arm
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[11].first
-    value: 100022
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[11].second
-    value: Right_Elbow
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[12].first
-    value: 100024
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[12].second
-    value: Right_Foot
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[13].first
-    value: 100026
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[13].second
-    value: Right_Hand
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[14].first
-    value: 100028
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[14].second
-    value: Right_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[15].first
-    value: 100030
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[15].second
-    value: Spine_1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[16].first
-    value: 100032
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[16].second
-    value: Spine_2
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[17].first
-    value: 100034
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[17].second
-    value: Spine_3
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[18].first
-    value: 400000
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[18].second
-    value: //RootNode
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[19].first
-    value: 400002
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[19].second
-    value: Head
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[20].first
-    value: 400004
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[20].second
-    value: Hips
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[21].first
-    value: 400006
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[21].second
-    value: Left_Arm
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[22].first
-    value: 400008
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[22].second
-    value: Left_Elbow
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[23].first
-    value: 400010
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[23].second
-    value: Left_Foot
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[24].first
-    value: 400012
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[24].second
-    value: Left_Hand
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[25].first
-    value: 400014
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[25].second
-    value: Left_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[26].first
-    value: 400016
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[26].second
-    value: Left_Lower_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[27].first
-    value: 400018
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[27].second
-    value: Right_Ankle
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[28].first
-    value: 400020
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[28].second
-    value: Right_Arm
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[29].first
-    value: 400022
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[29].second
-    value: Right_Elbow
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[30].first
-    value: 400024
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[30].second
-    value: Right_Foot
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[31].first
-    value: 400026
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[31].second
-    value: Right_Hand
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[32].first
-    value: 400028
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[32].second
-    value: Right_Leg
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[33].first
-    value: 400030
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[33].second
-    value: Spine_1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[34].first
-    value: 400032
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[34].second
-    value: Spine_2
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[35].first
-    value: 400034
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[35].second
-    value: Spine_3
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[36].first
-    value: 7400000
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[36].second
-    value: Walking
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[37].first
-    value: 9500000
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_FileIDToRecycleName.Array.data[37].second
-    value: //RootNode
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
     propertyPath: m_ExternalObjects.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_ImportMaterials
-    value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_SupportsEmbeddedMaterials
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -342,10 +31,6 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_MaterialLocation
     value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_Materials.Array.size
-    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_LegacyGenerateAnimations
@@ -612,6 +297,10 @@ Preset:
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_UseSRGBMaterialColor
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_ImportVisibility
     value: 1
     objectReference: {fileID: 0}
@@ -680,10 +369,6 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_FileScale
-    value: 0.01
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
     propertyPath: m_PreviousCalculatedGlobalScale
     value: 0.01
     objectReference: {fileID: 0}
@@ -708,59 +393,15 @@ Preset:
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.size
-    value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].name
-    value: mixamo.com
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].defaultClipName
-    value: Walking
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].startTime
+    propertyPath: legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].stopTime
-    value: 1.0333334
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].bakeStartTime
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].bakeStopTime
-    value: 1.0333333
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].sampleRate
-    value: 30
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedTakeInfos.Array.data[0].clip
-    value: 
-    objectReference: {fileID: 110800000, guid: d422678a44f06374da2873087b9b8bd6, type: 3}
-  - target: {fileID: 0}
-    propertyPath: m_ReferencedClips.Array.size
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_ImportedRoots.Array.size
+    propertyPath: blendShapeNormalImportMode
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_ImportedRoots.Array.data[0]
-    value: 
-    objectReference: {fileID: 100000, guid: d422678a44f06374da2873087b9b8bd6, type: 3}
-  - target: {fileID: 0}
-    propertyPath: m_HasExtraRoot
-    value: 1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_HasEmbeddedTextures
+    propertyPath: normalSmoothingSource
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -3278,22 +2919,6 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_HumanDescription.m_RootMotionBoneName
     value: 
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_HumanDescription.m_RootMotionBoneRotation.x
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_HumanDescription.m_RootMotionBoneRotation.y
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_HumanDescription.m_RootMotionBoneRotation.z
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_HumanDescription.m_RootMotionBoneRotation.w
-    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_HumanDescription.m_HasTranslationDoF

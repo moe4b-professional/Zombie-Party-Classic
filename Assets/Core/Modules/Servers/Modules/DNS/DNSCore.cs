@@ -29,12 +29,16 @@ using System.Threading;
 
 namespace Game
 {
-    [CreateAssetMenu(menuName = MenuPath + "DNS Server")]
+    [CreateAssetMenu(menuName = MenuPath + "DNS")]
     public class DNSCore : ServersCore.Module, IQuestionAnswerer
     {
         [SerializeField]
         protected int port = 53;
         public int Port { get { return port; } }
+
+        [SerializeField]
+        protected string _URL = "game.com";
+        public string URL { get { return _URL; } set { _URL = value; } }
 
         DnsServer server;
 
@@ -53,6 +57,8 @@ namespace Game
             base.Configure();
 
             port = OptionsOverride.Get("DNS Port", int.Parse, port);
+
+            URL = OptionsOverride.Get("DNS URL", URL);
         }
 
         public override void Start()
@@ -72,8 +78,6 @@ namespace Game
 
         public IList<IResourceRecord> Get(Question question)
         {
-            Debug.Log(question.Name.ToString());
-
             List<IResourceRecord> entries = new List<IResourceRecord>()
             {
                 new IPAddressResourceRecord(question.Name, Address)

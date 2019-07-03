@@ -25,6 +25,25 @@ namespace Game
 {
 	public class ServerConnectionGuide : MonoBehaviour, IPointerClickHandler
 	{
+        [SerializeField]
+        protected UIData _UI;
+        public UIData UI { get { return _UI; } }
+        [Serializable]
+        public class UIData
+        {
+            [SerializeField]
+            protected Text address;
+            public Text Address { get { return address; } }
+
+            [SerializeField]
+            protected Text _URL;
+            public Text URL { get { return _URL; } }
+
+            [SerializeField]
+            protected RawImage _QR;
+            public RawImage QR { get { return _QR; } }
+        }
+
         public Core Core { get { return Core.Asset; } }
 
         public IPAddress Address { get { return Core.Servers.Address; } }
@@ -35,7 +54,7 @@ namespace Game
         {
             get
             {
-                if(Port == 80)
+                if (Port == 80)
                     return Address.ToString();
                 else
                     return Address.ToString() + ":" + Port.ToString();
@@ -44,19 +63,13 @@ namespace Game
 
         public string URL { get { return "http://" + EndPoint; } }
 
-        [SerializeField]
-        protected Text label;
-        public Text Label { get { return label; } }
-
-        [SerializeField]
-        protected RawImage image;
-        public RawImage Image { get { return image; } }
-
         void Start()
         {
-            label.text = EndPoint;
+            UI.Address.text = EndPoint;
 
-            image.texture = QRUtility.Generate(URL, 256);
+            UI.URL.text = Core.Servers.DNS.URL;
+
+            UI.QR.texture = QRUtility.Generate(URL, 256);
         }
 
         public void OnPointerClick(PointerEventData eventData)

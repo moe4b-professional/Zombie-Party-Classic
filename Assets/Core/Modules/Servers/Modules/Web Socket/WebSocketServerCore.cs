@@ -40,9 +40,7 @@ namespace Game
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
     public class WebSocketServerCore : ServersCore.Module
 	{
-        new public const string MenuPath = ServersCore.Module.MenuPath + "Server/";
-
-        
+        new public const string MenuPath = ServersCore.Module.MenuPath + "Web Socket/";
 
         [SerializeField]
         protected int port = 5460;
