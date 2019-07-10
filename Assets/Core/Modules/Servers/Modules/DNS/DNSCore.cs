@@ -64,20 +64,21 @@ namespace Game
         public override void Start()
         {
             thread = new Thread(ThreadProcedure);
-
             thread.Start();
         }
 
         Thread thread;
         protected virtual void ThreadProcedure()
         {
-            server = new DnsServer(this, Address);
+            server = new DnsServer(this, Address, port);
 
-            server.Listen();
+            server.Listen(port);
         }
 
         public IList<IResourceRecord> Get(Question question)
         {
+            Debug.Log(question.Name.ToString());
+
             List<IResourceRecord> entries = new List<IResourceRecord>()
             {
                 new IPAddressResourceRecord(question.Name, Address)

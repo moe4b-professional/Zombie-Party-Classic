@@ -47,7 +47,7 @@ namespace Game
             }
         }
 
-        public static bool Exists(string key)
+        public static bool Contains(string key)
         {
             return Entries.ContainsKey(key);
         }

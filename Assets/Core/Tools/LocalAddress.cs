@@ -27,17 +27,32 @@ namespace Game
 	{
         public static IPAddress Default { get { return IPAddress.Loopback; } }
 
+        public static readonly List<NetworkInterfaceType> NetworkInterfaceTypes = new List<NetworkInterfaceType>()
+        {
+            NetworkInterfaceType.Wireless80211,
+            NetworkInterfaceType.Ethernet,
+        };
+
         public static IPAddress Get()
         {
+            List<NetworkInterface> interfaces = new List<NetworkInterface>();
+
             foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (networkInterface.OperationalStatus != OperationalStatus.Up) continue;
 
-                if(networkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                if (NetworkInterfaceTypes.Contains(networkInterface.NetworkInterfaceType))
+                    interfaces.Add(networkInterface);
+            }
+
+            for (int x = 0; x < NetworkInterfaceTypes.Count; x++)
+            {
+                for (int y = 0; y < interfaces.Count; y++)
                 {
-                    foreach (UnicastIPAddressInformation ip in networkInterface.GetIPProperties().UnicastAddresses)
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            return ip.Address;
+                    if (interfaces[y].NetworkInterfaceType == NetworkInterfaceTypes[x])
+                        foreach (UnicastIPAddressInformation AddressInfo in interfaces[y].GetIPProperties().UnicastAddresses)
+                            if (AddressInfo.Address.AddressFamily == AddressFamily.InterNetwork)
+                                return AddressInfo.Address;
                 }
             }
 

@@ -27,7 +27,7 @@ namespace Game
         new public const string MenuPath = Core.Module.MenuPath + "Servers/";
 
         public IPAddress Address { get; protected set; }
-        protected virtual void InitAddress()
+        protected virtual void GetAddresss()
         {
             Address = LocalAddress.Get();
 
@@ -66,8 +66,6 @@ namespace Game
         {
             base.Configure();
 
-            InitAddress();
-
             ForEachModule(ConfigureModule);
         }
         protected virtual void ConfigureModule(Module module)
@@ -88,6 +86,8 @@ namespace Game
 
         public virtual void Start()
         {
+            GetAddresss();
+
             ForEachModule(StartModule);
         }
         protected virtual void StartModule(Module module)
