@@ -50,37 +50,6 @@ namespace Game
             return new KeyValuePair<string, string>(key, value);
         }
 
-        public static Dictionary<string, string> ParseAll(IList<string> headers)
-        {
-            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            for (int i = 0; i < headers.Count; i++)
-            {
-                var pair = Parse(headers[i]);
-
-                dictionary.Add(pair.Key, pair.Value);
-            }
-
-            return dictionary;
-        }
-        public static Dictionary<string, string> ParseAll(string text)
-        {
-            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            var lines = Regex.Split(text, Environment.NewLine);
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (!IsValid(lines[i])) continue;
-
-                var element = Parse(lines[i]);
-
-                dictionary.Add(element.Key, element.Value);
-            }
-
-            return dictionary;
-        }
-
         public static KeyValuePair<string, string> Find(string key, Dictionary<string, string> headers)
         {
             foreach (var pair in headers)

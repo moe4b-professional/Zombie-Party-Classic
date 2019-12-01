@@ -34,7 +34,7 @@ namespace Game
 
         HttpServer server;
 
-        public string Root { get; protected set; }
+        public string Root => Application.streamingAssetsPath;
 
         public override bool Active
         {
@@ -50,9 +50,7 @@ namespace Game
         {
             base.Configure();
 
-            port = OptionsOverride.Get("Web Server Port", int.Parse, port);
-
-            Root = Application.streamingAssetsPath;
+            port = OptionsOverride.Get("Web Server Port", port);
 
             Mimes.Configure();
         }
@@ -61,9 +59,10 @@ namespace Game
         {
             try
             {
-                server = new HttpServer();
-
-                server.EndPoint = new IPEndPoint(Address, port);
+                server = new HttpServer
+                {
+                    EndPoint = new IPEndPoint(IPAddress.Any, port)
+                };
 
                 server.RequestReceived += OnRequest;
 
@@ -80,35 +79,19 @@ namespace Game
         {
             switch (args.Request.HttpMethod)
             {
-                case "RSC":
-                    OnResourceRequest(sender, args);
-                    break;
-
                 case "GET":
                     OnGetRequest(sender, args);
                     break;
-            }
-        }
 
-        void OnResourceRequest(object sender, HttpRequestEventArgs args)
-        {
-            var request = args.Request.Path.Substring(1);
-            request = Regex.Replace(request, "%20", " ");
-            request = request.ToLower();
-
-            if(request == "server port")
-            {
-                args.Response.StatusCode = 200;
-                args.Response.StatusDescription = "OK.";
-
-                var data = Encoding.UTF8.GetBytes(Core.Servers.WebSocket.Port.ToString());
-                args.Response.OutputStream.Write(data, 0, data.Length);
+                case "RSC":
+                    OnResourceRequest(sender, args);
+                    break;
             }
         }
 
         void OnGetRequest(object sender, HttpRequestEventArgs args)
         {
-            string resourcePath = Root + "/Web-Server" + Regex.Replace(args.Request.Path, "%20", " ");
+            string resourcePath = Root + "/Web-Server" + RestoreUrlSpaces(args.Request.Path);
 
             if (args.Request.Path == "/")
                 resourcePath += "index.html";
@@ -154,6 +137,23 @@ namespace Game
                 args.Response.StatusDescription = "Not Found";
             }
         }
+        void OnResourceRequest(object sender, HttpRequestEventArgs args)
+        {
+            var request = args.Request.Path.Substring(1);
+            request = RestoreUrlSpaces(request);
+            request = request.ToLower();
+
+            if(request == "server port")
+            {
+                args.Response.StatusCode = 200;
+                args.Response.StatusDescription = "OK.";
+
+                var data = Encoding.UTF8.GetBytes(Core.Servers.WebSocket.Port.ToString());
+                args.Response.OutputStream.Write(data, 0, data.Length);
+            }
+        }
+
+        string RestoreUrlSpaces(string target) => target.Replace("%20", " ");
 
         public override void Stop()
         {

@@ -17,9 +17,6 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
-
 namespace Game
 {
 	public class PlayersManager : MonoBehaviour

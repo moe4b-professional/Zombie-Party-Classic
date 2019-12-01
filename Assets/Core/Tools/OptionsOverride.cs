@@ -17,11 +17,13 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using Newtonsoft.Json.Linq;
+
 namespace Game
 {
 	public static class OptionsOverride
 	{
-        public const string FileName = "Options Override.txt";
+        public const string FileName = "Options Override.json";
 
         public static string FilePath
         {
@@ -31,18 +33,23 @@ namespace Game
             }
         }
 
-        public static Dictionary<string, string> Entries { get; private set; }
+        public static Dictionary<string, JToken> Entries { get; private set; }
 
         public static void Configure()
         {
+            Entries = new Dictionary<string, JToken>(StringComparer.OrdinalIgnoreCase);
+
             if (File.Exists(FilePath))
             {
-                Entries = Header.ParseAll(File.ReadAllText(FilePath));
+                var text = File.ReadAllText(FilePath);
+
+                var jObject = JObject.Parse(text);
+
+                foreach (var pair in jObject)
+                    Entries.Add(pair.Key, pair.Value);
             }
             else
             {
-                Entries = null;
-
                 Debug.LogWarning("Configuring Options Overrie but no file was found is Streaming Assets");
             }
         }
@@ -52,31 +59,24 @@ namespace Game
             return Entries.ContainsKey(key);
         }
         
-        public static string Get(string key)
+        public static JToken Get(string key)
         {
             if (!Entries.ContainsKey(key))
                 throw new KeyNotFoundException("No Override Found with Key: " + key);
 
             return Entries[key];
         }
-        public static T Get<T>(string key, Func<string, T> parser)
+        public static TType Get<TType>(string key)
         {
             var value = Get(key);
 
-            return parser(value);
+            return value.ToObject<TType>();
         }
 
-        public static string Get(string key, string defaultValue)
+        public static TType Get<TType>(string key, TType defaultValue)
         {
             if (Entries.ContainsKey(key))
-                return Get(key);
-            else
-                return defaultValue;
-        }
-        public static T Get<T>(string key, Func<string, T> parser, T defaultValue)
-        {
-            if (Entries.ContainsKey(key))
-                return Get(key, parser);
+                return Get<TType>(key);
             else
                 return defaultValue;
         }

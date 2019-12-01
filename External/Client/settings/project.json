@@ -1,0 +1,43 @@
+{
+  "assets-sort-type": "name",
+  "collision-matrix": [
+    [
+      true
+    ]
+  ],
+  "design-resolution-height": 640,
+  "design-resolution-width": 960,
+  "excluded-modules": [
+    "Spine Skeleton",
+    "DragonBones",
+    "Collider",
+    "Physics",
+    "3D",
+    "3D Primitive",
+    "Mesh"
+  ],
+  "facebook": {
+    "appID": "",
+    "audience": {
+      "enable": false
+    },
+    "enable": false,
+    "live": {
+      "enable": false
+    }
+  },
+  "fit-height": false,
+  "fit-width": false,
+  "group-list": [
+    "default"
+  ],
+  "last-module-event-record-time": 1575183765127,
+  "simulator-orientation": true,
+  "simulator-resolution": {
+    "height": 720,
+    "width": 1280
+  },
+  "start-scene": "current",
+  "use-customize-simulator": true,
+  "use-project-simulator-setting": true
+}

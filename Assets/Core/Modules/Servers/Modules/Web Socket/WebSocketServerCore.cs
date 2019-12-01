@@ -124,7 +124,7 @@ namespace Game
         {
             base.Configure();
 
-            port = OptionsOverride.Get("Web Socket Port", int.Parse, port);
+            port = OptionsOverride.Get("Web Socket Port", port);
 
             Application.runInBackground = true;
 

@@ -33,7 +33,14 @@ namespace Game
 
             try
             {
-                Address = OptionsOverride.Get("IP Address", IPAddress.Parse, Address);
+                var ID = "IP Address";
+
+                if(OptionsOverride.Contains(ID))
+                {
+                    var text = OptionsOverride.Get<string>(ID);
+
+                    Address = IPAddress.Parse(text);
+                }
             }
             catch (Exception)
             {

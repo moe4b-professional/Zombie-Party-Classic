@@ -56,7 +56,7 @@ namespace Game
         {
             base.Configure();
 
-            port = OptionsOverride.Get("DNS Port", int.Parse, port);
+            port = OptionsOverride.Get("DNS Port", port);
 
             URL = OptionsOverride.Get("DNS URL", URL);
         }
