@@ -8,29 +8,29 @@ import Popup from "./Menu/Popup";
 
 import Client from "./Client";
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Game extends cc.Component
 {
-    static instance : Game;
+    static instance: Game;
 
     @property(cc.Canvas)
-    canvas : cc.Canvas = null;
+    canvas: cc.Canvas = null;
 
     @property(Menu)
-    titleMenu : TitleMenu = null;
+    titleMenu: TitleMenu = null;
 
     @property(Menu)
-    joinMenu : JoinMenu = null;
+    joinMenu: JoinMenu = null;
 
     @property(ControlMenu)
-    controlMenu : ControlMenu = null;
+    controlMenu: ControlMenu = null;
 
     @property(Popup)
-    popup : Popup = null;
+    popup: Popup = null;
 
-    client : Client = null;
+    client: Client = null;
 
     onLoad()
     {
@@ -47,15 +47,15 @@ export default class Game extends cc.Component
         this.client = new Client();
     }
 
-    port : number;
-    onServerPortRecieved(request : XMLHttpRequest)
+    port: number;
+    onServerPortRecieved(request: XMLHttpRequest)
     {
-        if(request.readyState == 4 && request.status == 200)
+        if (request.readyState == 4 && request.status == 200)
         {
             this.popup.hide();
 
             this.port = request.response as number;
-    
+
             this.titleMenu.visibile = true;
         }
         else
@@ -64,9 +64,9 @@ export default class Game extends cc.Component
         }
     }
 
-    start ()
+    start()
     {
-        
+
     }
 
     reload()
@@ -75,16 +75,16 @@ export default class Game extends cc.Component
     }
 }
 
-function Request(method : string, path : string, callback : CallableFunction, context : object)
+function Request(method: string, path: string, callback: CallableFunction, context: object)
 {
     var request = cc.loader.getXMLHttpRequest();
 
-        request.open("RSC", "Server Port", true);
+    request.open("RSC", "Server Port", true);
 
-        request.onreadystatechange = function()
-        {
-            callback.bind(context)(request);
-        };
+    request.onreadystatechange = function ()
+    {
+        callback.bind(context)(request);
+    };
 
-        request.send();
+    request.send();
 }

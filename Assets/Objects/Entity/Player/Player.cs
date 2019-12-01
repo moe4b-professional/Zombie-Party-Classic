@@ -24,8 +24,6 @@ namespace Game
     [RequireComponent(typeof(Rigidbody))]
 	public class Player : Entity
 	{
-        public const short ControllerID = 1;
-
 #pragma warning disable CS0109
         new public Rigidbody rigidbody { get; protected set; }
 #pragma warning restore CS0109

@@ -29,7 +29,6 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
 
         public LevelMenu Menu { get { return Level.Instance.Menu; } }
 
@@ -39,7 +38,7 @@ namespace Game
         {
             this.observer = observer;
 
-            Clients.ClientNetworkMessageEvent.Add<InputMessage>(observer.Client, OnInput);
+            WebSocketServer.Clients.ClientNetworkMessageEvent.Add<InputMessage>(observer.Client, OnInput);
         }
 
         void OnInput(NetworkMessage msg)
