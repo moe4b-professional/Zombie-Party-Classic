@@ -25,6 +25,17 @@ namespace Game
         protected ParticleSystem particle;
         public ParticleSystem Particle { get { return particle; } }
 
+        public virtual float ParticleCollisionRadiusScale
+        {
+            get => particle.collision.radiusScale;
+            set
+            {
+                var collision = particle.collision;
+
+                collision.radiusScale = value;
+            }
+        }
+
         [SerializeField]
         protected LayerMask mask = Physics.DefaultRaycastLayers;
         public LayerMask Mask { get { return mask; } }
@@ -64,9 +75,12 @@ namespace Game
 
                 ApplyDamage();
             }
+
+            ParticleCollisionRadiusScale = Mathf.Clamp(range, 0.3f, 0.7f);
         }
 
         float range = 0f;
+        public float Range => range;
         ParticleSystem.Particle[] particles;
         void CalculateRange()
         {
@@ -78,7 +92,7 @@ namespace Game
             {
                 for (int i = 0; i < count; i++)
                 {
-                    if (particles[i].remainingLifetime / particle.main.startLifetime.Evaluate(0f) < minLifeTime) continue;
+                    if (particles[i].remainingLifetime / particle.main.startLifetime.Evaluate(0.5f) < minLifeTime) continue;
 
                     var localPosition = particle.transform.InverseTransformPoint(particles[i].position);
 
@@ -91,7 +105,6 @@ namespace Game
         }
 
         Queue<Entity> targets = new Queue<Entity>();
-
         void CalculateOverlap()
         {
             var p1 = particle.transform.position;
