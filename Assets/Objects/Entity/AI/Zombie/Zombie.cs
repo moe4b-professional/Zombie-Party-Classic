@@ -66,7 +66,6 @@ namespace Game
             }
         }
 
-
         protected virtual IEnumerator Idle()
         {
             while (Target == null && IsAlive)
@@ -76,7 +75,6 @@ namespace Game
                 yield return new WaitForSeconds(Random.Range(0f, 0.5f));
             }
         }
-
 
         protected virtual IEnumerator Chase()
         {
@@ -166,8 +164,6 @@ namespace Game
             Animator.SetFloat("Move", Agent.velocity.magnitude);
         }
 
-
-
         protected override void Death(Entity Damager)
         {
             base.Death(Damager);
@@ -179,8 +175,6 @@ namespace Game
 
             Destroy(gameObject);
         }
-
-
 
         protected virtual Player LocateNearestPlayer()
         {

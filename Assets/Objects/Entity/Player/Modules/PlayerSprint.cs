@@ -25,7 +25,6 @@ namespace Game
 
         public float DotProductRate { get; protected set; }
 
-
         /// <summary>
         /// Linear Value Repreasenting How Much Sprint Is Happen, Ranges Between 0 and 1
         /// </summary>
@@ -38,10 +37,9 @@ namespace Game
         public float MaxMultiplier { get { return maxMultiplier; } }
 
         /// <summary>
-        /// Linear Value Repreasenting How Much Sprint Is Happen, Ranges Between MinMultiplier (1f by default) and MaxMultiplier
+        /// Linear Value Repreasenting How Much Sprint Is Happening, Ranges Between MinMultiplier (1f by default) and MaxMultiplier
         /// </summary>
         public float Multiplier { get; protected set; }
-
 
         Player player;
 
