@@ -52,21 +52,44 @@ namespace Game
         protected float volume = 1f;
 
         [SerializeField]
-        protected bool ding = true;
+        protected DingData ding;
+        public DingData Ding { get { return ding; } }
+        [Serializable]
+        public class DingData
+        {
+            [SerializeField]
+            protected bool enabled = true;
+            public bool Enabled { get { return enabled; } }
+
+            [SerializeField]
+            protected AudioClip clip;
+            public AudioClip Clip { get { return clip; } }
+        }
 
         [SerializeField]
-        protected bool shuffle = true;
-        public static AudioClip GetTrack()
+        protected TracksData tracks;
+        public TracksData Tracks { get { return tracks; } }
+        [Serializable]
+        public class TracksData
         {
-            var list = Resources.LoadAll<AudioClip>("Compilation Tracks/");
+            [SerializeField]
+            protected AudioClip[] list;
+            public AudioClip[] List { get { return list; } }
 
-            if (list.Length == 0) return null;
-            if (list.Length == 1) return list.First();
+            [SerializeField]
+            protected bool shuffle = true;
+            public bool Shuffle { get { return shuffle; } }
 
-            if (Asset.shuffle)
-                return list[Random.Range(0, list.Length)];
-            else
-                return list.First();
+            public AudioClip Get()
+            {
+                if (list.Length == 0) return null;
+                if (list.Length == 1) return list.First();
+
+                if (shuffle)
+                    return list[Random.Range(0, list.Length)];
+                else
+                    return list.First();
+            }
         }
 
         [MenuItem("Tools/" + ScriptName)]
@@ -83,7 +106,7 @@ namespace Game
 
         static void OnCompilationStart(string obj)
         {
-            if (!Asset.enabled) return;
+            if (Asset.enabled == false) return;
 
             var scene = EditorSceneManager.GetSceneByName(string.Empty);
             AudioSource audioSource = null;
@@ -100,7 +123,7 @@ namespace Game
 
             if (audioSource.isPlaying == false)
             {
-                audioSource.clip = GetTrack();
+                audioSource.clip = Asset.tracks.Get();
                 audioSource.loop = true;
                 audioSource.Play();
             }
@@ -117,28 +140,29 @@ namespace Game
 
             if (audioSource != null)
             {
-                audioSource.Stop();
-
-                var clip = GetResource<AudioClip>(ScriptName + " Ding");
-
-                if (Asset.enabled && Asset.ding && clip != null)
+                if (Asset.enabled && Asset.ding.Enabled)
                 {
-                    audioSource.PlayOneShot(clip);
+                    WaitFor(0.2f, PlaySFX);
 
-                    timer = new Timer(End);
-                    timer.Start(clip.length);
+                    void PlaySFX()
+                    {
+                        audioSource.Stop();
+
+                        audioSource.PlayOneShot(Asset.ding.Clip);
+
+                        var timer = new Timer(End);
+                        timer.Start(Asset.ding.Clip.length);
+                    }
                 }
                 else
+                {
                     End();
+                }
             }
         }
 
-        static Timer timer;
-
         static void End()
         {
-            timer = null;
-
             var scene = EditorSceneManager.GetSceneByName(string.Empty);
 
             if (scene.isLoaded == false) return;
@@ -148,7 +172,11 @@ namespace Game
             if (audioSource != null)
             {
                 if (scene.rootCount == 1 && EditorSceneManager.loadedSceneCount > 1)
-                    EditorSceneManager.UnloadSceneAsync(scene);
+                {
+#pragma warning disable CS0618
+                    EditorSceneManager.UnloadScene(scene);
+#pragma warning restore CS0618
+                }
                 else
                     GameObject.DestroyImmediate(audioSource.gameObject);
             }
@@ -181,6 +209,12 @@ namespace Game
             EditorSceneManager.MoveGameObjectToScene(audioSource.gameObject, scene);
 
             return audioSource;
+        }
+
+        static void WaitFor(float time, Action action)
+        {
+            var timer = new Timer(action);
+            timer.Start(time);
         }
 
         public class Timer
