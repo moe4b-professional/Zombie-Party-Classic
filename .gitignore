@@ -5,6 +5,8 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 
+Assets/StreamingAssets/Web-Server
+
 # Visual Studio cache directory
 .vs/
 
