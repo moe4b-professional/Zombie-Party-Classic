@@ -26,7 +26,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         public abstract LevelStage Next { get; }
 

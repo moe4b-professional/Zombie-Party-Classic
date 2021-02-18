@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenes: {fileID: 11400000, guid: b22ffcf420c5f4641976da52c6b49e90, type: 2}
   servers: {fileID: 11400000, guid: 02ac1d5caeb22b14ab8248b6e186e5d3, type: 2}
+  room: {fileID: 11400000, guid: 375b83ad2b0934f45bd62aa9b13eb5ab, type: 2}
   cheats: {fileID: 11400000, guid: 0b441abed02e1cc40b10188afc34c78c, type: 2}

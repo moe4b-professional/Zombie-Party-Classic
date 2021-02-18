@@ -84,7 +84,7 @@ namespace Game
         public Core Core { get { return Core.Asset; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         void Awake()
         {

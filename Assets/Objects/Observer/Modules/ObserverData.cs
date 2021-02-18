@@ -39,37 +39,9 @@ namespace Game
         {
             if (Client.State != WebSocketSharp.WebSocketState.Open) return;
 
-            Client.Send(new HealthMessage(health));
-        }
-    }
+            var message = new PlayerHealthMessage(health.Value, health.MaxValue);
 
-    [NetworkMessage(11)]
-    public class HealthMessage : NetworkMessage
-    {
-        [JsonProperty]
-        float value;
-        [JsonIgnore]
-        public float Value { get { return value; } }
-
-        [JsonProperty]
-        float max;
-        [JsonIgnore]
-        public float Max { get { return max; } }
-
-        public override string ToString()
-        {
-            return value + "/" + max;
-        }
-
-        public HealthMessage(float value, float max)
-        {
-            this.value = value;
-            this.max = max;
-        }
-        public HealthMessage(EntityHealth health) : 
-            this(health.Value, health.MaxValue)
-        {
-
+            Client.Send(message);
         }
     }
 }

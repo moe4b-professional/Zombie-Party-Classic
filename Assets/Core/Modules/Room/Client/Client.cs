@@ -27,37 +27,36 @@ namespace Game
     {
         public string Name { get; protected set; }
 
-        public bool isReady;
-
         public int ID { get; protected set; }
 
-        public WebSocket Socket { get; protected set; }
+        public bool IsReady { get; internal set; }
+
+        public WSSBehaviour Behaviour { get; protected set; }
+        public WebSocket Socket => Behaviour.Context.WebSocket;
         public WebSocketState State { get { return Socket.ReadyState; } }
-        public virtual void Send(string data)
+
+        public virtual bool Send<T>(T message)
+            where T : NetworkMessage
         {
-            if(State != WebSocketState.Open)
+            var json = NetworkMessage.Serialize(message);
+
+            if (State != WebSocketState.Open)
             {
-                Debug.LogError("Trying to send message to unopen client socket, message: " + data);
-                return;
+                Debug.LogError($"Cannot Send Message of {typeof(T).Name} When Client State is {State}");
+                return false;
             }
 
-            Socket.Send(data);
-        }
-        public virtual void Send(NetworkMessage message)
-        {
-            Send(NetworkMessage.Serialize(message));
+            Socket.Send(json);
+            return true;
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
-        public Client(string name, int ID, WebSocketContext context)
+        public Client(string name, int ID, WSSBehaviour behaviour)
         {
             this.Name = name;
             this.ID = ID;
-            this.Socket = context.WebSocket;
+            this.Behaviour = behaviour;
         }
     }
 }

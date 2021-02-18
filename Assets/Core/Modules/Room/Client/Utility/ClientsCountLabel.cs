@@ -32,7 +32,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         Text label;
 
@@ -42,13 +42,13 @@ namespace Game
 
             UpdateState();
 
-            Clients.JoinEvent += OnJoined;
-            Clients.DisconnectionEvent += OnDisconnection;
+            Room.JoinEvent += OnJoined;
+            Room.DisconnectionEvent += OnDisconnection;
         }
 
         void UpdateState()
         {
-            label.text = prefix + "(" + Clients.Count + "/" + WebSocketServer.Size + ")" + suffix;
+            label.text = prefix + "(" + Room.Occupancy + "/" + WebSocketServer.Capacity + ")" + suffix;
         }
 
         void OnDisconnection(Client client)
@@ -63,8 +63,8 @@ namespace Game
 
         void OnDestroy()
         {
-            Clients.JoinEvent -= OnJoined;
-            Clients.DisconnectionEvent -= OnDisconnection;
+            Room.JoinEvent -= OnJoined;
+            Room.DisconnectionEvent -= OnDisconnection;
         }
     }
 }

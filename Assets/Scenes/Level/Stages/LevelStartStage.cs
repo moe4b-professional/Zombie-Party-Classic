@@ -30,8 +30,8 @@ namespace Game
             Menu.Initial.Visible = true;
             Menu.HUD.Visible = false;
 
-            Clients.ReadyStateChangedEvent += OnClientReadyStateChanged;
-            Clients.DisconnectionEvent += OnClientDisconnection;
+            Room.ReadyStateChangedEvent += OnClientReadyStateChanged;
+            Room.DisconnectionEvent += OnClientDisconnection;
         }
 
         void OnClientReadyStateChanged(Client client)
@@ -46,10 +46,10 @@ namespace Game
 
         void CheckReadiness()
         {
-            if (Clients.Count > 0 && Clients.AllReady)
+            if (Room.Occupancy > 0 && Room.Ready)
             {
-                Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
-                Clients.DisconnectionEvent -= OnClientDisconnection;
+                Room.ReadyStateChangedEvent -= OnClientReadyStateChanged;
+                Room.DisconnectionEvent -= OnClientDisconnection;
 
                 OnReady();
             }
@@ -67,14 +67,14 @@ namespace Game
 
         void SpawnAllClients()
         {
-            for (int i = 0; i < Clients.List.Count; i++)
-                Level.Observers.Spawn(Clients.List[i]);
+            for (int i = 0; i < Room.Clients.Count; i++)
+                Level.Observers.Spawn(Room.Clients[i]);
         }
 
         void OnDestroy()
         {
-            Clients.ReadyStateChangedEvent -= OnClientReadyStateChanged;
-            Clients.DisconnectionEvent -= OnClientDisconnection;
+            Room.ReadyStateChangedEvent -= OnClientReadyStateChanged;
+            Room.DisconnectionEvent -= OnClientDisconnection;
         }
     }
 }

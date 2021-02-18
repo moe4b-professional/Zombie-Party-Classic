@@ -47,13 +47,13 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         public virtual void Init()
         {
             List = new List<Observer>();
 
-            Clients.DisconnectionEvent += OnDisconnnection;
+            Room.DisconnectionEvent += OnDisconnnection;
         }
 
         void OnDisconnnection(Client client)
@@ -87,7 +87,7 @@ namespace Game
 
         void OnDestroy()
         {
-            Clients.DisconnectionEvent -= OnDisconnnection;
+            Room.DisconnectionEvent -= OnDisconnnection;
         }
     }
 }

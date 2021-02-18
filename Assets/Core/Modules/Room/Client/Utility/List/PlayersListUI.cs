@@ -59,18 +59,18 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         void Start()
         {
             Elements = new List<PlayersListElement>();
 
-            Clients.JoinEvent += OnJoin;
-            Clients.DisconnectionEvent += OnDisconnection;
+            Room.JoinEvent += OnJoin;
+            Room.DisconnectionEvent += OnDisconnection;
 
-            Clients.ReadyStateChangedEvent += OnReadyStateChanged;
+            Room.ReadyStateChangedEvent += OnReadyStateChanged;
 
-            foreach (var player in Clients.List)
+            foreach (var player in Room.Clients)
                 if(player != null)
                     Add(player);
         }
@@ -82,7 +82,7 @@ namespace Game
             {
                 if(Elements[i].Client == client)
                 {
-                    Elements[i].Color = colors.Get(client.isReady);
+                    Elements[i].Color = colors.Get(client.IsReady);
                     break;
                 }
             }
@@ -109,7 +109,7 @@ namespace Game
 
             element.Set(client);
 
-            element.Color = colors.Get(client.isReady);
+            element.Color = colors.Get(client.IsReady);
 
             return element;
         }
@@ -135,10 +135,10 @@ namespace Game
 
         void OnDestroy()
         {
-            Clients.JoinEvent -= OnJoin;
-            Clients.DisconnectionEvent -= OnDisconnection;
+            Room.JoinEvent -= OnJoin;
+            Room.DisconnectionEvent -= OnDisconnection;
 
-            Clients.ReadyStateChangedEvent -= OnReadyStateChanged;
+            Room.ReadyStateChangedEvent -= OnReadyStateChanged;
         }
     }
 }

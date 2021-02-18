@@ -29,7 +29,8 @@ namespace Game
         {
             base.Begin();
 
-            Clients.Broadcast("#Start");
+            var message = new StartLevelMessage();
+            Room.Broadcast(message);
 
             Level.Spawner.Begin();
 

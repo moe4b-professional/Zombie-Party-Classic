@@ -38,6 +38,10 @@ namespace Game
         public ServersCore Servers { get { return servers; } }
 
         [SerializeField]
+        protected RoomCore room;
+        public RoomCore Room => room;
+
+        [SerializeField]
         protected CheatsCore cheats;
         public CheatsCore Cheats { get { return cheats; } }
 
@@ -45,6 +49,7 @@ namespace Game
         {
             action(scenes);
             action(servers);
+            action(room);
             action(cheats);
         }
 

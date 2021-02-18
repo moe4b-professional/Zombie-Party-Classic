@@ -149,6 +149,8 @@ namespace Game
 
                 var entity = colliders[i].attachedRigidbody.GetComponent<Entity>();
 
+                if (entity == null) continue;
+
                 entity.TakeDamage(this, damage);
 
                 if (Burn.Active && entity.Burn != null)

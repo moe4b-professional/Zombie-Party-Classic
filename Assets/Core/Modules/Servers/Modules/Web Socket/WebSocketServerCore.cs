@@ -39,7 +39,7 @@ namespace Game
 {
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
     public class WebSocketServerCore : ServersCore.Module
-	{
+    {
         new public const string MenuPath = ServersCore.Module.MenuPath + "Web Socket/";
 
         [SerializeField]
@@ -47,8 +47,8 @@ namespace Game
         public int Port { get { return port; } }
 
         [SerializeField]
-        protected int size = 4;
-        public int Size { get { return size; } }
+        protected int capacity = 4;
+        public int Capacity { get { return capacity; } }
 
         public WebSocketServer Server { get; protected set; }
 
@@ -62,60 +62,6 @@ namespace Game
             }
         }
 
-        public InternalBehavior Behavior { get; protected set; }
-        void InitBehaviour(InternalBehavior behaviour)
-        {
-            this.Behavior = behaviour;
-        }
-        public class InternalBehavior : WebSocketBehavior
-        {
-            public Core Core { get { return Core.Asset; } }
-            public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-            public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
-
-            protected override void OnOpen()
-            {
-                base.OnOpen();
-
-                UnityThreadDispatcher.Add(()=>OnOpen_UNITYSAFE(Context));
-            }
-            void OnOpen_UNITYSAFE(WebSocketContext context)
-            {
-                WebSocketServer.OnConnection(Context);
-            }
-
-            protected override void OnMessage(MessageEventArgs args)
-            {
-                base.OnMessage(args);
-
-                UnityThreadDispatcher.Add(()=>OnMessage_UNITY_SAFE(Context, args));
-            }
-            void OnMessage_UNITY_SAFE(WebSocketContext context, MessageEventArgs args)
-            {
-                WebSocketServer.OnMessage(Context, args);
-            }
-
-            protected override void OnClose(CloseEventArgs args)
-            {
-                base.OnClose(args);
-
-                UnityThreadDispatcher.Add(()=>OnClose_UNITY_SAFE(Context, args));
-            }
-            void OnClose_UNITY_SAFE(WebSocketContext context, CloseEventArgs args)
-            {
-                WebSocketServer.OnDisconnection(Context, args);
-            }
-
-            public InternalBehavior()
-            {
-                WebSocketServer.InitBehaviour(this);
-            }
-        }
-
-        [SerializeField]
-        protected ClientsManagerCore clients;
-        public ClientsManagerCore Clients { get { return clients; } }
-
         public WebServerCore WebServer { get { return Core.Servers.WebServer; } }
 
         public DNSCore DNSServer { get { return Core.Servers.DNS; } }
@@ -127,17 +73,6 @@ namespace Game
             port = OptionsOverride.Get("Web Socket Port", port);
 
             Application.runInBackground = true;
-
-            NetworkMessage.Configure();
-
-            clients.Configure();
-        }
-
-        public override void Init()
-        {
-            base.Init();
-
-            clients.Init();
         }
 
         public override void Start()
@@ -148,7 +83,7 @@ namespace Game
 
                 Server.KeepClean = true;
 
-                Server.AddWebSocketService<InternalBehavior>("/");
+                Server.AddWebSocketService<WSSBehaviour>("/");
 
                 Server.Log.Level = LogLevel.Error;
                 Server.Log.Output = (data, s) => { Debug.LogError(data.Message); };
@@ -162,25 +97,25 @@ namespace Game
             }
         }
 
-        public delegate void ContextOperationDelegate(WebSocketContext context);
+        public delegate void ContextOperationDelegate(WSSBehaviour behaviour);
         public event ContextOperationDelegate ConnectionEvent;
-        void OnConnection(WebSocketContext context)
+        internal void OnConnection(WSSBehaviour behaviour)
         {
-            if (ConnectionEvent != null) ConnectionEvent(context);
+            ConnectionEvent?.Invoke(behaviour);
         }
 
-        public delegate void MessageDelegate(WebSocketContext context, MessageEventArgs args);
+        public delegate void MessageDelegate(WSSBehaviour behaviour, MessageEventArgs args);
         public event MessageDelegate MessageEvent;
-        void OnMessage(WebSocketContext context, MessageEventArgs args)
+        internal void OnMessage(WSSBehaviour behaviour, MessageEventArgs args)
         {
-            if (MessageEvent != null) MessageEvent(context, args);
+            MessageEvent?.Invoke(behaviour, args);
         }
 
-        public delegate void DisconnectOperationDelegate(WebSocketContext context, CloseEventArgs args);
+        public delegate void DisconnectOperationDelegate(WSSBehaviour behaviour, CloseEventArgs args);
         public event DisconnectOperationDelegate DisconnectionEvent;
-        void OnDisconnection(WebSocketContext context, CloseEventArgs args)
+        internal void OnDisconnection(WSSBehaviour behaviour, CloseEventArgs args)
         {
-            if (DisconnectionEvent != null) DisconnectionEvent(context, args);
+            DisconnectionEvent?.Invoke(behaviour, args);
         }
 
         public override void Stop()
@@ -188,9 +123,7 @@ namespace Game
             if (!Active) return;
 
             Server.Stop();
-
             Server = null;
-            Behavior = null;
         }
 
         public abstract partial class Module : Core.Module
@@ -198,8 +131,45 @@ namespace Game
             new public const string MenuPath = WebSocketServerCore.MenuPath + "Modules/";
 
             public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        }
+    }
 
-            public InternalBehavior Behaviour { get { return WebSocketServer.Behavior; } }
+    public class WSSBehaviour : WebSocketBehavior
+    {
+        public Core Core { get { return Core.Asset; } }
+        public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+
+        protected override void OnOpen()
+        {
+            base.OnOpen();
+
+            UnityThreadDispatcher.Add(OnOpen_UNITYSAFE);
+        }
+        void OnOpen_UNITYSAFE()
+        {
+            WebSocketServer.OnConnection(this);
+        }
+
+        protected override void OnMessage(MessageEventArgs args)
+        {
+            base.OnMessage(args);
+
+            UnityThreadDispatcher.Add(() => OnMessage_UNITY_SAFE(args));
+        }
+        void OnMessage_UNITY_SAFE(MessageEventArgs args)
+        {
+            WebSocketServer.OnMessage(this, args);
+        }
+
+        protected override void OnClose(CloseEventArgs args)
+        {
+            base.OnClose(args);
+
+            UnityThreadDispatcher.Add(() => OnClose_UNITY_SAFE(args));
+        }
+        void OnClose_UNITY_SAFE(CloseEventArgs args)
+        {
+            WebSocketServer.OnDisconnection(this, args);
         }
     }
 }

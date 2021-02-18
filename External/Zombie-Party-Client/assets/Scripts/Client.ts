@@ -1,4 +1,5 @@
 import MoeEvent from "../Plugins/MoeEvent";
+import { NetworkMessage, ReadyClientMessage, RegisterClientMessage, RetryLevelMessage } from "./Tools/NetworkMessage";
 
 const { ccclass, property } = cc._decorator;
 
@@ -29,7 +30,9 @@ export default class Client
     public set name(value: string)
     {
         this._name = value;
-        this.send("player name: " + this._name);
+
+        var message = new RegisterClientMessage(value);
+        this.send(message);
     }
     public static get defaultName() { return "Player Name"; }
     public static isValidName(value: string): boolean
@@ -48,14 +51,17 @@ export default class Client
     {
         this._ready = value;
 
-        this.send("ready: " + this._ready);
+        var message = new ReadyClientMessage(value);
+        this.send(message);
 
         this.readyEvent.invoke(this._ready);
     }
 
-    public send(data: string): void
+    public send<T extends NetworkMessage>(message: T): void
     {
-        this.socket.send(data);
+        var json = NetworkMessage.Stringify(message);
+
+        this.socket.send(json);
     }
 
     public connectEvent = new MoeEvent();
@@ -67,37 +73,14 @@ export default class Client
     public messageEvent = new MoeEvent();
     onMessage(event: MessageEvent): void
     {
-        this.messageEvent.invoke(event);
+        console.log(event.data);
 
-        if (typeof event.data === 'string')
-        {
-            var text = event.data as string;
+        var message = NetworkMessage.Parse(event.data);
 
-            if (text.length > 0)
-            {
-                if (text.charAt(0) == '#')
-                    this.onCommand(text.slice(1).toLowerCase());
-                else if (text.includes("\"ID\":"))
-                    this.onNetworkMessage(text);
-            }
-        }
-    }
-
-    public commandEvent = new MoeEvent();
-    onCommand(value: string)
-    {
-        if (value == "retry")
+        if (message instanceof RetryLevelMessage)
             this.ready = false;
 
-        this.commandEvent.invoke(value);
-    }
-
-    public networkMessageEvent = new MoeEvent();
-    onNetworkMessage(value: string)
-    {
-        var msg = JSON.parse(value);
-
-        this.networkMessageEvent.invoke(msg);
+        this.messageEvent.invoke(message);
     }
 
     public errorEvent = new MoeEvent();

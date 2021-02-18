@@ -25,8 +25,10 @@ using Newtonsoft.Json.Serialization;
 
 namespace Game
 {
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public abstract class NetworkMessage
     {
+        [JsonProperty]
         public int ID { get; private set; }
 
         public TNetworkMessage To<TNetworkMessage>()
@@ -37,166 +39,162 @@ namespace Game
 
         public NetworkMessage()
         {
-            ID = GetID(GetType());
+            var type = GetType();
+
+            ID = GetID(type);
         }
 
-        //------------------------------------------------------------------------
+        //Static Utility
 
-        public static void Configure()
+        public static Glossary<int, Type> Glossary { get; protected set; }
+
+        public static Type GetType(int id)
         {
-            Types.Configure();
+            if (Glossary.TryGetValue(id, out var type) == false)
+                throw new Exception($"ID {id} Not Registered for Any Network Messages");
+
+            return type;
         }
 
-        public static class Types
+        public static int GetID<T>()
+            where T : NetworkMessage
         {
-            public static List<Data> List { get; private set; }
-            [Serializable]
-            public class Data
-            {
-                public int ID { get; private set; }
+            var type = typeof(T);
 
-                public string Name { get; private set; }
-
-                [JsonIgnore]
-                public Type Type { get; private set; }
-
-                public override string ToString()
-                {
-                    return Name + " / " + ID;
-                }
-
-                public Data(int ID, Type type)
-                {
-                    this.ID = ID;
-
-                    this.Type = type;
-
-                    this.Name = type.Name;
-                }
-            }
-
-            public static Data Find(int ID)
-            {
-                for (int i = 0; i < List.Count; i++)
-                    if (List[i].ID == ID)
-                        return List[i];
-
-                return null;
-            }
-            public static Data Find(Type type)
-            {
-                for (int i = 0; i < List.Count; i++)
-                    if (List[i].Type == type)
-                        return List[i];
-
-                return null;
-            }
-            public static Data Find<T>()
-                where T : NetworkMessage
-            {
-                return Find(typeof(T));
-            }
-
-            public static void Configure()
-            {
-                List = GetAll();
-            }
-
-            public static List<Data> GetAll()
-            {
-                var list = new List<Data>();
-
-                var IDs = new Dictionary<int, Data>();
-
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    foreach (var type in assembly.GetTypes())
-                    {
-                        var attributes = type.GetCustomAttributes(typeof(NetworkMessageAttribute), true);
-
-                        if (attributes.Length == 0) continue;
-
-                        var attribute = (NetworkMessageAttribute)attributes.First();
-
-                        if (IDs.ContainsKey(attribute.ID))
-                            throw new InvalidDataException("NetworkMessage ID: " + attribute.ID + " is assigned to both: " + type.Name + " & " + IDs[attribute.ID].Name);
-
-                        var entry = new Data(attribute.ID, type);
-
-                        list.Add(entry);
-                        IDs.Add(entry.ID, entry);
-                    }
-                }
-
-                return list;
-            }
+            return GetID(type);
         }
-
         public static int GetID(Type type)
         {
-            var data = Types.Find(type);
+            if (Glossary.TryGetKey(type, out var id) == false)
+                throw new Exception($"Type '{type}' Not Registered as Network Message");
 
-            if(data == null)
-                throw new InvalidDataException("Type: " + type.Name + " Not Registerd As A Network Message");
-
-            return data.ID;
+            return id;
         }
-        public static int GetID<TNetworkMessage>()
-            where TNetworkMessage : NetworkMessage
+
+        static void Register<T>(int id)
         {
-            var data = Types.Find<TNetworkMessage>();
+            var type = typeof(T);
 
-            if (data == null)
-                throw new InvalidDataException("Type: " + typeof(TNetworkMessage).Name + " Not Registerd As A Network Message");
-
-            return data.ID;
+            Register(type, id);
         }
-
-        public static TNetworkMessage Get<TNetworkMessage>(string json)
-            where TNetworkMessage : NetworkMessage
+        static void Register(Type type, int id)
         {
-            return Get<TNetworkMessage>(JObject.Parse(json));
+            Glossary.Add(id, type);
         }
-        public static TNetworkMessage Get<TNetworkMessage>(JObject json)
-            where TNetworkMessage : NetworkMessage
+
+        public static NetworkMessage Deserialize(string json)
+        {
+            var jObject = JObject.Parse(json);
+
+            return Deserialize(jObject);
+        }
+        public static NetworkMessage Deserialize(JObject json)
         {
             var ID = json["ID"].ToObject<int>();
 
-            var data = Types.Find(ID);
+            var type = GetType(ID);
 
-            if (data == null)
-                throw new InvalidDataException("No Network Message registered with ID: " + ID);
-
-            var message = (TNetworkMessage)json.ToObject(data.Type);
-
-            message.ID = ID;
+            var message = (NetworkMessage)json.ToObject(type);
 
             return message;
         }
-        public static NetworkMessage Get(string json)
-        {
-            return Get(JObject.Parse(json));
-        }
-        public static NetworkMessage Get(JObject json)
-        {
-            return Get<NetworkMessage>(json);
-        }
 
-        public static string Serialize(NetworkMessage message)
+        public static string Serialize<T>(T message)
+            where T : NetworkMessage
         {
             return JsonConvert.SerializeObject(message, JsonPersonal.Settings);
         }
-    }
 
-    [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-    sealed class NetworkMessageAttribute : Attribute
-    {
-        public readonly int _ID;
-        public int ID { get { return _ID; } }
-
-        public NetworkMessageAttribute(int ID)
+        static NetworkMessage()
         {
-            this._ID = ID;
+            Glossary = new Glossary<int, Type>();
+
+            var id = 0;
+
+            void Add<T>()
+                where T : NetworkMessage
+            {
+                Register<T>(id);
+
+                id += 1;
+            }
+
+            Add<RegisterClientMessage>();
+            Add<ReadyClientMessage>();
+
+            Add<StartLevelMessage>();
+            Add<RetryLevelMessage>();
+
+            Add<PlayerInputMessage>();
+            Add<PlayerHealthMessage>();
         }
     }
+
+    #region Client
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class RegisterClientMessage : NetworkMessage
+    {
+        [JsonProperty]
+        string name = default;
+        public string Name => name;
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class ReadyClientMessage : NetworkMessage
+    {
+        [JsonProperty]
+        bool value = default;
+        public bool Value => value;
+    }
+    #endregion
+
+    #region Level
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class StartLevelMessage : NetworkMessage
+    {
+
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class RetryLevelMessage : NetworkMessage
+    {
+
+    }
+    #endregion
+
+    #region Player
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class PlayerInputMessage : NetworkMessage
+    {
+        [JsonProperty]
+        Vector2 left = default;
+        public Vector2 Left => left;
+
+        [JsonProperty]
+        Vector2 right = default;
+        public Vector2 Right => right;
+
+        public override string ToString() => $"{right} : {left}";
+    }
+
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public class PlayerHealthMessage : NetworkMessage
+    {
+        [JsonProperty]
+        float value;
+        public float Value { get { return value; } }
+
+        [JsonProperty]
+        float max;
+        public float Max { get { return max; } }
+
+        public override string ToString() => $"{value} / {max}";
+
+        public PlayerHealthMessage(float value, float max)
+        {
+            this.value = value;
+            this.max = max;
+        }
+    }
+    #endregion
 }

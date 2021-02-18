@@ -3,22 +3,23 @@ import Game from "../Game";
 import Menu from "./Menu";
 
 import VirtualJoystick from "../../Plugins/Virtual Joystick/VirtualJoystick";
+import { NetworkMessage, PlayerHealthMessage, PlayerInputMessage, StartLevelMessage, RetryLevelMessage } from "../Tools/NetworkMessage";
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class ControlMenu extends Menu
 {
     @property(Menu)
-    initial : Menu = null;
+    initial: Menu = null;
 
     @property(Menu)
-    HUD : Menu = null;
+    HUD: Menu = null;
 
     @property(Menu)
-    death : Menu = null;
+    death: Menu = null;
 
-    setActiveMenu(target : Menu)
+    setActiveMenu(target: Menu)
     {
         this.initial.visibile = target == this.initial;
         this.HUD.visibile = target == this.HUD;
@@ -26,16 +27,16 @@ export default class ControlMenu extends Menu
     }
 
     @property(VirtualJoystick)
-    leftStick : VirtualJoystick = null;
+    leftStick: VirtualJoystick = null;
 
     @property(VirtualJoystick)
-    rightStick : VirtualJoystick = null;
+    rightStick: VirtualJoystick = null;
 
     @property(cc.ProgressBar)
-    healthBar : cc.ProgressBar = null;
+    healthBar: cc.ProgressBar = null;
 
     @property(cc.Label)
-    healthLabel : cc.Label = null;
+    healthLabel: cc.Label = null;
 
     get game() { return Game.instance; }
     get client() { return this.game.client; }
@@ -47,8 +48,7 @@ export default class ControlMenu extends Menu
         this.healthBar.node.active = false;
 
         this.client.disconnectEvent.add(this.onDisconnect, this);
-        this.client.commandEvent.add(this.onCommand, this);
-        this.client.networkMessageEvent.add(this.onNetworkMessage, this);
+        this.client.messageEvent.add(this.onMessage, this);
 
         this.leftStick.onValueChanged.add(this.updateInput, this);
         this.rightStick.onValueChanged.add(this.updateInput, this);
@@ -56,41 +56,46 @@ export default class ControlMenu extends Menu
 
     updateInput()
     {
-        var message = new InputMessage(this.leftStick.value, this.rightStick.value);
-
-        this.client.send(message.getJSON());
+        var message = new PlayerInputMessage(this.leftStick.value, this.rightStick.value);
+        this.client.send(message);
     }
 
-    onCommand(text : string)
+    onCommand(text: string)
     {
-        if(text == "start")
+
+    }
+
+    onMessage(message: NetworkMessage)
+    {
+        if (message instanceof PlayerHealthMessage)
         {
-            this.setActiveMenu(this.HUD);
+            this.healthBar.progress = message.value / message.max;
+            this.healthBar.node.active = true;
+            this.healthLabel.string = message.value.toFixed(1) + "/" + message.max.toFixed(1);
+
+            if (message.value != message.max)
+            {
+
+            }
+
+            if (message.value == 0) this.onDeath();
+
+            return;
         }
 
-        if(text == "retry")
+        if (message instanceof StartLevelMessage)
+        {
+            this.setActiveMenu(this.HUD);
+
+            return;
+        }
+
+        if (message instanceof RetryLevelMessage)
         {
             this.setActiveMenu(this.initial);
             this.healthBar.node.active = false;
-        }
-    }
 
-    onNetworkMessage(data : any)
-    {
-        if(data["ID"] == 11)
-        {
-            var msg = NetworkMessage.Parse(data, new HealthMessage());
-
-            this.healthBar.progress = msg.value / msg.max;
-            this.healthBar.node.active = true;
-            this.healthLabel.string = msg.value.toFixed(1) + "/" + msg.max.toFixed(1);
-
-            if(msg.value != msg.max)
-            {
-                
-            }
-
-            if(msg.value == 0) this.onDeath();
+            return;
         }
     }
 
@@ -104,32 +109,5 @@ export default class ControlMenu extends Menu
         this.client.disconnectEvent.remove(this.onDisconnect);
 
         this.popup.display("Disconnected", this.game.reload, "Return");
-    }
-}
-
-import NetworkMessage from "../Tools/NetworkMessage";
-
-class InputMessage extends NetworkMessage
-{
-    ID = 10;
-    left : cc.Vec2
-    right : cc.Vec2;
-
-    constructor(left : cc.Vec2, right : cc.Vec2)
-    {
-        super(10);
-        this.left = left;
-        this.right = right;
-    }
-}
-
-class HealthMessage extends NetworkMessage
-{
-    value : number;
-    max : number;
-    
-    constructor()
-    {
-        super(11);
     }
 }

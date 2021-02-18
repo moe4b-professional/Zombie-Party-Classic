@@ -29,6 +29,7 @@ namespace Game
 
         public Core Core { get { return Core.Asset; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         public LevelMenu Menu { get { return Level.Instance.Menu; } }
 
@@ -37,53 +38,22 @@ namespace Game
         public virtual void Init(Observer observer)
         {
             this.observer = observer;
-
-            WebSocketServer.Clients.ClientNetworkMessageEvent.Add<InputMessage>(observer.Client, OnInput);
         }
 
-        void OnInput(NetworkMessage msg)
+        void Start()
         {
-            var input = msg.To<InputMessage>();
+            Room.MessageDispatcher.Add<PlayerInputMessage>(observer.Client, OnInput);
+        }
 
+        void OnInput(PlayerInputMessage input)
+        {
             Move = input.Left;
             Look = input.Right;
         }
-    }
 
-    [NetworkMessage(10)]
-    public class InputMessage : NetworkMessage
-    {
-        [JsonProperty]
-        Vector2 left;
-        [JsonIgnore]
-        public Vector2 Left
+        void OnDestroy()
         {
-            get
-            {
-                return left;
-            }
-        }
-
-        [JsonProperty]
-        Vector2 right;
-        [JsonIgnore]
-        public Vector2 Right
-        {
-            get
-            {
-                return right;
-            }
-        }
-
-        public override string ToString()
-        {
-            return right.ToString() + " : " + left.ToString();
-        }
-
-        public InputMessage(Vector2 right, Vector2 left)
-        {
-            this.right = right;
-            this.left = left;
+            Room.MessageDispatcher.Remove<PlayerInputMessage>(observer.Client);
         }
     }
 }

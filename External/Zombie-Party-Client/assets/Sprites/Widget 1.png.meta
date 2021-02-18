@@ -1,10 +1,14 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.5",
   "uuid": "f044a4f4-822e-4bd5-80b5-832588782d46",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "point",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 190,
+  "height": 45,
   "platformSettings": {},
   "subMetas": {
     "Widget 1": {

@@ -28,13 +28,14 @@ namespace Game
         public ScenesCore Scenes { get { return Core.Scenes; } }
 
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
-        public ClientsManagerCore Clients { get { return WebSocketServer.Clients; } }
+        public RoomCore Room { get { return Core.Room; } }
 
         public override void Execute()
         {
-            Clients.SetAllClientsReadiness(false);
+            Room.SetAllReadiness(false);
 
-            Clients.Broadcast("#Retry");
+            var message = new RetryLevelMessage();
+            Room.Broadcast(message);
 
             Scenes.Load(Scenes.Level.Name);
         }
