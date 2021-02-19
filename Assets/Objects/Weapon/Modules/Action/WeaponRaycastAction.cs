@@ -61,7 +61,7 @@ namespace Game
                 if (entity != null)
                     weapon.Damage(entity, damage);
 
-                weapon.InvokeHit(raycastHit.transform.gameObject, entity, raycastHit.point);
+                weapon.Hit.Invoke(raycastHit.transform.gameObject, entity, raycastHit.point);
             }
             else
             {

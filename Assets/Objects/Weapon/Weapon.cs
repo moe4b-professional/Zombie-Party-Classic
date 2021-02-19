@@ -25,6 +25,8 @@ namespace Game
 
         public WeaponModel Model { get; protected set; }
 
+        public WeaponHit Hit { get; protected set; }
+
         public Entity Owner { get; protected set; }
 
         public void Damage(Entity target, float damage)
@@ -39,6 +41,8 @@ namespace Game
             State = WeaponState.Idle;
 
             Model = GetComponentInChildren<WeaponModel>();
+            Hit = GetComponentInChildren<WeaponHit>();
+
             AutoTwoSidedShadows.Apply(gameObject);
             Model.Init();
 
@@ -108,32 +112,6 @@ namespace Game
                     return true;
 
             return false;
-        }
-
-        public delegate void HitDelegate(HitData data);
-        public event HitDelegate OnHit;
-        public struct HitData
-        {
-            public GameObject GameObject { get; private set; }
-            public Entity Entity { get; private set; }
-            public Vector3 Position { get; private set; }
-
-            public HitData(GameObject gameObject, Entity entity, Vector3 position)
-            {
-                this.GameObject = gameObject;
-                this.Entity = entity;
-                this.Position = position;
-            }
-        }
-        public virtual void InvokeHit(HitData data)
-        {
-            if (OnHit != null) OnHit(data);
-        }
-        public virtual void InvokeHit(GameObject gameObject, Entity entity, Vector3 position)
-        {
-            var data = new HitData(gameObject, entity, position);
-
-            InvokeHit(data);
         }
 
         public delegate void ProcessDelegate(bool input);

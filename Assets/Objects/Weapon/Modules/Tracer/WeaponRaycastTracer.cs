@@ -35,7 +35,7 @@ namespace Game
 
             weapon.ProcessEvent += Process;
 
-            weapon.OnHit += OnHit;
+            weapon.Hit.OnInvoke += OnHit;
         }
 
         void Process(bool input)
@@ -43,9 +43,9 @@ namespace Game
             line.SetPosition(0, start.position);
         }
 
-        void OnHit(Weapon.HitData data)
+        void OnHit(WeaponHit.Data data)
         {
-            line.SetPosition(1, data.Position);
+            line.SetPosition(1, data.Point);
         }
     }
 }

@@ -33,10 +33,10 @@ namespace Game
         {
             base.Init(weapon);
 
-            weapon.OnHit += OnHit;
+            weapon.Hit.OnInvoke += OnHit;
         }
 
-        protected virtual void OnHit(Weapon.HitData data)
+        protected virtual void OnHit(WeaponHit.Data data)
         {
             if (data.Entity == null) return;
             if (data.Entity.Burn == null) return;

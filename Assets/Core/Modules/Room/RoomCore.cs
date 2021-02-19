@@ -104,6 +104,8 @@ namespace Game
 
         void OnMessage(WSSBehaviour behaviour, MessageEventArgs args)
         {
+            if (args.Data == "ACKNOWLEDGE BYTES") return;
+
             var client = Clients.Find(x => x.Socket == behaviour.Context.WebSocket);
 
             NetworkMessage message;

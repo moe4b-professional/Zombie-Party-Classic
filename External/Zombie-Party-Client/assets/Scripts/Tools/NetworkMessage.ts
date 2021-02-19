@@ -34,25 +34,25 @@ export abstract class NetworkMessage
 
     static glossary = new Glossary<number, any>();
 
-    static Register(id: number, constructor: any)
+    static Register(id: number, type: any)
     {
-        NetworkMessage.glossary.Add(id, constructor);
+        NetworkMessage.glossary.Add(id, type);
     }
 
     public static GetType(id: number): any
     {
-        var constructor = NetworkMessage.glossary.GetValue(id);
+        var type = NetworkMessage.glossary.GetValue(id);
 
-        if (constructor == undefined) throw `ID ${id} not Registerd with Any Type`;
+        if (type == undefined) throw `ID ${id} not Registerd with Any Type`;
 
-        return constructor;
+        return type;
     }
 
     public static GetID(type: any): number
     {
         var id = NetworkMessage.glossary.GetKey(type);
 
-        if (id == undefined) throw `Constructor ${type} Not Registered as NetworkMessage`;
+        if (id == undefined) throw `Type ${type} Not Registered as NetworkMessage`;
 
         return id;
     }
@@ -76,6 +76,8 @@ export abstract class NetworkMessage
 
         Add(PlayerInputMessage);
         Add(PlayerHealthMessage);
+
+        Add(HitMarkerMessage);
     }
 }
 
@@ -149,5 +151,17 @@ export class PlayerHealthMessage extends NetworkMessage
     }
 }
 //#endregion
+
+export class HitMarkerMessage extends NetworkMessage
+{
+    pattern: number[];
+
+    hit: boolean;
+
+    constructor()
+    {
+        super(HitMarkerMessage);
+    }
+}
 
 NetworkMessage.Configure();

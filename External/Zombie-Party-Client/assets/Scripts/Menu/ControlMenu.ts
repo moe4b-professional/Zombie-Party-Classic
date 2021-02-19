@@ -3,7 +3,8 @@ import Game from "../Game";
 import Menu from "./Menu";
 
 import VirtualJoystick from "../../Plugins/Virtual Joystick/VirtualJoystick";
-import { NetworkMessage, PlayerHealthMessage, PlayerInputMessage, StartLevelMessage, RetryLevelMessage } from "../Tools/NetworkMessage";
+import { NetworkMessage, PlayerHealthMessage, PlayerInputMessage, StartLevelMessage, RetryLevelMessage, HitMarkerMessage } from "../Tools/NetworkMessage";
+import { AsyncUtility } from "../Utility/AsyncUtility";
 
 const { ccclass, property } = cc._decorator;
 
@@ -38,11 +39,14 @@ export default class ControlMenu extends Menu
     @property(cc.Label)
     healthLabel: cc.Label = null;
 
+    @property(cc.AudioClip)
+    hitmarker: cc.AudioClip = null;
+
     get game() { return Game.instance; }
     get client() { return this.game.client; }
     get popup() { return this.game.popup; }
 
-    onEnable()
+    start()
     {
         this.setActiveMenu(this.initial);
         this.healthBar.node.active = false;
@@ -60,11 +64,6 @@ export default class ControlMenu extends Menu
         this.client.send(message);
     }
 
-    onCommand(text: string)
-    {
-
-    }
-
     onMessage(message: NetworkMessage)
     {
         if (message instanceof PlayerHealthMessage)
@@ -79,6 +78,18 @@ export default class ControlMenu extends Menu
             }
 
             if (message.value == 0) this.onDeath();
+
+            return;
+        }
+
+        if (message instanceof HitMarkerMessage)
+        {
+            console.log(message.pattern);
+
+            navigator.vibrate(message.pattern);
+
+            if (message.hit)
+                cc.audioEngine.play(this.hitmarker, false, 0.1);
 
             return;
         }

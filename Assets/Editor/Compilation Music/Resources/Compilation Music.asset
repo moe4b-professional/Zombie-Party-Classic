@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef65b58a794a78447a713b2b6ee03c05, type: 3}
   m_Name: Compilation Music
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   volume: 0.1
   ding:
     enabled: 1

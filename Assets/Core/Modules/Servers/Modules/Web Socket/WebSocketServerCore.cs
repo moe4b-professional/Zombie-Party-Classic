@@ -34,6 +34,7 @@ using WebSocketSharp.Server;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace Game
 {
@@ -87,6 +88,9 @@ namespace Game
 
                 Server.Log.Level = LogLevel.Error;
                 Server.Log.Output = (data, s) => { Debug.LogError(data.Message); };
+
+                var listener = typeof(WebSocketServer).GetField("_listener", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Server) as TcpListener;
+                listener.Server.NoDelay = true;
 
                 Server.Start();
             }

@@ -73,7 +73,7 @@ export default class Client
     public messageEvent = new MoeEvent();
     onMessage(event: MessageEvent): void
     {
-        console.log(event.data);
+        this.socket.send('ACKNOWLEDGE BYTES');
 
         var message = NetworkMessage.Parse(event.data);
 

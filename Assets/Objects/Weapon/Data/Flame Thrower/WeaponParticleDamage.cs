@@ -118,7 +118,7 @@ namespace Game
 
                 var entity = array[i].GetComponent<Entity>();
 
-                weapon.InvokeHit(array[i].gameObject, entity, array[i].transform.position);
+                weapon.Hit.Invoke(array[i].gameObject, entity, array[i].transform.position);
 
                 if (entity == null || targets.Contains(entity)) continue;
 

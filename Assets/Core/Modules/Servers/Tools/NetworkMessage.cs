@@ -127,6 +127,8 @@ namespace Game
 
             Add<PlayerInputMessage>();
             Add<PlayerHealthMessage>();
+
+            Add<HitMarkerMessage>();
         }
     }
 
@@ -197,4 +199,21 @@ namespace Game
         }
     }
     #endregion
+
+    public class HitMarkerMessage : NetworkMessage
+    {
+        [JsonProperty]
+        bool hit = default;
+        public bool Hit => hit;
+
+        [JsonProperty]
+        float[] pattern = default;
+        public float[] Pattern => pattern;
+
+        public HitMarkerMessage(bool hit, params float[] duration)
+        {
+            this.hit = hit;
+            this.pattern = duration;
+        }
+    }
 }
