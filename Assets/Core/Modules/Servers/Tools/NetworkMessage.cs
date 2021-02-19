@@ -129,6 +129,8 @@ namespace Game
             Add<PlayerHealthMessage>();
 
             Add<HitMarkerMessage>();
+
+            Add<PingMessage>();
         }
     }
 
@@ -215,5 +217,12 @@ namespace Game
             this.hit = hit;
             this.pattern = duration;
         }
+    }
+
+    public class PingMessage : NetworkMessage
+    {
+        [JsonProperty]
+        long stamp = default;
+        public long Stamp => stamp;
     }
 }

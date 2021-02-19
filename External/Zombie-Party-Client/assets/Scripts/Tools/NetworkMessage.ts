@@ -78,6 +78,8 @@ export abstract class NetworkMessage
         Add(PlayerHealthMessage);
 
         Add(HitMarkerMessage);
+
+        Add(PingMessage);
     }
 }
 
@@ -161,6 +163,18 @@ export class HitMarkerMessage extends NetworkMessage
     constructor()
     {
         super(HitMarkerMessage);
+    }
+}
+
+export class PingMessage extends NetworkMessage
+{
+    stamp: number;
+
+    constructor()
+    {
+        super(PingMessage);
+
+        this.stamp = Date.now();
     }
 }
 

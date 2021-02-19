@@ -118,6 +118,15 @@ namespace Game
                 throw;
             }
 
+            if (message is PingMessage ping)
+            {
+                if (behaviour.Context.WebSocket.ReadyState != WebSocketState.Open) return;
+
+                var json = NetworkMessage.Serialize(message);
+                behaviour.Context.WebSocket.Send(json);
+                return;
+            }
+
             if (client == null)
             {
                 if (message is RegisterClientMessage payload)

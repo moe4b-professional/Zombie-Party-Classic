@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-	public class WeaponHitMarker : Weapon.Module
-	{
+    public class WeaponHitMarker : Weapon.Module
+    {
         [SerializeField]
         float interval = 0.1f;
 
@@ -57,10 +57,11 @@ namespace Game
         {
             while (true)
             {
-                var delay = Mathf.RoundToInt(interval * 1000);
-                if (delay == 0) delay = 1;
-
-                await Task.Delay(delay);
+                if (state == WeaponHitMarkerState.None)
+                {
+                    await Task.Delay(1);
+                    continue;
+                }
 
                 switch (state)
                 {
@@ -72,6 +73,11 @@ namespace Game
                         Send(true, 80, 20, 80);
                         break;
                 }
+
+                var delay = Mathf.RoundToInt(interval * 1000);
+                if (delay == 0) delay = 1;
+
+                await Task.Delay(delay);
 
                 state = WeaponHitMarkerState.None;
             }
@@ -85,7 +91,7 @@ namespace Game
     }
 
     enum WeaponHitMarkerState
-    { 
+    {
         None, Action, Hit
     }
 }

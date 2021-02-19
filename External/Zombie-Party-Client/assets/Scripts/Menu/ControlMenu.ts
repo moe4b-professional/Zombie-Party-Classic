@@ -72,11 +72,6 @@ export default class ControlMenu extends Menu
             this.healthBar.node.active = true;
             this.healthLabel.string = message.value.toFixed(1) + "/" + message.max.toFixed(1);
 
-            if (message.value != message.max)
-            {
-
-            }
-
             if (message.value == 0) this.onDeath();
 
             return;
@@ -84,12 +79,10 @@ export default class ControlMenu extends Menu
 
         if (message instanceof HitMarkerMessage)
         {
-            console.log(message.pattern);
-
             navigator.vibrate(message.pattern);
 
             if (message.hit)
-                cc.audioEngine.play(this.hitmarker, false, 0.1);
+                cc.audioEngine.play(this.hitmarker, false, 1);
 
             return;
         }

@@ -1,5 +1,5 @@
 import MoeEvent from "../Plugins/MoeEvent";
-import { NetworkMessage, ReadyClientMessage, RegisterClientMessage, RetryLevelMessage } from "./Tools/NetworkMessage";
+import { NetworkMessage, ReadyClientMessage, RegisterClientMessage, RetryLevelMessage, PingMessage } from "./Tools/NetworkMessage";
 
 const { ccclass, property } = cc._decorator;
 
@@ -57,6 +57,24 @@ export default class Client
         this.readyEvent.invoke(this._ready);
     }
 
+    rtt: number;
+
+    ping()
+    {
+        var message = new PingMessage();
+        this.send(message);
+    }
+
+    pong(message: PingMessage)
+    {
+        var now = Date.now();
+        this.rtt = now - message.stamp;
+
+        console.log(this.rtt);
+
+        this.ping();
+    }
+
     public send<T extends NetworkMessage>(message: T): void
     {
         var json = NetworkMessage.Stringify(message);
@@ -67,6 +85,10 @@ export default class Client
     public connectEvent = new MoeEvent();
     onConnected(event: Event): void
     {
+        this.rtt = 0;
+
+        this.ping();
+
         this.connectEvent.invoke(event);
     }
 
@@ -79,6 +101,9 @@ export default class Client
 
         if (message instanceof RetryLevelMessage)
             this.ready = false;
+
+        if (message instanceof PingMessage)
+            this.pong(message);
 
         this.messageEvent.invoke(message);
     }
