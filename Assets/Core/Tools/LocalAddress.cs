@@ -35,28 +35,47 @@ namespace Game
 
         public static IPAddress Get()
         {
-            List<NetworkInterface> interfaces = new List<NetworkInterface>();
+            var networkInterfaces = Query(NetworkInterfaceTypes);
 
-            foreach (NetworkInterface networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+            foreach (var networkInterface in networkInterfaces)
             {
-                if (networkInterface.OperationalStatus != OperationalStatus.Up) continue;
-
-                if (NetworkInterfaceTypes.Contains(networkInterface.NetworkInterfaceType))
-                    interfaces.Add(networkInterface);
-            }
-
-            for (int x = 0; x < NetworkInterfaceTypes.Count; x++)
-            {
-                for (int y = 0; y < interfaces.Count; y++)
-                {
-                    if (interfaces[y].NetworkInterfaceType == NetworkInterfaceTypes[x])
-                        foreach (UnicastIPAddressInformation AddressInfo in interfaces[y].GetIPProperties().UnicastAddresses)
-                            if (AddressInfo.Address.AddressFamily == AddressFamily.InterNetwork)
-                                return AddressInfo.Address;
-                }
+                foreach (var info in networkInterface.GetIPProperties().UnicastAddresses)
+                    if (info.Address.AddressFamily == AddressFamily.InterNetwork)
+                        return info.Address;
             }
 
             return Default;
+        }
+
+        public static List<NetworkInterface> Query(IList<NetworkInterfaceType> types)
+        {
+            var all = NetworkInterface.GetAllNetworkInterfaces();
+
+            var targets = new List<NetworkInterface>();
+
+            foreach (var type in types)
+            {
+                foreach (var networkInterface in all)
+                {
+                    if (IgnoreInterface(networkInterface)) continue;
+
+                    if (networkInterface.NetworkInterfaceType == type)
+                        targets.Add(networkInterface);
+                }
+            }
+
+            return targets;
+        }
+
+        public static bool IgnoreInterface(NetworkInterface networkInterface)
+        {
+            if (networkInterface.OperationalStatus != OperationalStatus.Up)
+                return true;
+
+            if (networkInterface.Description.ToLower().Contains("virtual"))
+                return true;
+
+            return false;
         }
     }
 }
