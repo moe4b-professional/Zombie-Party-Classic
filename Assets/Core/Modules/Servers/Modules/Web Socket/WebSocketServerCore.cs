@@ -87,7 +87,7 @@ namespace Game
                 Server.AddWebSocketService<WSSBehaviour>("/");
 
                 Server.Log.Level = LogLevel.Error;
-                Server.Log.Output = (data, s) => { Debug.LogError(data.Message); };
+                Server.Log.Output = (data, s) => Debug.LogError(data.Message);
 
                 var listener = typeof(WebSocketServer).GetField("_listener", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Server) as TcpListener;
                 listener.Server.NoDelay = true;
