@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace Game
+namespace Default
 {
     public class ImageHoldRelay : Relay<Image>, IPointerDownHandler, IPointerUpHandler
     {

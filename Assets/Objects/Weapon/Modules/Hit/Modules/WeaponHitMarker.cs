@@ -18,7 +18,7 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using System.Threading.Tasks;
 
-namespace Game
+namespace Default
 {
     public class WeaponHitMarker : Weapon.Module
     {

@@ -16,7 +16,7 @@ using Random = UnityEngine.Random;
 
 using UnityEngine.Networking;
 
-namespace Game
+namespace Default
 {
     public class Entity : MonoBehaviour
     {

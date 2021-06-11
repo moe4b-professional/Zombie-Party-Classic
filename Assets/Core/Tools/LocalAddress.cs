@@ -21,7 +21,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 
-namespace Game
+namespace Default
 {
 	public static class LocalAddress
 	{

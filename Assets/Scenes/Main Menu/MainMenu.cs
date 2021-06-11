@@ -17,7 +17,7 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Game
+namespace Default
 {
     [DefaultExecutionOrder(-100)]
 	public class MainMenu : MonoBehaviour

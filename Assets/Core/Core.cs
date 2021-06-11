@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 using System.Runtime.Serialization;
 using System.Xml;
 
-namespace Game
+namespace Default
 {
     public abstract class CoreBase : ScriptableObject
     {
@@ -42,6 +42,10 @@ namespace Game
         public RoomCore Room => room;
 
         [SerializeField]
+        ScoresCore scores = default;
+        public ScoresCore Scores => scores;
+
+        [SerializeField]
         protected CheatsCore cheats;
         public CheatsCore Cheats { get { return cheats; } }
 
@@ -50,6 +54,7 @@ namespace Game
             action(scenes);
             action(servers);
             action(room);
+            action(scores);
             action(cheats);
         }
 
@@ -114,7 +119,6 @@ namespace Game
                 return null;
         }
 
-        #region Configure
         protected virtual void Configure()
         {
             ConfigureSceneAccessor();
@@ -123,36 +127,26 @@ namespace Game
 
             OptionsOverride.Configure();
 
-            ForEachModule(ConfigureModule);
+            ForEachModule(Process);
+            void Process(Core.Module module) => module.Configure();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        protected virtual void ConfigureModule(Core.Module module)
-        {
-            module.Configure();
-        }
-        #endregion
-
         void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             Init();
         }
 
-        #region Init
         public event Action OnInit;
         protected virtual void Init()
         {
-            ForEachModule(InitModule);
+            ForEachModule(Process);
+            void Process(Core.Module module) => module.Init();
 
             if (OnInit != null) OnInit();
         }
-
-        protected virtual void InitModule(Core.Module module)
-        {
-            module.Init();
-        }
-        #endregion
 
         protected virtual void OnApplicationQuit()
         {

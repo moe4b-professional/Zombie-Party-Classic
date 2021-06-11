@@ -20,7 +20,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.Compilation;
 using UnityEditor.SceneManagement;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu]
     public class CompilationMusic : ScriptableObject

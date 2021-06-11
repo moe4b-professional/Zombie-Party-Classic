@@ -21,7 +21,7 @@ using ZXing;
 using ZXing.QrCode;
 using ZXing.Common;
 
-namespace Game
+namespace Default
 {
 	public static class QRUtility
 	{

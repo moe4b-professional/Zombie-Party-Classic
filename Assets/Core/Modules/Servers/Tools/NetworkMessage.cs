@@ -23,7 +23,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace Game
+namespace Default
 {
     [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public abstract class NetworkMessage

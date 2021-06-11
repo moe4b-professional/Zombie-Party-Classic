@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using System.Net;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
 	public class ServersCore : Core.Module

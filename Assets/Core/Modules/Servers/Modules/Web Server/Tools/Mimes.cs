@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using System.Text.RegularExpressions;
 
-namespace Game
+namespace Default
 {
 	public static class Mimes
 	{

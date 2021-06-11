@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using Newtonsoft.Json.Linq;
 
-namespace Game
+namespace Default
 {
 	public static class OptionsOverride
 	{

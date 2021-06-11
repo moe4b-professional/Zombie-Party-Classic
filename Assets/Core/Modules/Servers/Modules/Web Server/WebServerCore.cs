@@ -23,7 +23,7 @@ using System.Text.RegularExpressions;
 
 using NHttp;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Web Server")]
 	public class WebServerCore : ServersCore.Module

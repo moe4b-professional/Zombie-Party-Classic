@@ -17,17 +17,25 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Game
+namespace Default
 {
 	public class ConstraintArea : MonoBehaviour
 	{
 		[SerializeField]
         protected float length;
-        public float Length { get { return length; } }
+        public float Length
+        {
+            get => length;
+            set => length = value;
+        }
 
         [SerializeField]
         protected float width;
-        public float Width { get { return width; } }
+        public float Width
+        {
+            get => width;
+            set => width = value;
+        }
 
         [SerializeField]
         protected float height;

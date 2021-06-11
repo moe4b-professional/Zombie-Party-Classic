@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using UnityEngine.Rendering;
 
-namespace Game
+namespace Default
 {
 	public class AutoTwoSidedShadows : MonoBehaviour
 	{

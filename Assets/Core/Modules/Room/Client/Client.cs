@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 using WebSocketSharp;
 using WebSocketSharp.Net.WebSockets;
 
-namespace Game
+namespace Default
 {
     [Serializable]
     public class Client

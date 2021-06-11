@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 using WebSocketSharp;
 using WebSocketSharp.Net.WebSockets;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Room")]
     public class RoomCore : Core.Module

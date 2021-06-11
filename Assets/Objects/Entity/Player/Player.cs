@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using UnityEngine.Networking;
 
-namespace Game
+namespace Default
 {
     [RequireComponent(typeof(Rigidbody))]
 	public class Player : Entity
@@ -33,6 +33,7 @@ namespace Game
         public PlayerBody Body { get; protected set; }
         public PlayerAim Aim { get; protected set; }
         public PlayerWeapons Weapons { get; protected set; }
+        public PlayerScore Score { get; protected set; }
 
         public RagdollController Ragdoll { get; protected set; }
 
@@ -58,6 +59,7 @@ namespace Game
             Body = Dependancy.Get<PlayerBody>(gameObject);
             Aim = Dependancy.Get<PlayerAim>(gameObject);
             Weapons = Dependancy.Get<PlayerWeapons>(gameObject);
+            Score = Dependancy.Get<PlayerScore>(gameObject);
 
             References.Init(this);
 

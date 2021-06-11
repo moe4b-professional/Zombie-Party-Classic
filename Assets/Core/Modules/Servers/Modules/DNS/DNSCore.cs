@@ -27,7 +27,7 @@ using System.Net;
 
 using System.Threading;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "DNS")]
     public class DNSCore : ServersCore.Module, IQuestionAnswerer

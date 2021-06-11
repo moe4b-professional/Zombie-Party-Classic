@@ -36,7 +36,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 
-namespace Game
+namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Asset")]
     public class WebSocketServerCore : ServersCore.Module

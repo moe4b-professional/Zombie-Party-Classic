@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using Newtonsoft.Json;
 
-namespace Game
+namespace Default
 {
 	public class ObserverData : MonoBehaviour, Observer.IReference
     {

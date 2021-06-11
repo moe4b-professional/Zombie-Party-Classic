@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 using UnityEngine.EventSystems;
 
-namespace Game
+namespace Default
 {
     public class TitleMenu : Menu, IPointerClickHandler
     {

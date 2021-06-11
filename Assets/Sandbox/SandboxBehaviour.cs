@@ -17,7 +17,7 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Game
+namespace Default
 {
     [DefaultExecutionOrder(-200)]
 	public class SandboxBehaviour : MonoBehaviour

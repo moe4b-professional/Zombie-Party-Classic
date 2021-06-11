@@ -21,7 +21,7 @@ using UnityEngine.EventSystems;
 
 using System.Net;
 
-namespace Game
+namespace Default
 {
 	public class ServerConnectionGuide : MonoBehaviour, IPointerClickHandler
 	{
