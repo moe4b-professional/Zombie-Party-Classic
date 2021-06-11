@@ -35,9 +35,10 @@ namespace Default
 
         }
 
+        public event Action OnBegin;
         public virtual void Begin()
         {
-
+            OnBegin?.Invoke();
         }
 
         public event Action OnEnd;

@@ -81,6 +81,12 @@ namespace Default
             Spawner = FindObjectOfType<Spawner>();
         }
 
+        public LevelMusic Music { get; protected set; }
+        protected virtual void InitMusic()
+        {
+            Music = GetComponentInChildren<LevelMusic>();
+        }
+
         public Core Core { get { return Core.Asset; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
@@ -110,6 +116,8 @@ namespace Default
             InitStages();
 
             InitPause();
+
+            InitMusic();
         }
 
 		void Start()
