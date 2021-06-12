@@ -5,19 +5,30 @@ using UnityEngine;
 public class LayerWeight : StateMachineBehaviour
 {
     [Range(0f, 1f)]
-    public float value = 1f;
+    public float target = 1f;
 
-    float initialValue;
+    [SerializeField]
+    float speed = 5f;
+    public float Speed => speed;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        initialValue = animator.GetLayerWeight(layerIndex);
-
-        animator.SetLayerWeight(layerIndex, value);
+        Process(animator, layerIndex, target);
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetLayerWeight(layerIndex, initialValue);
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
+
+        Process(animator, layerIndex, target);
+    }
+
+    void Process(Animator animator, int layer, float target)
+    {
+        var weight = animator.GetLayerWeight(layer);
+        if (weight == target) return;
+
+        weight = Mathf.MoveTowards(weight, target, speed * Time.deltaTime);
+        animator.SetLayerWeight(layer, weight);
     }
 }
