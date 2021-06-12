@@ -31,6 +31,8 @@ namespace Default
 
         public void Damage(Entity target, float damage)
         {
+            if (Owner is Player && target is Player) return; //Quick Hack so players can't shoot each other
+
             target.TakeDamage(Owner, damage);
         }
 

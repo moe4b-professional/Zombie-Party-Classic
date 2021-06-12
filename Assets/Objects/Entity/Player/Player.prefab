@@ -6818,7 +6818,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1331
   range: 400
-  damage: 20
+  damage: 25
   triggerInteraction: 1
   point: {fileID: 4082513803218437450}
 --- !u!114 &3290171570706867521
@@ -12652,7 +12652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5afb9fcd99c1d14ab781cdfcce322b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 1000
+  value: 800
 --- !u!1 &4171466253299021378
 GameObject:
   m_ObjectHideFlags: 0
