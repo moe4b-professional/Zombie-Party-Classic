@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a276a22b220cca844b06e0a1ad54ebcf, type: 3}
   m_Name: Core
   m_EditorClassIdentifier: 
+  _UI: {fileID: 11400000, guid: 008e9e8cd03e5344f87173033546b59b, type: 2}
   scenes: {fileID: 11400000, guid: b22ffcf420c5f4641976da52c6b49e90, type: 2}
   servers: {fileID: 11400000, guid: 02ac1d5caeb22b14ab8248b6e186e5d3, type: 2}
   room: {fileID: 11400000, guid: 375b83ad2b0934f45bd62aa9b13eb5ab, type: 2}

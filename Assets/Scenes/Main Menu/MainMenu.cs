@@ -30,23 +30,25 @@ namespace Default
 
         [SerializeField]
         protected StartMenu start;
-        public StartMenu Start { get { return start; } }
+        public StartMenu Initial { get { return start; } }
 
         [SerializeField]
         protected Popup popup;
         public Popup Popup { get { return popup; } }
 
-        [SerializeField]
-        protected ScreenFade fade;
-        public ScreenFade Fade { get { return fade; } }
+        Core Core => Core.Asset;
 
         void Awake()
         {
             Instance = this;
 
             Time.timeScale = 1f;
+        }
 
-            fade.Init(1f, 0f);
+        void Start()
+        {
+            Core.UI.Container.Fade.Alpha = 1f;
+            Core.UI.Container.Fade.Transition(0f);
         }
     }
 }

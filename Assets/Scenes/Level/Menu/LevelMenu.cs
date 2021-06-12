@@ -41,10 +41,6 @@ namespace Default
         protected Popup popup;
         public Popup Popup { get { return popup; } }
 
-        [SerializeField]
-        protected ScreenFade fade;
-        public ScreenFade Fade { get { return fade; } }
-
         public Core Core { get { return Core.Asset; } }
 
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
@@ -52,7 +48,7 @@ namespace Default
 
         public virtual void Init()
         {
-            fade.Init(1f, 0f);
+            
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Default
 
         Image image;
 
-        public float Transparency
+        public float Alpha
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Default
                 color.a = value;
                 image.color = color;
 
-                image.raycastTarget = Transparency != 0f;
+                image.raycastTarget = Alpha != 0f;
             }
         }
 
@@ -50,37 +50,27 @@ namespace Default
 
             gameObject.SetActive(true);
 
-            Transparency = value;
-        }
-        public virtual void Init(float value, float target)
-        {
-            Init(value);
-
-            Transition(target);
+            Alpha = value;
         }
 
         public event Action OnTransitionEnd;
-        public virtual void Transition(float target)
+        public virtual Coroutine Transition(float target)
         {
             if (Coroutine != null) StopCoroutine(Coroutine);
 
             Coroutine = StartCoroutine(Procedure(target));
-        }
-        public virtual void Transition(float target, float initialValue)
-        {
-            this.Transparency = target;
 
-            Transition(initialValue);
+            return Coroutine;
         }
 
         public Coroutine Coroutine { get; protected set; }
         IEnumerator Procedure(float target)
         {
-            while(Transparency != target)
+            while(Alpha != target)
             {
-                Transparency = Mathf.MoveTowards(Transparency, target, speed * Time.unscaledDeltaTime);
+                Alpha = Mathf.MoveTowards(Alpha, target, speed * Time.unscaledDeltaTime);
 
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
 
             Coroutine = null;

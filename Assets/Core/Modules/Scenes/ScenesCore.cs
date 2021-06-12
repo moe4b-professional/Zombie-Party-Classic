@@ -32,7 +32,21 @@ namespace Default
 
         public virtual void Load(string name)
         {
-            SceneManager.LoadScene(name);
+            Core.SceneAccessor.StartCoroutine(Procedure());
+            IEnumerator Procedure()
+            {
+                Debug.Log("Load " + name);
+
+                yield return Core.UI.Container.Fade.Transition(1f);
+
+                yield return new WaitForSecondsRealtime(1f);
+
+                yield return SceneManager.LoadSceneAsync(name);
+
+                yield return new WaitForSecondsRealtime(1f);
+
+                yield return Core.UI.Container.Fade.Transition(0f);
+            }
         }
     }
 }

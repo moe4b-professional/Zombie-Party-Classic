@@ -25,24 +25,9 @@ namespace Default
 
         public LevelMenu Menu { get { return Level.Menu; } }
 
-        public ScreenFade Fade { get { return Menu.Fade; } }
-
         public Core Core { get { return Core.Asset; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }
 
-        public override void Execute()
-        {
-            Fade.OnTransitionEnd += OnFadeTransitionEnd;
-            Fade.Transition(1f);
-        }
-
-        private void OnFadeTransitionEnd()
-        {
-            Fade.OnTransitionEnd -= OnFadeTransitionEnd;
-
-            Core.Servers.Stop();
-
-            Scenes.Load(Scenes.MainMenu.Name);
-        }
+        public override void Execute() => Level.Quit();
     }
 }

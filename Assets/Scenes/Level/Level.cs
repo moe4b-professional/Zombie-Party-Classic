@@ -20,8 +20,8 @@ using Random = UnityEngine.Random;
 namespace Default
 {
     [DefaultExecutionOrder(ExecutionOrder)]
-	public class Level : MonoBehaviour
-	{
+    public class Level : MonoBehaviour
+    {
         public const int ExecutionOrder = -200;
 
         public static Level Instance { get; protected set; }
@@ -96,7 +96,7 @@ namespace Default
         {
             if (!WebSocketServer.Active)
             {
-                Scenes.Load(Scenes.MainMenu.Name);
+                SceneManager.LoadScene(Scenes.MainMenu.Name);
                 enabled = false;
                 return;
             }
@@ -120,8 +120,22 @@ namespace Default
             InitMusic();
         }
 
-		void Start()
+        void Start()
         {
+            if (IsRetry)
+            {
+                IsRetry = false;
+
+                StartCoroutine(Procedure());
+                IEnumerator Procedure()
+                {
+                    yield return new WaitForSecondsRealtime(1f);
+
+                    var message = new RetryLevelMessage();
+                    Room.Broadcast(message);
+                }
+            }
+
             EndStage.OnEnd += OnEnd;
             StartStage.Begin();
         }
@@ -129,6 +143,20 @@ namespace Default
         protected virtual void OnEnd()
         {
             
+        }
+
+        public void Quit()
+        {
+            Core.Servers.Stop();
+            Scenes.Load(Scenes.MainMenu.Name);
+        }
+
+        static bool IsRetry;
+        public void Retry()
+        {
+            IsRetry = true;
+            Room.SetAllReadiness(false);
+            Scenes.Load(Scenes.Level.Name);
         }
 
         protected virtual void OnDestroy()

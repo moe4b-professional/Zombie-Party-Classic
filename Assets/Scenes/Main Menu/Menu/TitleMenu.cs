@@ -30,7 +30,7 @@ namespace Default
             if (eventData.button != PointerEventData.InputButton.Left) return;
 
             Visible = false;
-            MainMenu.Start.Visible = true;
+            MainMenu.Initial.Visible = true;
         }
     }
 }

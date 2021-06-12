@@ -30,14 +30,6 @@ namespace Default
         public WebSocketServerCore WebSocketServer { get { return Core.Servers.WebSocket; } }
         public RoomCore Room { get { return Core.Room; } }
 
-        public override void Execute()
-        {
-            Room.SetAllReadiness(false);
-
-            var message = new RetryLevelMessage();
-            Room.Broadcast(message);
-
-            Scenes.Load(Scenes.Level.Name);
-        }
+        public override void Execute() => Level.Retry();
     }
 }

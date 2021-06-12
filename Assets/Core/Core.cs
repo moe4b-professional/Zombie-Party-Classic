@@ -30,6 +30,10 @@ namespace Default
 
         #region Modules
         [SerializeField]
+        UICore _UI = default;
+        public UICore UI => _UI;
+
+        [SerializeField]
         protected ScenesCore scenes;
         public ScenesCore Scenes { get { return scenes; } }
 
@@ -51,6 +55,7 @@ namespace Default
 
         public virtual void ForEachModule(Action<Core.Module> action)
         {
+            action(UI);
             action(scenes);
             action(servers);
             action(room);
