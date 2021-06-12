@@ -21,7 +21,7 @@ MonoBehaviour:
     - key: moe4b
       value:
         name: Moe4B
-        value: 115
+        value: 149
     - key: d3dice
       value:
         name: D3dice
@@ -30,3 +30,7 @@ MonoBehaviour:
       value:
         name: Max
         value: 12
+    - key: meek
+      value:
+        name: MeeK
+        value: 22

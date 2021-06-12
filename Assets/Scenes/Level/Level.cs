@@ -148,6 +148,8 @@ namespace Default
         public void Quit()
         {
             Core.Servers.Stop();
+
+            Exit();
             Scenes.Load(Scenes.MainMenu.Name);
         }
 
@@ -156,7 +158,15 @@ namespace Default
         {
             IsRetry = true;
             Room.SetAllReadiness(false);
+
+            Exit();
             Scenes.Load(Scenes.Level.Name);
+        }
+
+        public event Action OnExit;
+        void Exit()
+        {
+            OnExit?.Invoke();
         }
 
         protected virtual void OnDestroy()

@@ -28,6 +28,12 @@ namespace Default
 
         AudioSource AudioSource;
 
+        public float Volume
+        {
+            get => AudioSource.volume;
+            set => AudioSource.volume = value;
+        }
+
         Level Level => Level.Instance;
 
         void Awake()
@@ -39,6 +45,8 @@ namespace Default
         {
             Level.PlayStage.OnBegin += PlayCallback;
             Level.EndStage.OnBegin += EndCallback;
+
+            Level.OnExit += ExitCallback;
 
             Level.Pause.OnStateChange += PauseStateCallback;
         }
@@ -65,25 +73,30 @@ namespace Default
             AudioSource.Play();
         }
 
-        void EndCallback()
+        void EndCallback() => Fade(Volume / 5f);
+
+        void ExitCallback() => Fade(0f);
+
+        Coroutine Fade(float target)
         {
-            StartCoroutine(Procedure());
-            IEnumerator Procedure()
+            StopAllCoroutines();
+
+            return StartCoroutine(Procedure(target));
+        }
+        IEnumerator Procedure(float target)
+        {
+            var start = Volume;
+
+            var duration = 2f;
+            var timer = 0f;
+
+            while (timer != duration)
             {
-                var start = AudioSource.volume;
-                var target = start / 5f;
+                timer = Mathf.MoveTowards(timer, duration, Time.unscaledDeltaTime);
 
-                var duration = 3f;
-                var timer = 0f;
+                Volume = Mathf.Lerp(start, target, timer / duration);
 
-                while(timer != duration)
-                {
-                    timer = Mathf.MoveTowards(timer, duration, Time.unscaledDeltaTime);
-
-                    AudioSource.volume = Mathf.Lerp(start, target, timer / duration);
-
-                    yield return new WaitForEndOfFrame();
-                }
+                yield return new WaitForEndOfFrame();
             }
         }
     }
