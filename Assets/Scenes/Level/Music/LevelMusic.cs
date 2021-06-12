@@ -39,6 +39,22 @@ namespace Default
         {
             Level.PlayStage.OnBegin += PlayCallback;
             Level.EndStage.OnBegin += EndCallback;
+
+            Level.Pause.OnStateChange += PauseStateCallback;
+        }
+
+        void PauseStateCallback(LevelPauseState state)
+        {
+            switch (state)
+            {
+                case LevelPauseState.None:
+                    AudioSource.UnPause();
+                    break;
+
+                case LevelPauseState.Full:
+                    AudioSource.Pause();
+                    break;
+            }
         }
 
         void PlayCallback()
@@ -55,9 +71,9 @@ namespace Default
             IEnumerator Procedure()
             {
                 var start = AudioSource.volume;
-                var target = 0f;
+                var target = start / 5f;
 
-                var duration = 1f;
+                var duration = 3f;
                 var timer = 0f;
 
                 while(timer != duration)
@@ -68,9 +84,6 @@ namespace Default
 
                     yield return new WaitForEndOfFrame();
                 }
-
-                AudioSource.Stop();
-                AudioSource.volume = start;
             }
         }
     }

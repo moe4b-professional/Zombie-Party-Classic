@@ -19,11 +19,14 @@ using Random = UnityEngine.Random;
 
 namespace Default
 {
-	public class DeActivateOnStart : MonoBehaviour
+	public class HideOnStart : MonoBehaviour
 	{
         void Start()
         {
-            gameObject.SetActive(false);
+            var renderers = GetComponentsInChildren<Renderer>(true);
+
+            foreach (var item in renderers)
+                item.enabled = false;
         }
     }
 }
