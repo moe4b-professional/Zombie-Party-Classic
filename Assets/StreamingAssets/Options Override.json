@@ -3,5 +3,5 @@
 	"Web Server Port": 80,
 	"DNS Port": 53,
 	"*IP Address": "127.0.0.1",
-	"DNS URL": "t4.game.com"
+	"*DNS URL": "t4.game.com"
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DNS Core
   m_EditorClassIdentifier: 
   port: 53
-  _URL: t4.game.com
+  _URL: zombie-party.hopto.org
