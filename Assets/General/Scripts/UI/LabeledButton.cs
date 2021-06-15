@@ -17,9 +17,11 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
-	public class LabeledButton : Button, Initializer.Interface
+	public class LabeledButton : Button, IInitialize
 	{
         public Text Label { get; protected set; }
 
@@ -37,9 +39,14 @@ namespace Default
             }
         }
 
-        public virtual void Init()
+        public virtual void Configure()
         {
             Label = Dependancy.Get<Text>(gameObject);
+        }
+
+        public virtual void Init()
+        {
+
         }
     }
 }

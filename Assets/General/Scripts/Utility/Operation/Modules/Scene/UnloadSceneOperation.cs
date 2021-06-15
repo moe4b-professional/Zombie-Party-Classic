@@ -17,11 +17,13 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
 	public class UnloadSceneOperation : Operation.Behaviour
 	{
-        public GameScene target;
+        public MSceneAsset target;
 
         public override void Execute()
         {

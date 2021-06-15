@@ -2,33 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LayerWeight : StateMachineBehaviour
+public class SmartStateMachineBehaviour : StateMachineBehaviour
+{
+    public Animator Animator { get; protected set; }
+
+    public int LayerIndex { get; protected set; }
+
+    public float LayerWeight
+    {
+        get => Animator.GetLayerWeight(LayerIndex);
+        set => Animator.SetLayerWeight(LayerIndex, value);
+    }
+
+    protected virtual void Prepare(Animator Animator, int LayerIndex)
+    {
+        if (this.Animator == Animator) return;
+
+        Init(Animator, LayerIndex);
+    }
+    protected virtual void Init(Animator Animator, int LayerIndex)
+    {
+        this.Animator = Animator;
+        this.LayerIndex = LayerIndex;
+    }
+
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        Prepare(animator, layerIndex);
+
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+    }
+}
+
+public class LayerWeight : SmartStateMachineBehaviour
 {
     [Range(0f, 1f)]
     public float target = 1f;
 
     [SerializeField]
     float speed = 5f;
-    public float Speed => speed;
 
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Process(animator, layerIndex, target);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        Process();
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
 
-        Process(animator, layerIndex, target);
+        Process();
     }
 
-    void Process(Animator animator, int layer, float target)
+    void Process()
     {
-        var weight = animator.GetLayerWeight(layer);
-        if (weight == target) return;
+        if (LayerWeight == target) return;
 
-        weight = Mathf.MoveTowards(weight, target, speed * Time.deltaTime);
-        animator.SetLayerWeight(layer, weight);
+        LayerWeight = Mathf.MoveTowards(LayerWeight, target, speed * Time.deltaTime);
+        Animator.SetLayerWeight(LayerIndex, LayerWeight);
     }
 }

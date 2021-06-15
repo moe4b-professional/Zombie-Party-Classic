@@ -53,7 +53,7 @@ namespace Default
 
             Popup.Visible = false;
 
-            Scenes.Load(Scenes.Level.Name);
+            Scenes.Load(Scenes.Level);
         }
 
         void OnError()

@@ -17,6 +17,8 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
     public class ProgressBar : MonoBehaviour
@@ -52,12 +54,11 @@ namespace Default
                 dependancy.OnValueChanged(value);
         }
 
-        public class Module : MonoBehaviour, Initializer.Interface
+        public class Module : MonoBehaviour, IInitialize
         {
             [SerializeField]
             [HideInInspector]
             public ProgressBar Bar { get; protected set; }
-
 
             protected virtual void Reset()
             {
@@ -66,19 +67,20 @@ namespace Default
                 UpdateValue();
             }
 
-            public virtual void Init()
+            public virtual void Configure()
             {
                 GetDependancies();
-
-                UpdateValue();
             }
-
 
             protected virtual void GetDependancies()
             {
                 Bar = Dependancy.Get<ProgressBar>(gameObject, Dependancy.Scope.RecursiveToParents);
             }
 
+            public virtual void Init()
+            {
+                UpdateValue();
+            }
 
             public virtual void OnValueChanged(float value)
             {

@@ -44,7 +44,7 @@ namespace Default
             }
 
             if (Input.GetKeyDown(KeyCode.D))
-                SceneManager.LoadScene(Core.Asset.Scenes.Level.Name);
+                SceneManager.LoadScene(Core.Asset.Scenes.Level);
         }
     }
 }

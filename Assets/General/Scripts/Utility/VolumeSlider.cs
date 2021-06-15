@@ -17,10 +17,12 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
 	[RequireComponent(typeof(Slider))]
-	public class VolumeSlider : MonoBehaviour
+	public class VolumeSlider : MonoBehaviour, IInitialize
 	{
 		[SerializeField]
 		AudioSource audioSource;
@@ -36,33 +38,22 @@ namespace Default
 
 		Slider slider;
 
-        void Awake()
+		public void Configure()
         {
 			slider = GetComponent<Slider>();
-        }
+		}
 
-        void Start()
-        {
+		public void Init()
+		{
 			Load();
 
 			slider.value = Volume;
-
 			slider.onValueChanged.AddListener(ValueChange);
-        }
+		}
 
 		void Load()
         {
 			Volume = PlayerPrefs.GetFloat(id, Volume);
-        }
-
-		void Save()
-        {
-			PlayerPrefs.SetFloat(id, Volume);
-        }
-
-		void UpdateState()
-        {
-			audioSource.volume = slider.value;
 		}
 
 		void ValueChange(float value)
@@ -70,6 +61,15 @@ namespace Default
 			UpdateState();
 
 			Save();
+		}
+		void UpdateState()
+		{
+			Volume = slider.value;
+		}
+
+		void Save()
+		{
+			PlayerPrefs.SetFloat(id, Volume);
 		}
     }
 }

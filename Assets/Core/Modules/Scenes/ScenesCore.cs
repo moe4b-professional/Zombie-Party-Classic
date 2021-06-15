@@ -17,26 +17,27 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Levels")]
 	public class ScenesCore : Core.Module
 	{
         [SerializeField]
-        protected GameScene mainMenu;
-        public GameScene MainMenu { get { return mainMenu; } }
+        protected MSceneAsset mainMenu;
+        public MSceneAsset MainMenu { get { return mainMenu; } }
 
         [SerializeField]
-        protected GameScene level;
-        public GameScene Level { get { return level; } }
+        protected MSceneAsset level;
+        public MSceneAsset Level { get { return level; } }
 
+        public virtual void Load(MSceneAsset asset) => Load(asset.ID);
         public virtual void Load(string name)
         {
             Core.SceneAccessor.StartCoroutine(Procedure());
             IEnumerator Procedure()
             {
-                Debug.Log("Load " + name);
-
                 yield return Core.UI.Container.Fade.Transition(1f);
 
                 yield return new WaitForSecondsRealtime(1f);

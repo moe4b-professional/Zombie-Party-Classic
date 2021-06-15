@@ -17,6 +17,8 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
 	public class UITransition : MonoBehaviour
@@ -76,17 +78,20 @@ namespace Default
             if (Value == 0f && gameObject.activeInHierarchy) gameObject.SetActive(false);
         }
 
-        public abstract class Module : MonoBehaviour, Initializer.Interface
+        public abstract class Module : MonoBehaviour, IInitialize
         {
             protected UITransition transition;
 
-            public virtual void Init()
+            public virtual void Configure()
             {
                 transition = Dependancy.Get<UITransition>(gameObject, Dependancy.Scope.RecursiveToParents);
 
                 if (transition == null)
                     throw new NullReferenceException("Cannot find UI Transition for module: " + name + " to use");
+            }
 
+            public virtual void Init()
+            {
                 UpdateState(transition.Value);
 
                 transition.OnValueChanged += OnValueChanged;

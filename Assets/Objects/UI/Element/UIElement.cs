@@ -17,15 +17,22 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
-	public class UIElement : MonoBehaviour, Initializer.Interface
+	public class UIElement : MonoBehaviour, IInitialize
 	{
         public UITransition Transition { get; protected set; }
 
-        public virtual void Init()
+        public virtual void Configure()
         {
             Transition = GetComponent<UITransition>();
+        }
+
+        public virtual void Init()
+        {
+            
         }
 
         public bool Visible

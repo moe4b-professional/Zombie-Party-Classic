@@ -19,7 +19,7 @@ using Random = UnityEngine.Random;
 
 namespace Default
 {
-    public class PopupLabel : UIElement, Initializer.Interface
+    public class PopupLabel : UIElement
     {
         [SerializeField]
         protected Text label;

@@ -17,6 +17,10 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using UnityEngine.PlayerLoop;
+
+using MB;
+
 namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Cheats")]
@@ -57,7 +61,7 @@ namespace Default
         {
             base.Configure();
 
-            SceneAccessor.UpdateEvent += Update;
+            MUtility.RegisterPlayerLoop<Update>(Update);
         }
 
         public override void Init()

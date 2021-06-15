@@ -20,6 +20,8 @@ using Random = UnityEngine.Random;
 using System.Runtime.Serialization;
 using System.Xml;
 
+using MB;
+
 namespace Default
 {
     public abstract class CoreBase : ScriptableObject
@@ -83,15 +85,7 @@ namespace Default
         }
         #endregion
 
-        #region Tools
         public SceneAccessor SceneAccessor { get; protected set; }
-        protected virtual void ConfigureSceneAccessor()
-        {
-            SceneAccessor = SceneAccessor.Create();
-
-            SceneAccessor.ApplicationQuitEvent += OnApplicationQuit;
-        }
-        #endregion
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void OnLoad()
@@ -126,9 +120,7 @@ namespace Default
 
         protected virtual void Configure()
         {
-            ConfigureSceneAccessor();
-
-            Initializer.Configure();
+            SceneAccessor = SceneAccessor.Create();
 
             OptionsOverride.Configure();
 
@@ -136,6 +128,7 @@ namespace Default
             void Process(Core.Module module) => module.Configure();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+            Application.quitting += OnQuit;
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
@@ -153,7 +146,7 @@ namespace Default
             if (OnInit != null) OnInit();
         }
 
-        protected virtual void OnApplicationQuit()
+        protected virtual void OnQuit()
         {
             servers.Stop();
 

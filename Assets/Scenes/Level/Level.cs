@@ -96,7 +96,7 @@ namespace Default
         {
             if (!WebSocketServer.Active)
             {
-                SceneManager.LoadScene(Scenes.MainMenu.Name);
+                SceneManager.LoadScene(Scenes.MainMenu);
                 enabled = false;
                 return;
             }
@@ -150,7 +150,7 @@ namespace Default
             Core.Servers.Stop();
 
             Exit();
-            Scenes.Load(Scenes.MainMenu.Name);
+            Scenes.Load(Scenes.MainMenu);
         }
 
         static bool IsRetry;
@@ -160,7 +160,7 @@ namespace Default
             Room.SetAllReadiness(false);
 
             Exit();
-            Scenes.Load(Scenes.Level.Name);
+            Scenes.Load(Scenes.Level);
         }
 
         public event Action OnExit;
