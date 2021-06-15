@@ -143,7 +143,24 @@ namespace Default
             ForEachModule(Process);
             void Process(Core.Module module) => module.Init();
 
+            LoadQualitySettings();
+
             if (OnInit != null) OnInit();
+        }
+
+        void LoadQualitySettings()
+        {
+            var id = OptionsOverride.Get("Quality", "Ultra").ToLower();
+
+            var index = Array.FindIndex(QualitySettings.names, x => x.ToLower().Contains(id));
+
+            if (index < 0)
+            {
+                Debug.LogError($"Quality Level: {id} Not Found");
+                return;
+            }
+
+            QualitySettings.SetQualityLevel(index);
         }
 
         protected virtual void OnQuit()

@@ -1,7 +1,10 @@
 {
-	"Web Socket Port": 5460,
-	"Web Server Port": 80,
-	"DNS Port": 53,
-	"*IP Address": "127.0.0.1",
-	"*DNS URL": "t4.game.com"
+   "Web Socket Port": 5460,
+   "Web Server Port": 80,
+   "DNS Port": 53,
+   "*IP Address": "127.0.0.1",
+   "*DNS URL": "t4.game.com",
+
+   //Options: Very Low, Low, Medium, High, Very High, Ultra
+   "Quality": "Ultra"
 }
