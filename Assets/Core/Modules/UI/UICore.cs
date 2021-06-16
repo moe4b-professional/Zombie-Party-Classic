@@ -27,6 +27,9 @@ namespace Default
 
         public UIContainer Container { get; protected set; }
 
+        public ScreenFade Fade => Container.Fade;
+        public Popup Popup => Container.Popup;
+
         public override void Init()
         {
             base.Init();

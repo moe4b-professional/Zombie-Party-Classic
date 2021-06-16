@@ -32,10 +32,6 @@ namespace Default
         protected StartMenu start;
         public StartMenu Initial { get { return start; } }
 
-        [SerializeField]
-        protected Popup popup;
-        public Popup Popup { get { return popup; } }
-
         Core Core => Core.Asset;
 
         void Awake()
@@ -47,8 +43,8 @@ namespace Default
 
         void Start()
         {
-            Core.UI.Container.Fade.Alpha = 1f;
-            Core.UI.Container.Fade.Transition(0f);
+            Core.UI.Fade.Alpha = 1f;
+            Core.UI.Fade.Transition(0f);
         }
     }
 }

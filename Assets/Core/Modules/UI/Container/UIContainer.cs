@@ -17,17 +17,23 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
 	public class UIContainer : MonoBehaviour
 	{
-		[SerializeField]
-		ScreenFade fade = default;
-		public ScreenFade Fade => fade;
+        [SerializeField]
+        ScreenFade fade = default;
+        public ScreenFade Fade => fade;
+
+        [SerializeField]
+        Popup popup = default;
+        public Popup Popup => popup;
 
         void Awake()
         {
-            fade.Init(0);
+            Initializer.Perform(this);
         }
     }
 }

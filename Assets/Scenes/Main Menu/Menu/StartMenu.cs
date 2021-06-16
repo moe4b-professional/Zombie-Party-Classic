@@ -23,9 +23,8 @@ namespace Default
     {
         public MainMenu MainMenu { get { return MainMenu.Instance; } }
 
-        public Popup Popup { get { return MainMenu.Popup; } }
-
         public Core Core { get { return Core.Asset; } }
+        public Popup Popup => Core.UI.Popup;
 
         public ServersCore Servers { get { return Core.Servers; } }
         public ScenesCore Scenes { get { return Core.Scenes; } }

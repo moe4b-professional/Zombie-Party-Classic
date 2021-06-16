@@ -59,7 +59,13 @@ namespace Default
         {
             var id = FormatID(name);
 
-            dictionary[id] = new Entry(name, value);
+            if (Dictioanry.TryGetValue(id, out var entry))
+                if (entry.Value >= value)
+                    return;
+
+            entry = new Entry(name, value);
+
+            dictionary[id] = entry;
         }
 
         public bool Remove(string name)

@@ -131,6 +131,8 @@ namespace Default
             Add<HitMarkerMessage>();
 
             Add<PingMessage>();
+
+            Add<ScoreMessage>();
         }
     }
 
@@ -224,5 +226,17 @@ namespace Default
         [JsonProperty]
         long stamp = default;
         public long Stamp => stamp;
+    }
+
+    public class ScoreMessage : NetworkMessage
+    {
+        [JsonProperty]
+        int value = default;
+        public int Value => value;
+
+        public ScoreMessage(int value)
+        {
+            this.value = value;
+        }
     }
 }

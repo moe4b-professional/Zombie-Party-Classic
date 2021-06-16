@@ -44,6 +44,15 @@ namespace Default
         public void Add(int increase)
         {
             value += increase;
+
+            Sync();
+        }
+
+        void Sync()
+        {
+            var message = new ScoreMessage(value);
+
+            Player.Client.Send(message);
         }
     }
 }

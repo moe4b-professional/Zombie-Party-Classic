@@ -3,7 +3,7 @@ import Game from "../Game";
 import Menu from "./Menu";
 
 import VirtualJoystick from "../../Plugins/Virtual Joystick/VirtualJoystick";
-import { NetworkMessage, PlayerHealthMessage, PlayerInputMessage, StartLevelMessage, RetryLevelMessage, HitMarkerMessage } from "../Tools/NetworkMessage";
+import { NetworkMessage, PlayerHealthMessage, PlayerInputMessage, StartLevelMessage, RetryLevelMessage, HitMarkerMessage, ScoreMessage } from "../Tools/NetworkMessage";
 import { AsyncUtility } from "../Utility/AsyncUtility";
 
 const { ccclass, property } = cc._decorator;
@@ -42,6 +42,9 @@ export default class ControlMenu extends Menu
     @property(cc.AudioClip)
     hitmarker: cc.AudioClip = null;
 
+    @property(cc.Label)
+    scoreLabel: cc.Label = null;
+
     get game() { return Game.instance; }
     get client() { return this.game.client; }
     get popup() { return this.game.popup; }
@@ -74,6 +77,12 @@ export default class ControlMenu extends Menu
 
             if (message.value == 0) this.onDeath();
 
+            return;
+        }
+
+        if (message instanceof ScoreMessage)
+        {
+            this.scoreLabel.string = "Score: " + message.value;
             return;
         }
 

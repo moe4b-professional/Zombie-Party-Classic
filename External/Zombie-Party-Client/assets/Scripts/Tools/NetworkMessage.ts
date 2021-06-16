@@ -80,6 +80,8 @@ export abstract class NetworkMessage
         Add(HitMarkerMessage);
 
         Add(PingMessage);
+
+        Add(ScoreMessage);
     }
 }
 
@@ -175,6 +177,16 @@ export class PingMessage extends NetworkMessage
         super(PingMessage);
 
         this.stamp = Date.now();
+    }
+}
+
+export class ScoreMessage extends NetworkMessage
+{
+    value: number;
+
+    constructor()
+    {
+        super(ScoreMessage);
     }
 }
 

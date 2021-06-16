@@ -17,10 +17,12 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using MB;
+
 namespace Default
 {
     [RequireComponent(typeof(Image))]
-	public class ScreenFade : MonoBehaviour
+	public class ScreenFade : MonoBehaviour, IInitialize
 	{
         [SerializeField]
         protected float speed = 5;
@@ -44,13 +46,16 @@ namespace Default
             }
         }
 
-        public virtual void Init(float value)
+        public virtual void Configure()
         {
             image = GetComponent<Image>();
 
             gameObject.SetActive(true);
+        }
 
-            Alpha = value;
+        public virtual void Init()
+        {
+
         }
 
         public event Action OnTransitionEnd;
