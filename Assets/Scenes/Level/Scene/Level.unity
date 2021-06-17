@@ -9556,7 +9556,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1755428296029182, guid: cdbd7c013fcf16d4e8282dd23b9b1c9d, type: 3}
   waveNumber: 0
-  waveDelay: 15
+  waveDelay: 10
   spawnDelay: 1.5
 --- !u!1 &1428553467
 GameObject:
