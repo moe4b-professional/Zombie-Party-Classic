@@ -85,6 +85,8 @@ namespace Default
         {
             base.Death(Damager);
 
+            GetComponentInChildren<OutlineFader>().Begin(Variants.Selection.Model);
+
             Body.Animator.enabled = false;
 
             Ragdoll.Enable();

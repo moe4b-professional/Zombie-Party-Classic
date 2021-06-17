@@ -36,10 +36,12 @@ namespace Default
             public Weapon Weapon { get { return weapon; } }
         }
 
-        Player player;
+        public Data Selection => list[Player.Client.ID];
+
+        Player Player;
 		public virtual void Init(Player player)
         {
-            this.player = player;
+            this.Player = player;
 
             if (Core.Asset.Cheats.AllPlayersArePyro)
                 Apply(3);
@@ -63,10 +65,10 @@ namespace Default
             }
 
             data.Model.SetActive(true);
-            player.Burn.SetModel(data.Model);
+            Player.Burn.SetModel(data.Model);
 
             data.Weapon.gameObject.SetActive(true);
-            player.Weapons.Set(data.Weapon);
+            Player.Weapons.Set(data.Weapon);
         }
 	}
 }

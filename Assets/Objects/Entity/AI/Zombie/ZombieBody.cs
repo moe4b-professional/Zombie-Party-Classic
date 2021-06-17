@@ -26,7 +26,12 @@ namespace Default
         public GameObject[] Models { get { return models; } }
 
         public GameObject Model { get; protected set; }
-        protected virtual void InitModel()
+
+        [SerializeField]
+        protected EntityBurn burn;
+        public EntityBurn Burn { get { return burn; } }
+
+        protected virtual void Awake()
         {
             var index = Random.Range(0, models.Length);
 
@@ -36,21 +41,8 @@ namespace Default
 
             Model = models[index];
             Model.SetActive(true);
-        }
 
-        [SerializeField]
-        protected EntityBurn burn;
-        public EntityBurn Burn { get { return burn; } }
-        protected virtual void InitBurn()
-        {
             burn.SetModel(Model);
-        }
-        
-        protected virtual void Awake()
-        {
-            InitModel();
-
-            InitBurn();
         }
     }
 }

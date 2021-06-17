@@ -274,6 +274,18 @@ MonoBehaviour:
   - {fileID: 7502786024102605548}
   - {fileID: 7502786024102605536}
   burn: {fileID: 7926329598779361230}
+--- !u!114 &2593518949720289980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502786024102605586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bab32d3d2f23444d81afda6caaf3103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9052951977980508523
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,9 +628,14 @@ PrefabInstance:
     - target: {fileID: 5696309382769767403, guid: 7e30c43725418214e89ec9687b948045,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5696309382769767407, guid: 7e30c43725418214e89ec9687b948045,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696309382769767409, guid: 7e30c43725418214e89ec9687b948045,
         type: 3}
       propertyPath: m_IsActive
       value: 0

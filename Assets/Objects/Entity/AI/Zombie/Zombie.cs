@@ -29,11 +29,15 @@ namespace Default
 
         public RagdollController Ragdoll { get; protected set; }
 
+        public ZombieBody Body { get; protected set; }
+
         public Player Target { get; protected set; }
 
         protected override void Start()
         {
             base.Start();
+
+            Body = Dependancy.Get<ZombieBody>(gameObject);
 
             Agent = GetComponent<NavMeshAgent>();
 
@@ -165,6 +169,8 @@ namespace Default
         protected override void Death(Entity Damager)
         {
             base.Death(Damager);
+
+            GetComponentInChildren<OutlineFader>().Begin(Body.Model);
 
             Animator.enabled = false;
 
