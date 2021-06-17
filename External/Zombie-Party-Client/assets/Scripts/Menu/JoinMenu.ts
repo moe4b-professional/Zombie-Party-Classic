@@ -4,13 +4,13 @@ import Client from "../Client";
 
 import Menu from "./Menu";
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class JoinMenu extends Menu
 {
     @property(cc.EditBox)
-    playerName : cc.EditBox = null;
+    playerName: cc.EditBox = null;
     initPlayerName()
     {
         var changeEvent = new cc.EditBox.EventHandler();
@@ -27,7 +27,7 @@ export default class JoinMenu extends Menu
 
         var value = cc.sys.localStorage.getItem("player name");
 
-        if(value == null) value = Client.defaultName;
+        if (value == null) value = Client.defaultName;
 
         this.playerName.string = value;
 
@@ -35,7 +35,7 @@ export default class JoinMenu extends Menu
     }
 
     @property(cc.Button)
-    button : cc.Button = null;
+    button: cc.Button = null;
     initButton()
     {
         var event = new cc.Button.EventHandler();
@@ -50,16 +50,16 @@ export default class JoinMenu extends Menu
     get game() { return Game.instance; }
     get client() { return this.game.client; }
     get popup() { return this.game.popup; }
-    
+
     get hostName()
     {
-        if(location.hostname == "") return "localhost";
+        if (location.hostname == "") return "localhost";
 
         return location.hostname;
     }
     get address() { return "ws://" + this.hostName + ":" + this.game.port; }
 
-    start ()
+    start()
     {
         this.initButton();
 
@@ -77,7 +77,7 @@ export default class JoinMenu extends Menu
     }
     onButtonTouched()
     {
-        if(Client.isValidName(this.playerName.string) == false)
+        if (Client.isValidName(this.playerName.string) == false)
         {
             this.popup.display("Invalid Name", this.popup.hide, "Close");
         }
@@ -91,7 +91,7 @@ export default class JoinMenu extends Menu
     {
         cc.sys.localStorage.setItem("player name", this.playerName.string);
 
-        this.game.reload();
+        //this.game.reload();
     }
 
     onConnected()
