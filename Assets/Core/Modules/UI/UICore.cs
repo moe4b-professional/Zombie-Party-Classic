@@ -35,6 +35,7 @@ namespace Default
             base.Init();
 
             Container = Instantiate(prefab).GetComponent<UIContainer>();
+            Container.gameObject.name = prefab.name;
             DontDestroyOnLoad(Container.gameObject);
         }
     }
