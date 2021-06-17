@@ -43,7 +43,7 @@ export default class ControlMenu extends Menu
     hitmarker: cc.AudioClip = null;
 
     @property(cc.Label)
-    scoreLabel: cc.Label = null;
+    scoreLabels: cc.Label[] = [];
 
     get game() { return Game.instance; }
     get client() { return this.game.client; }
@@ -82,7 +82,9 @@ export default class ControlMenu extends Menu
 
         if (message instanceof ScoreMessage)
         {
-            this.scoreLabel.string = "Score: " + message.value;
+            for (let i = 0; i < this.scoreLabels.length; i++)
+                this.scoreLabels[i].string = "Score: " + message.value;
+
             return;
         }
 

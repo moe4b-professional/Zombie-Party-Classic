@@ -82,11 +82,7 @@ namespace Default
 
             while (IsAlive)
             {
-                if (Target == null)
-                {
-                    Agent.isStopped = true;
-                    break;
-                }
+                if (Target == null) yield break;
 
                 Agent.SetDestination(Target.transform.position);
 
@@ -98,7 +94,7 @@ namespace Default
                         StartCoroutine(Attack());
                 }
 
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
         }
 
@@ -163,7 +159,7 @@ namespace Default
         {
             base.Update();
 
-            Animator.SetFloat("Move", Agent.velocity.magnitude);
+            Animator.SetFloat("Move", Agent.velocity.magnitude, 0.5f, Time.deltaTime);
         }
 
         protected override void Death(Entity Damager)

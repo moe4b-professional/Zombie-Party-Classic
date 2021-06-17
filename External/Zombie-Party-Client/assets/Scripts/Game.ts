@@ -45,6 +45,8 @@ export default class Game extends cc.Component
         Request("RSC", "Server Port", this.onServerPortRecieved, this);
 
         this.client = new Client();
+
+        window.addEventListener('beforeunload', this.OnUnload);
     }
 
     port: number;
@@ -72,6 +74,12 @@ export default class Game extends cc.Component
     reload()
     {
         cc.director.loadScene(cc.director.getScene().name);
+    }
+
+    OnUnload(e: Event)
+    {
+        if (this.client.isConnected)
+            this.client.socket.close();
     }
 }
 
