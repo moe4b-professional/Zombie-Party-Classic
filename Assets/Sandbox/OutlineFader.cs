@@ -29,7 +29,7 @@ namespace Default
         {
             var renderer = target.GetComponentInChildren<Renderer>(true);
 
-            var power = renderer.material.GetFloat("_Power");
+            var power = renderer.sharedMaterial.GetFloat("_Power");
 
             var block = new MaterialPropertyBlock();
 
