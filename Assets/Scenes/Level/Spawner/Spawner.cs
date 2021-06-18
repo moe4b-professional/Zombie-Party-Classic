@@ -76,7 +76,7 @@ namespace Default
         public float waveDelay = 5f;
         protected virtual IEnumerator Procedure()
         {
-            yield return new WaitForSeconds(waveDelay);
+            yield return new WaitForSeconds(4);
 
             while (true)
             {
