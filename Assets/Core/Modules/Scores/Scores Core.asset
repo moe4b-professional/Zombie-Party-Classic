@@ -14,23 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dictionary:
     list:
-    - key: player
-      value:
-        name: Player
-        value: 32
     - key: moe4b
       value:
         name: Moe4B
         value: 149
-    - key: d3dice
-      value:
-        name: D3dice
-        value: 45
-    - key: max
-      value:
-        name: Max
-        value: 12
-    - key: meek
-      value:
-        name: MeeK
-        value: 22

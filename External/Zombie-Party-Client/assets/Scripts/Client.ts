@@ -34,7 +34,7 @@ export default class Client
         var message = new RegisterClientMessage(value);
         this.send(message);
     }
-    public static get defaultName() { return "Player Name"; }
+    public static get defaultName() { return "Player"; }
     public static isValidName(value: string): boolean
     {
         if (value == null) return false;

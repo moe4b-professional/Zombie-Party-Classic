@@ -36,8 +36,6 @@ namespace Default
             Menu = FindObjectOfType<LevelMenu>();
             Menu.Init();
         }
-        public Popup Popup { get { return Menu.Popup; } }
-
 
         public LevelPause Pause { get; protected set; }
         protected virtual void InitPause()

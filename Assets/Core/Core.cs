@@ -122,6 +122,9 @@ namespace Default
         {
             SceneAccessor = SceneAccessor.Create();
 
+            AutoPrefs.Configure();
+            AutoPrefs.Load();
+
             OptionsOverride.Configure();
 
             ForEachModule(Process);

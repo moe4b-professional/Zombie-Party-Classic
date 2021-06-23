@@ -296,7 +296,7 @@
       "array": [
         0,
         0,
-        435.61077810357267,
+        326.28645086668456,
         0,
         0,
         0,
@@ -518,7 +518,7 @@
       "array": [
         0,
         0,
-        435.61077810357267,
+        326.28645086668456,
         0,
         0,
         0,
@@ -1806,7 +1806,7 @@
     "_useOriginalSize": false,
     "_string": "",
     "returnType": 0,
-    "maxLength": 6,
+    "maxLength": 20,
     "_tabIndex": 0,
     "editingDidBegan": [],
     "textChanged": [],

@@ -38,8 +38,7 @@ namespace Default
         public PopupLabel PopupLabel { get { return popupLabel; } }
 
         [SerializeField]
-        protected Popup popup;
-        public Popup Popup { get { return popup; } }
+        TopScoreUI topScore;
 
         public Core Core { get { return Core.Asset; } }
 
@@ -49,6 +48,12 @@ namespace Default
         public virtual void Init()
         {
             
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                topScore.Toggle();
         }
     }
 }

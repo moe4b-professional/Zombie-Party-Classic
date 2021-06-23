@@ -25,6 +25,20 @@ namespace Default
         protected float speed;
         public float Speed { get { return speed; } }
 
+        [SerializeField]
+        AssistData assist;
+        [Serializable]
+        public class AssistData
+        {
+            [SerializeField]
+            float distance = 10;
+            public float Distance => distance;
+
+            [SerializeField]
+            float angle = 45;
+            public float Angle => angle;
+        }
+
         Player player;
 
         PlayerMovement Movement { get { return player.Movement; } }
@@ -43,10 +57,22 @@ namespace Default
 
         void Update()
         {
-            if(Input.Look.magnitude > 0f)
-                LookTowards(Vector2Angle(Input.Look));
-            else if(Input.Move.magnitude > 0f)
+            if (Input.Look.magnitude > 0f)
+                Process();
+            else if (Input.Move.magnitude > 0f)
                 LookTowards(Vector2Angle(Input.Move));
+        }
+
+        void Process()
+        {
+            var direction = new Vector3(Input.Look.x, 0f, Input.Look.y);
+
+            var target = AI.Query.Find(player.transform.position, direction, assist.Distance, assist.Angle);
+
+            if (target.AI == null)
+                LookTowards(Vector2Angle(Input.Look));
+            else
+                LookTowards(Vector2Angle(target.Direction));
         }
 
         Vector3 angles;
@@ -64,9 +90,11 @@ namespace Default
             player.transform.eulerAngles = angles;
         }
 
-        public static float Vector2Angle(Vector2 vector2)
+        public static float Vector2Angle(Vector3 vector3) => Vector2Angle(vector3.x, vector3.z);
+        public static float Vector2Angle(Vector2 vector2) => Vector2Angle(vector2.x, vector2.y);
+        public static float Vector2Angle(float x, float y)
         {
-            return Mathf.Atan2(vector2.x, vector2.y) * Mathf.Rad2Deg;
+            return Mathf.Atan2(x, y) * Mathf.Rad2Deg;
         }
     }
 }

@@ -26,8 +26,7 @@ export default class JoinMenu extends Menu
         this.playerName.editingDidEnded.push(editEndEvent);
 
         var value = cc.sys.localStorage.getItem("player name");
-
-        if (value == null) value = Client.defaultName;
+        if (value == null) value = "";
 
         this.playerName.string = value;
 

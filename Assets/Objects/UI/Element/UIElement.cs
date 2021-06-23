@@ -61,6 +61,11 @@ namespace Default
             if (OnShow != null) OnShow();
         }
 
+        public void Toggle()
+        {
+            Visible = !Visible;
+        }
+
         public event Action OnHide;
         public virtual void Hide()
         {

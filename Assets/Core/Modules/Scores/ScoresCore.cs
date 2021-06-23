@@ -17,24 +17,29 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+using Newtonsoft.Json;
+
 using MB;
 
 namespace Default
 {
     [CreateAssetMenu(menuName = MenuPath + "Scores")]
-	public class ScoresCore : Core.Module
-	{
+    public class ScoresCore : Core.Module
+    {
         [SerializeField]
         UDictionary<string, Entry> dictionary;
         public UDictionary<string, Entry> Dictioanry => dictionary;
 
         [Serializable]
+        [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
         public struct Entry
         {
+            [JsonProperty]
             [SerializeField]
             string name;
             public string Name => name;
 
+            [JsonProperty]
             [SerializeField]
             int value;
             public int Value => value;
@@ -48,11 +53,32 @@ namespace Default
             }
         }
 
+        public const string ID = "Top Scores";
+
         public override void Init()
         {
             base.Init();
 
-            Debug.Log(GetTop(3).ToCollectionString());
+            Load();
+        }
+
+        public void Save()
+        {
+            AutoPrefs.Set(ID, dictionary.Values);
+        }
+
+        public void Load()
+        {
+            if (AutoPrefs.Contains(ID) == false) return;
+
+            var entires = AutoPrefs.Read<Entry[]>(ID);
+
+            foreach (var data in entires)
+            {
+                var id = FormatID(data.Name);
+
+                dictionary[id] = data;
+            }
         }
 
         public void Submit(string name, int value)
@@ -66,6 +92,8 @@ namespace Default
             entry = new Entry(name, value);
 
             dictionary[id] = entry;
+
+            Save();
         }
 
         public bool Remove(string name)

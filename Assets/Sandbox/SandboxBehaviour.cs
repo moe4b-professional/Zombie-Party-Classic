@@ -22,29 +22,19 @@ namespace Default
     [DefaultExecutionOrder(-200)]
 	public class SandboxBehaviour : MonoBehaviour
 	{
-        public Weapon[] weapons;
+        public float angle;
 
-        public RawImage image;
+        public Transform a;
+        public Transform b;
 
-        void Start()
+        private void Start()
         {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                weapons[i].Init(null);
-            }
-
-            image.texture = QRUtility.Generate("Hello World, This is a large piece of text, goodbye", 256);
+            
         }
 
-        void Update()
+        private void Update()
         {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                weapons[i].Process(Input.GetMouseButton(0));
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-                SceneManager.LoadScene(Core.Asset.Scenes.Level);
+            angle = Vector3.Angle(a.forward, (b.position - a.position).normalized);
         }
     }
 }
