@@ -44,7 +44,7 @@ namespace Default
             this.Player = player;
 
             if (Core.Asset.Cheats.AllPlayersArePyro)
-                Apply(3);
+                Apply(2);
             else
                 Apply(player.Client.ID);
         }
