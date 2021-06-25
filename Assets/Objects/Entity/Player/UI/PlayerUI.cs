@@ -26,5 +26,12 @@ namespace Default
         {
             this.player = reference;
         }
-	}
+
+        void Update()
+        {
+            var angles = transform.eulerAngles;
+            angles.y = 0f;
+            transform.eulerAngles = angles;
+        }
+    }
 }

@@ -58,6 +58,10 @@ namespace Default
         protected float duration = 5f;
         public float Duration { get { return duration; } }
 
+        [SerializeField]
+        float target = 0.5f;
+        public float Target => target;
+
         public Level Level { get { return Level.Instance; } }
 
         Player player;
@@ -79,9 +83,7 @@ namespace Default
 
             yield return new WaitForSeconds(duration);
 
-            yield return Transition(0f);
-
-            gameObject.SetActive(false);
+            yield return Transition(target);
         }
 
         IEnumerator Transition(float target)
@@ -90,17 +92,8 @@ namespace Default
             {
                 Transparency = Mathf.MoveTowards(Transparency, target, speed * Time.deltaTime);
 
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
-        }
-
-        void Update()
-        {
-            var angles = transform.eulerAngles;
-
-            angles.y = 0f;
-
-            transform.eulerAngles = angles;
         }
     }
 }
