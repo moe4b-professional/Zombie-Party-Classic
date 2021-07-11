@@ -2,37 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmartStateMachineBehaviour : StateMachineBehaviour
-{
-    public Animator Animator { get; protected set; }
-
-    public int LayerIndex { get; protected set; }
-
-    public float LayerWeight
-    {
-        get => Animator.GetLayerWeight(LayerIndex);
-        set => Animator.SetLayerWeight(LayerIndex, value);
-    }
-
-    protected virtual void Prepare(Animator Animator, int LayerIndex)
-    {
-        if (this.Animator == Animator) return;
-
-        Init(Animator, LayerIndex);
-    }
-    protected virtual void Init(Animator Animator, int LayerIndex)
-    {
-        this.Animator = Animator;
-        this.LayerIndex = LayerIndex;
-    }
-
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        Prepare(animator, layerIndex);
-
-        base.OnStateEnter(animator, stateInfo, layerIndex);
-    }
-}
+using MB;
 
 public class LayerWeight : SmartStateMachineBehaviour
 {
